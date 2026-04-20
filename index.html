@@ -571,7 +571,7 @@
     <div class="progress-wrapper">
       <div class="progress-label">
         <span id="progress-label-text">填写进度</span>
-        <span id="progress-text">0 / 28</span>
+        <span id="progress-text">0 / 18</span>
       </div>
       <div class="progress-bar">
         <div class="progress-fill" id="progress-fill"></div>
@@ -797,34 +797,34 @@ const I18N = {
 };
 
 const TEMPLATE_DATA = [
-  { id: 'tech-1', options: { zh: 'STM32, ESP32, 树莓派, Arduino, RTOS, FreeRTOS, 瑞芯微, 全志, RISC-V, ARM架构', en: 'STM32, ESP32, Raspberry Pi, Arduino, RTOS, FreeRTOS, RISC-V, ARM' } },
-  { id: 'tech-2', options: { zh: 'Agent开发, Skill, 神经网络, Transformer, GPT, 提示词工程(Prompt), RAG, 部署微调, LangChain, AI生图, 深度学习', en: 'Agent Dev, Neural Networks, Transformer, GPT, Prompt Eng, RAG, LangChain, Deep Learning' } },
-  { id: 'tech-3', options: { zh: 'Python, C/C++, PyTorch, QT, LVGL, Rust, Go, 前端(React/Vue), Git, MATLAB, LaTeX, Makefile', en: 'Python, C/C++, PyTorch, QT, Rust, Go, Frontend(React/Vue), Git, MATLAB, LaTeX' } },
-  { id: 'tech-4', options: { zh: 'RISC-V, ARM架构, RT-thread, Jetson, FPGA, 传感器', en: 'RISC-V, ARM, RT-thread, Jetson, FPGA, Sensors' } },
-  { id: 'tech-5', options: { zh: 'Linux内核, 设备树, ROS, 机器人运动学, 机械臂仿真, Shell脚本, Docker/K8s, Ubuntu, Buildroot, Yocto', en: 'Linux Kernel, Device Tree, ROS, Robotics, Shell, Docker/K8s, Ubuntu, Buildroot, Yocto' } },
-  { id: 'art-1', options: { zh: '极简主义, 赛博朋克, 像素风, 毛玻璃/新拟态, 扁平化, 拟物化, 抽象艺术', en: 'Minimalism, Cyberpunk, Pixel Art, Glassmorphism, Flat, Skeuomorphism' } },
-  { id: 'art-2', options: { zh: '莫兰迪色系, 黑白灰克制, 高饱和霓虹, 大留白, 网格排版', en: 'Morandi, B&W Restraint, Neon, White Space, Grid Layout' } },
-  { id: 'art-3', options: { zh: '3D渲染, LUT, 胶片摄影, 矢量插画, 抽象艺术, 纪实摄影, 技术图表', en: '3D Render, Film Photo, Vector Art, Abstract Art, Documentary Photo, Tech Diagrams' } },
-  { id: 'music-1', options: { zh: '流行, 纯音乐/BGM, 电子EDM, 摇滚, 爵士/古典, 嘻哈, R&B', en: 'Pop, Instrumental/BGM, EDM, Rock, Jazz/Classical, Hip-hop, R&B' } },
-  { id: 'music-2', options: { zh: '周杰伦, 泽野弘之, 泰勒·斯威夫特, 坂本龙一, 林俊杰, 伍佰, 落日飞车, Hans Zimmer, 贝多芬', en: 'Jay Chou, Hiroyuki Sawano, Taylor Swift, Ryuichi Sakamoto, JJ Lin, Hans Zimmer, Beethoven' } },
-  { id: 'ent-1', options: { zh: '科技数码, Vlog, 风景, 知识科普, 游戏解说, 萌宠, 影视解说', en: 'Tech Reviews, Vlogs, Landscapes, Science Edu, Gaming, Cute Animals' } },
-  { id: 'ent-2', options: { zh: 'B站硬核科普, TED演讲, 网课/教程, 影视解说, 机器人教程, 技术大会演讲, 学术论文, 纪录片', en: 'Deep Dives, TED Talks, Online Courses, Tech Talks, Academic Papers, Documentaries' } },
-  { id: 'ent-3', options: { zh: '技术博客, 哲学宗教, 科幻小说, 科技科普, 商业分析, 历史人文, 新闻资讯, 哲学自我成长, 艺术评论', en: 'Tech Blogs, Sci-Fi, Science Articles, Business Analysis, History, Philosophy, Art Criticism' } },
-  { id: 'life-1', options: { zh: '跑步, 游泳, 力量训练, 羽毛球, 骑行, 散步, 瑜伽, 冥想, 爬山徒步', en: 'Running, Swimming, Strength Training, Badminton, Cycling, Walking, Yoga, Meditation' } },
-  { id: 'life-2', options: { zh: '清淡, 无辣不欢, 甜食控, 咖啡/茶依赖, 随便对付', en: 'Light Diet, Spicy Lover, Sweet Tooth, Coffee/Tea Dependent, Whatever is easy' } },
-  { id: 'life-3', options: { zh: '听歌, 放空, 公园, 打游戏, 睡觉, 看书, 刷短视频, 看展, 冥想', en: 'Music, Zoning Out, Park, Gaming, Sleeping, Reading, Exhibitions' } },
-  { id: 'design-1', options: { zh: 'Apple风, Material Design, 拟物化, 卡片式', en: 'Apple Style, Material Design, Skeuomorphic, Card-based' } },
-  { id: 'design-2', options: { zh: '极简/克制, 科技感/暗黑, 活泼/多彩, 商务/专业', en: 'Minimalist/Controlled, Tech/Dark, Playful/Colorful, Business/Professional' } },
-  { id: 'design-3', options: { zh: '丝滑动画, 快速响应, 细腻微动效, 手势操作', en: 'Smooth Animations, Fast Response, Micro-interactions, Gestures' } },
-  { id: 'digital-1', options: { zh: '智能手机, 相机, VR/AR, 降噪耳机, 掌机/主机, 大疆Pocket4, 机械键盘, 示波器, 大屏显示器', en: 'Smartphone, Camera, VR/AR, ANC Headphones, Console, DJI Pocket, Mech Keyboard' } },
-  { id: 'digital-2', options: { zh: '苹果(Apple), 索尼(Sony), 大疆(DJI), 华为(Huawei), 任天堂, 富士(Fuji), Keysight, Dell, 微软', en: 'Apple, Sony, DJI, Huawei, Nintendo, Fujifilm, Keysight, Dell, Microsoft' } },
-  { id: 'digital-3', options: { zh: '极致性能, 续航无忧, 屏幕素质, 工业设计, 极具性价比, 稳定性, 色彩准确', en: 'Peak Performance, Battery Life, Display Quality, Industrial Design, Value, Stability' } },
-  { id: 'goal-1', options: { zh: '学习机械臂, 个人网站, 小工具/脚本, 点亮开发板, 读完一本书, 发论文, 复现实验', en: 'Learn Robotics, Personal Website, Scripts, Board Bring-up, Finish a Book, Publish Paper' } },
-  { id: 'goal-2', options: { zh: '海边度假, 爬山徒步, 历史古迹, 城市漫游, 云南, 宅家云旅游, 逛艺术展, 学术会议', en: 'Beach Vacation, Hiking, Historical Sites, City Wandering, Art Exhibitions, Conferences' } },
-  { id: 'goal-3', options: { zh: '学一门乐器, 尝试新运动, 做一次饭, 学习3D建模, 学习机器人, 拍一个Vlog, 深入研究方向', en: 'Learn an Instrument, Try New Sport, Learn 3D Modeling, Learn Robotics, Make a Vlog' } },
-  { id: 'comm-1', options: { zh: '直奔主题, 循循善诱, 幽默风趣, 严谨客观', en: 'Get to the Point, Patient & Guiding, Humorous & Witty, Rigorous & Objective' } },
-  { id: 'comm-2', options: { zh: '结构化表格, 代码+注释, 思维导图, 简短总结, 图文并茂', en: 'Structured Tables, Code+Comments, Mind Maps, Concise Summary, Rich Visuals' } },
-  { id: 'comm-3', options: { zh: '热情鼓励, 专业高冷, 朋友般闲聊, 客观中立', en: 'Warm & Encouraging, Professional & Cool, Like a Friend, Objective & Balanced' } }
+  // 1. Tech & Learning
+  { id: 'tech-1', options: { zh: 'Python, C/C++, Rust, Go, TypeScript, React/Vue, Node.js, SQL', en: 'Python, C/C++, Rust, Go, TypeScript, React/Vue, Node.js, SQL' } },
+  { id: 'tech-2', options: { zh: 'STM32, ESP32, 树莓派(Raspberry Pi), Arduino, RISC-V, ARM架构, RTOS, FPGA, 传感器', en: 'STM32, ESP32, Raspberry Pi, Arduino, RISC-V, ARM, RTOS, FPGA, Sensors' } },
+  { id: 'tech-3', options: { zh: '大语言模型(LLM), 提示词工程(Prompt), RAG, Agent开发, LangChain, 深度学习, 机器视觉(CV), AI生图', en: 'LLM, Prompt Eng, RAG, Agent Dev, LangChain, Deep Learning, CV, AI Art' } },
+  { id: 'tech-4', options: { zh: 'Linux内核, Docker/K8s, Git, ROS, Makefile, 嵌入式Linux(Buildroot/Yocto)', en: 'Linux Kernel, Docker/K8s, Git, ROS, Makefile, Embedded Linux' } },
+  
+  // 2. Art & Design
+  { id: 'art-1', options: { zh: '极简主义(Minimalism), 赛博朋克(Cyberpunk), 像素风(Pixel Art), 毛玻璃(Glassmorphism), 拟物化(Skeuomorphism), 卡片式设计', en: 'Minimalism, Cyberpunk, Pixel Art, Glassmorphism, Skeuomorphism, Card-based' } },
+  { id: 'art-2', options: { zh: '黑白灰克制, 高饱和霓虹, 莫兰迪色系, 大留白, 结构化网格, 丝滑微动效, 快速响应', en: 'B&W Restraint, Neon, Morandi, Generous White Space, Grid, Smooth Animations, Fast Response' } },
+  { id: 'art-3', options: { zh: '3D渲染, 矢量插画, 胶片摄影, 纪实摄影, 抽象艺术, 技术图表', en: '3D Render, Vector Art, Film Photo, Documentary, Abstract Art, Tech Diagrams' } },
+
+  // 3. Entertainment & Media
+  { id: 'ent-1', options: { zh: 'B站硬核科普, TED演讲, 科技数码评测, Vlog/生活记录, 游戏解说, 萌宠, 影视解说, 纪录片', en: 'Deep Dives, TED Talks, Tech Reviews, Vlogs, Gaming, Pets, Film Essays, Documentaries' } },
+  { id: 'ent-2', options: { zh: '技术博客, 学术论文, 科幻小说, 商业分析, 历史人文, 哲学宗教, 新闻资讯, 艺术评论', en: 'Tech Blogs, Papers, Sci-Fi, Business Analysis, History, Philosophy, News, Art Criticism' } },
+  { id: 'ent-3', options: { zh: '流行(Pop), 电子(EDM), 摇滚(Rock), 纯音乐/BGM, 爵士/古典, 嘻哈(Hip-hop), R&B', en: 'Pop, EDM, Rock, Instrumental/BGM, Jazz/Classical, Hip-hop, R&B' } },
+  { id: 'ent-4', options: { zh: '周杰伦, 泽野弘之, 泰勒·斯威夫特(Taylor Swift), 坂本龙一, 林俊杰, 落日飞车, Hans Zimmer, 贝多芬', en: 'Jay Chou, Hiroyuki Sawano, Taylor Swift, Ryuichi Sakamoto, JJ Lin, Hans Zimmer, Beethoven' } },
+
+  // 4. Life & Devices
+  { id: 'life-1', options: { zh: '跑步, 游泳, 力量训练(健身), 骑行, 散步, 瑜伽, 爬山徒步, 打球', en: 'Running, Swimming, Gym/Weights, Cycling, Walking, Yoga, Hiking, Sports' } },
+  { id: 'life-2', options: { zh: '打游戏, 听歌放空, 刷短视频, 看书, 看展, 睡觉, 冥想, 逛公园', en: 'Gaming, Zoning Out, Short Videos, Reading, Exhibitions, Sleep, Meditation, Parks' } },
+  { id: 'life-3', options: { zh: '降噪耳机, 机械键盘, 掌机/主机, 智能手机, 相机, VR/AR, 示波器/开发板, 大屏显示器', en: 'ANC Headphones, Mech Keyboard, Console, Smartphone, Camera, VR/AR, Dev Boards, Large Monitor' } },
+  { id: 'life-4', options: { zh: '苹果(Apple), 索尼(Sony), 大疆(DJI), 华为(Huawei), 任天堂, 微软, 极具性价比, 极致性能, 工业设计优秀', en: 'Apple, Sony, DJI, Huawei, Nintendo, Microsoft, Best Value, Peak Performance, Great Design' } },
+
+  // 5. Goals & Comm
+  { id: 'goal-1', options: { zh: '点亮开发板, 做个个人网站, 写个小脚本/工具, 读完一本书, 学习3D建模, 发篇论文, 拍个Vlog', en: 'Board Bring-up, Personal Website, Small Script, Finish a Book, Learn 3D, Publish Paper, Make Vlog' } },
+  { id: 'goal-2', options: { zh: '海边度假, 爬山徒步, 历史古迹, 城市漫游, 云南, 宅家云旅游, 逛艺术展', en: 'Beach Vacation, Hiking, Historical Sites, City Wandering, Art Exhibitions, Staycation' } },
+  { id: 'comm-1', options: { zh: '直奔主题, 循循善诱, 幽默风趣, 严谨客观, 热情鼓励, 专业高冷, 朋友般闲聊', en: 'Get to the Point, Patient & Guiding, Humorous & Witty, Rigorous, Warm, Professional, Like a Friend' } },
+  { id: 'comm-2', options: { zh: '结构化表格, 代码+注释, 思维导图, 简短总结, 图文并茂, 步骤清晰', en: 'Structured Tables, Code+Comments, Mind Maps, Concise Summary, Rich Visuals, Clear Steps' } }
 ];
 
 const PRESET_TEMPLATES = {
@@ -832,251 +832,185 @@ const PRESET_TEMPLATES = {
     name: { zh: '嵌入式工程师', en: 'Embedded Engineer' },
     icon: '⚡',
     values: {
-      'tech-1': { zh: 'STM32, ESP32, RTOS, FreeRTOS, 驱动开发', en: 'STM32, ESP32, RTOS, FreeRTOS, Driver Dev' },
-      'tech-2': { zh: 'Agent开发, RAG, 提示词工程, 神经网络', en: 'Agent Dev, RAG, Prompt Eng, Neural Nets' },
-      'tech-3': { zh: 'C/C++, Python, Rust, Git, Makefile', en: 'C/C++, Python, Rust, Git, Makefile' },
-      'tech-4': { zh: 'RISC-V, ARM Cortex-M, 瑞芯微, 全志', en: 'RISC-V, ARM Cortex-M, Rockchip, Allwinner' },
-      'tech-5': { zh: 'Linux内核, 设备树, Buildroot, Yocto', en: 'Linux Kernel, Device Tree, Buildroot, Yocto' },
-      'art-1': { zh: '极简主义, 赛博朋克', en: 'Minimalism, Cyberpunk' },
-      'art-2': { zh: '黑白灰克制, 大留白', en: 'B&W Restraint, Generous White Space' },
-      'art-3': { zh: '纪实摄影, 技术图表', en: 'Documentary Photography, Tech Diagrams' },
-      'music-1': { zh: '电子EDM, 纯音乐/BGM', en: 'Electronic EDM, Instrumental/BGM' },
-      'music-2': { zh: '泽野弘之, Hans Zimmer', en: 'Hiroyuki Sawano, Hans Zimmer' },
-      'ent-1': { zh: '科技数码, 知识科普, 机器人教程', en: 'Tech Reviews, Science Edu, Robotics Tutorials' },
-      'ent-2': { zh: 'B站硬核科普, 网课/教程, 技术大会演讲', en: 'B-site Deep Dives, Online Courses, Tech Talks' },
-      'ent-3': { zh: '技术博客, 科技科普, 科幻小说', en: 'Tech Blogs, Science Articles, Sci-Fi Novels' },
-      'life-1': { zh: '跑步, 骑行, 游泳', en: 'Running, Cycling, Swimming' },
-      'life-2': { zh: '随便对付, 咖啡依赖', en: 'Whatever is easy, Coffee Dependent' },
-      'life-3': { zh: '打游戏, 听歌, 放空', en: 'Gaming, Listening to Music, Zoning Out' },
-      'design-1': { zh: 'Apple风, Material Design', en: 'Apple Style, Material Design' },
-      'design-2': { zh: '极简/克制, 科技感/暗黑', en: 'Minimalist/Controlled, Tech/Dark' },
-      'design-3': { zh: '丝滑动画, 快速响应', en: 'Smooth Animations, Fast Response' },
-      'digital-1': { zh: '降噪耳机, 机械键盘, 示波器', en: 'ANC Headphones, Mech Keyboard, Oscilloscope' },
-      'digital-2': { zh: '苹果(Apple), 大疆(DJI), Keysight', en: 'Apple, DJI, Keysight' },
-      'digital-3': { zh: '极致性能, 屏幕素质, 稳定性', en: 'Peak Performance, Display Quality, Stability' },
-      'goal-1': { zh: '点亮开发板, 学习机械臂, 小工具/脚本', en: 'Board Bring-up, Learn Robotics Arm, Scripts' },
-      'goal-2': { zh: '云南, 历史古迹', en: 'Yunnan, Historical Sites' },
-      'goal-3': { zh: '学习机器人, 深入内核', en: 'Learn Robotics, Kernel Deep Dive' },
-      'comm-1': { zh: '直奔主题, 严谨客观', en: 'Get to the point, Rigorous & Objective' },
-      'comm-2': { zh: '代码+注释, 结构化表格', en: 'Code + Comments, Structured Tables' },
-      'comm-3': { zh: '专业高冷', en: 'Professional & Cool' }
+      'tech-1': { zh: 'C/C++, Python, Rust', en: 'C/C++, Python, Rust' },
+      'tech-2': { zh: 'STM32, ESP32, RTOS, RISC-V, ARM架构', en: 'STM32, ESP32, RTOS, RISC-V, ARM' },
+      'tech-3': { zh: '提示词工程(Prompt), Agent开发, RAG', en: 'Prompt Eng, Agent Dev, RAG' },
+      'tech-4': { zh: 'Linux内核, Makefile, Git', en: 'Linux Kernel, Makefile, Git' },
+      'art-1': { zh: '极简主义(Minimalism), 赛博朋克(Cyberpunk)', en: 'Minimalism, Cyberpunk' },
+      'art-2': { zh: '黑白灰克制, 大留白, 快速响应', en: 'B&W Restraint, Generous White Space, Fast Response' },
+      'art-3': { zh: '技术图表, 纪实摄影', en: 'Tech Diagrams, Documentary' },
+      'ent-1': { zh: '科技数码评测, B站硬核科普, 纪录片', en: 'Tech Reviews, Deep Dives, Documentaries' },
+      'ent-2': { zh: '技术博客, 科幻小说', en: 'Tech Blogs, Sci-Fi' },
+      'ent-3': { zh: '纯音乐/BGM, 电子(EDM)', en: 'Instrumental/BGM, EDM' },
+      'ent-4': { zh: '泽野弘之, Hans Zimmer', en: 'Hiroyuki Sawano, Hans Zimmer' },
+      'life-1': { zh: '跑步, 骑行', en: 'Running, Cycling' },
+      'life-2': { zh: '打游戏, 听歌放空', en: 'Gaming, Zoning Out' },
+      'life-3': { zh: '机械键盘, 示波器/开发板, 降噪耳机', en: 'Mech Keyboard, Dev Boards, ANC Headphones' },
+      'life-4': { zh: '极致性能, 苹果(Apple), 大疆(DJI)', en: 'Peak Performance, Apple, DJI' },
+      'goal-1': { zh: '点亮开发板, 写个小脚本/工具', en: 'Board Bring-up, Small Script' },
+      'goal-2': { zh: '历史古迹, 爬山徒步', en: 'Historical Sites, Hiking' },
+      'comm-1': { zh: '直奔主题, 严谨客观, 专业高冷', en: 'Get to the Point, Rigorous, Professional' },
+      'comm-2': { zh: '代码+注释, 结构化表格', en: 'Code+Comments, Structured Tables' }
     }
   },
   designer: {
     name: { zh: '设计师', en: 'Designer' },
     icon: '🎨',
     values: {
-      'tech-1': { zh: 'Arduino, 树莓派', en: 'Arduino, Raspberry Pi' },
-      'tech-2': { zh: '提示词工程, AI生图, Stable Diffusion', en: 'Prompt Eng, AI Art, Stable Diffusion' },
-      'tech-3': { zh: 'Figma, 前端(React/Vue), Processing', en: 'Figma, Frontend(React/Vue), Processing' },
-      'art-1': { zh: '极简主义, 扁平化, 毛玻璃/新拟态', en: 'Minimalism, Flat Design, Glassmorphism' },
-      'art-2': { zh: '莫兰迪色系, 高饱和霓虹, 大留白', en: 'Morandi Palette, Neon, Generous White Space' },
-      'art-3': { zh: '矢量插画, 胶片摄影, 3D渲染, 抽象艺术', en: 'Vector Art, Film Photography, 3D Render, Abstract Art' },
-      'music-1': { zh: '流行, 嘻哈, R&B', en: 'Pop, Hip-hop, R&B' },
-      'music-2': { zh: '周杰伦, 落日飞车, City Pop', en: 'Jay Chou, Sunset Rollercoaster, City Pop' },
-      'ent-1': { zh: 'Vlog, 风景, 艺术展览', en: 'Vlogs, Landscapes, Art Exhibitions' },
-      'ent-2': { zh: 'TED演讲, 影视解说, 艺术设计类', en: 'TED Talks, Film Essays, Art & Design' },
-      'ent-3': { zh: '科幻小说, 历史人文, 艺术评论', en: 'Sci-Fi, History & Humanities, Art Criticism' },
-      'life-1': { zh: '瑜伽, 散步, 冥想', en: 'Yoga, Walking, Meditation' },
-      'life-2': { zh: '清淡, 甜食控', en: 'Light Diet, Sweet Tooth' },
-      'life-3': { zh: '看书, 看展, 刷短视频', en: 'Reading, Exhibitions, Short Videos' },
-      'design-1': { zh: 'Apple风, 卡片式, 拟物化', en: 'Apple Style, Card-based, Skeuomorphic' },
-      'design-2': { zh: '活泼/多彩, 极简/克制', en: 'Playful/Colorful, Minimalist/Controlled' },
-      'design-3': { zh: '细腻微动效, 手势操作, 丝滑动画', en: 'Subtle Micro-interactions, Gestures, Fluid Animations' },
-      'digital-1': { zh: '相机, 降噪耳机, iPad Pro', en: 'Camera, ANC Headphones, iPad Pro' },
-      'digital-2': { zh: '苹果(Apple), 索尼(Sony), 富士(Fuji)', en: 'Apple, Sony, Fujifilm' },
-      'digital-3': { zh: '工业设计, 屏幕素质, 色彩准确', en: 'Industrial Design, Display Quality, Color Accuracy' },
-      'goal-1': { zh: '读完一本书, 个人作品集网站', en: 'Finish a Book, Portfolio Website' },
-      'goal-2': { zh: '海边度假, 逛艺术展', en: 'Beach Vacation, Art Exhibitions' },
-      'goal-3': { zh: '学一门乐器, 尝试3D建模', en: 'Learn an Instrument, Try 3D Modeling' },
-      'comm-1': { zh: '循循善诱, 幽默风趣', en: 'Guiding & Patient, Humorous & Witty' },
-      'comm-2': { zh: '思维导图, 图文并茂', en: 'Mind Maps, Rich Visuals' },
-      'comm-3': { zh: '热情鼓励, 朋友般闲聊', en: 'Warm & Encouraging, Like a Friend' }
+      'tech-1': { zh: 'React/Vue, TypeScript', en: 'React/Vue, TypeScript' },
+      'tech-2': { zh: '树莓派(Raspberry Pi), Arduino', en: 'Raspberry Pi, Arduino' },
+      'tech-3': { zh: '提示词工程(Prompt), AI生图, 机器视觉(CV)', en: 'Prompt Eng, AI Art, CV' },
+      'tech-4': { zh: 'Git', en: 'Git' },
+      'art-1': { zh: '毛玻璃(Glassmorphism), 极简主义(Minimalism)', en: 'Glassmorphism, Minimalism' },
+      'art-2': { zh: '莫兰迪色系, 丝滑微动效, 大留白', en: 'Morandi, Smooth Animations, Generous White Space' },
+      'art-3': { zh: '3D渲染, 矢量插画, 胶片摄影', en: '3D Render, Vector Art, Film Photo' },
+      'ent-1': { zh: 'Vlog/生活记录, TED演讲, 影视解说', en: 'Vlogs, TED Talks, Film Essays' },
+      'ent-2': { zh: '艺术评论, 历史人文', en: 'Art Criticism, History' },
+      'ent-3': { zh: '流行(Pop), R&B, 纯音乐/BGM', en: 'Pop, R&B, Instrumental/BGM' },
+      'ent-4': { zh: '落日飞车, 坂本龙一, 泰勒·斯威夫特(Taylor Swift)', en: 'Sunset Rollercoaster, Ryuichi Sakamoto, Taylor Swift' },
+      'life-1': { zh: '瑜伽, 散步', en: 'Yoga, Walking' },
+      'life-2': { zh: '看展, 逛公园, 听歌放空', en: 'Exhibitions, Parks, Zoning Out' },
+      'life-3': { zh: '相机, 降噪耳机, 大屏显示器', en: 'Camera, ANC Headphones, Large Monitor' },
+      'life-4': { zh: '工业设计优秀, 苹果(Apple), 索尼(Sony)', en: 'Great Design, Apple, Sony' },
+      'goal-1': { zh: '做个个人网站, 拍个Vlog', en: 'Personal Website, Make Vlog' },
+      'goal-2': { zh: '逛艺术展, 海边度假', en: 'Art Exhibitions, Beach Vacation' },
+      'comm-1': { zh: '热情鼓励, 循循善诱, 朋友般闲聊', en: 'Warm, Patient & Guiding, Like a Friend' },
+      'comm-2': { zh: '图文并茂, 思维导图', en: 'Rich Visuals, Mind Maps' }
     }
   },
   student: {
     name: { zh: '学生', en: 'Student' },
     icon: '📚',
     values: {
-      'tech-1': { zh: 'STM32, Arduino, ESP32', en: 'STM32, Arduino, ESP32' },
-      'tech-2': { zh: '神经网络, Transformer, 机器学习基础', en: 'Neural Networks, Transformers, ML Basics' },
-      'tech-3': { zh: 'Python, C/C++, PyTorch, Git', en: 'Python, C/C++, PyTorch, Git' },
-      'tech-4': { zh: ' Jetson Nano, 树莓派', en: 'Jetson Nano, Raspberry Pi' },
-      'tech-5': { zh: 'Ubuntu, Shell脚本, Docker', en: 'Ubuntu, Shell Scripts, Docker' },
-      'art-1': { zh: '扁平化, 像素风, 赛博朋克', en: 'Flat Design, Pixel Art, Cyberpunk' },
-      'art-2': { zh: '高饱和霓虹, 黑白灰克制', en: 'High-saturation Neon, B&W Restraint' },
-      'art-3': { zh: '矢量插画, 3D渲染', en: 'Vector Art, 3D Rendering' },
-      'music-1': { zh: '流行, 嘻哈, R&B, 电子', en: 'Pop, Hip-hop, R&B, Electronic' },
-      'music-2': { zh: '周杰伦, 林俊杰, 泰勒·斯威夫特', en: 'Jay Chou, JJ Lin, Taylor Swift' },
-      'ent-1': { zh: '游戏解说, Vlog, 萌宠, 知识科普', en: 'Gaming, Vlogs, Cute Animals, Science Edu' },
-      'ent-2': { zh: 'B站硬核科普, 网课/教程, 技术演讲', en: 'Deep Dive Tutorials, Online Courses, Tech Talks' },
-      'ent-3': { zh: '科幻小说, 技术博客, 论文研读', en: 'Sci-Fi, Tech Blogs, Paper Reading' },
-      'life-1': { zh: '羽毛球, 骑行, 跑步', en: 'Badminton, Cycling, Running' },
-      'life-2': { zh: '随便对付, 甜食控', en: 'Whatever is easy, Sweet Tooth' },
-      'life-3': { zh: '打游戏, 刷短视频, 听歌', en: 'Gaming, Short Videos, Music' },
-      'design-1': { zh: 'Material Design, Apple风', en: 'Material Design, Apple Style' },
-      'design-2': { zh: '活泼/多彩, 科技感/暗黑', en: 'Playful/Colorful, Tech/Dark' },
-      'design-3': { zh: '丝滑动画, 快速响应', en: 'Smooth Animations, Fast Response' },
-      'digital-1': { zh: '掌机/主机, 降噪耳机, 机械键盘', en: 'Gaming Console, ANC Headphones, Mech Keyboard' },
-      'digital-2': { zh: '任天堂, 索尼(Sony), 华为', en: 'Nintendo, Sony, Huawei' },
-      'digital-3': { zh: '极具性价比, 极致性能', en: 'Best Value, Peak Performance' },
-      'goal-1': { zh: '点亮开发板, 做完课设项目, 读完一本书', en: 'Board Bring-up, Course Project, Finish a Book' },
-      'goal-2': { zh: '爬山徒步, 城市漫游', en: 'Hiking, City Wandering' },
-      'goal-3': { zh: '尝试新运动, 学一门乐器', en: 'Try a New Sport, Learn an Instrument' },
-      'comm-1': { zh: '幽默风趣, 循循善诱', en: 'Humorous & Witty, Patient & Guiding' },
-      'comm-2': { zh: '简短总结, 结构化表格', en: 'Concise Summary, Structured Tables' },
-      'comm-3': { zh: '朋友般闲聊, 热情鼓励', en: 'Like a Friend, Warm & Encouraging' }
+      'tech-1': { zh: 'Python, C/C++, SQL', en: 'Python, C/C++, SQL' },
+      'tech-2': { zh: 'STM32, Arduino', en: 'STM32, Arduino' },
+      'tech-3': { zh: '大语言模型(LLM), 深度学习', en: 'LLM, Deep Learning' },
+      'tech-4': { zh: 'Git, Linux内核', en: 'Git, Linux Kernel' },
+      'art-1': { zh: '极简主义(Minimalism), 卡片式设计', en: 'Minimalism, Card-based' },
+      'art-2': { zh: '高饱和霓虹, 快速响应', en: 'Neon, Fast Response' },
+      'art-3': { zh: '矢量插画, 3D渲染', en: 'Vector Art, 3D Render' },
+      'ent-1': { zh: '游戏解说, 萌宠, B站硬核科普', en: 'Gaming, Pets, Deep Dives' },
+      'ent-2': { zh: '科幻小说, 技术博客', en: 'Sci-Fi, Tech Blogs' },
+      'ent-3': { zh: '流行(Pop), 电子(EDM), 嘻哈(Hip-hop)', en: 'Pop, EDM, Hip-hop' },
+      'ent-4': { zh: '周杰伦, 林俊杰, 泰勒·斯威夫特(Taylor Swift)', en: 'Jay Chou, JJ Lin, Taylor Swift' },
+      'life-1': { zh: '打球, 跑步, 骑行', en: 'Sports, Running, Cycling' },
+      'life-2': { zh: '打游戏, 刷短视频, 睡觉', en: 'Gaming, Short Videos, Sleep' },
+      'life-3': { zh: '掌机/主机, 机械键盘, 智能手机', en: 'Console, Mech Keyboard, Smartphone' },
+      'life-4': { zh: '极具性价比, 任天堂, 苹果(Apple)', en: 'Best Value, Nintendo, Apple' },
+      'goal-1': { zh: '读完一本书, 点亮开发板', en: 'Finish a Book, Board Bring-up' },
+      'goal-2': { zh: '城市漫游, 爬山徒步', en: 'City Wandering, Hiking' },
+      'comm-1': { zh: '幽默风趣, 朋友般闲聊, 热情鼓励', en: 'Humorous & Witty, Like a Friend, Warm' },
+      'comm-2': { zh: '简短总结, 结构化表格', en: 'Concise Summary, Structured Tables' }
     }
   },
   pm: {
     name: { zh: '产品经理', en: 'Product Manager' },
     icon: '📋',
     values: {
-      'tech-1': { zh: 'RTOS, 物联网, 传感器', en: 'RTOS, IoT, Sensors' },
-      'tech-2': { zh: 'Agent开发, GPT, RAG, 大模型应用', en: 'Agent Dev, GPT, RAG, LLM Apps' },
-      'tech-3': { zh: 'Python, SQL, 前端(React/Vue), Axure', en: 'Python, SQL, Frontend(React/Vue), Axure' },
-      'art-1': { zh: '极简主义, Apple风', en: 'Minimalism, Apple Style' },
-      'art-2': { zh: '黑白灰克制, 大留白, 莫兰迪色系', en: 'B&W Restraint, White Space, Morandi Palette' },
-      'art-3': { zh: '纪实摄影, 3D渲染', en: 'Documentary Photography, 3D Rendering' },
-      'music-1': { zh: '流行, 爵士/古典, 纯音乐/BGM', en: 'Pop, Jazz/Classical, Instrumental/BGM' },
-      'music-2': { zh: '周杰伦, 坂本龙一, 泰勒·斯威夫特', en: 'Jay Chou, Ryuichi Sakamoto, Taylor Swift' },
-      'ent-1': { zh: '知识科普, 商业分析, Vlog', en: 'Science Edu, Business Analysis, Vlogs' },
-      'ent-2': { zh: 'TED演讲, 商业分析, 行业报告', en: 'TED Talks, Business Analysis, Industry Reports' },
-      'ent-3': { zh: '商业分析, 历史人文, 新闻资讯', en: 'Business Analysis, History & Humanities, News' },
-      'life-1': { zh: '游泳, 跑步, 羽毛球', en: 'Swimming, Running, Badminton' },
-      'life-2': { zh: '清淡, 咖啡/茶依赖', en: 'Light Diet, Coffee/Tea Dependent' },
-      'life-3': { zh: '看书, 听歌放空, 看展', en: 'Reading, Music & Zoning Out, Exhibitions' },
-      'design-1': { zh: 'Apple风, Material Design', en: 'Apple Style, Material Design' },
-      'design-2': { zh: '商务/专业, 极简/克制', en: 'Business/Professional, Minimalist/Controlled' },
-      'design-3': { zh: '快速响应, 丝滑动画, 手势操作', en: 'Fast Response, Smooth Animations, Gestures' },
-      'digital-1': { zh: '智能手机, 降噪耳机, 大屏平板', en: 'Smartphone, ANC Headphones, Large Tablet' },
-      'digital-2': { zh: '苹果(Apple), 华为(Huawei), 微软', en: 'Apple, Huawei, Microsoft' },
-      'digital-3': { zh: '工业设计, 续航无忧, 屏幕素质', en: 'Industrial Design, Battery Life, Display Quality' },
-      'goal-1': { zh: '个人网站, 小工具/脚本', en: 'Personal Website, Small Tools/Scripts' },
-      'goal-2': { zh: '海边度假, 历史古迹, 城市漫游', en: 'Beach Vacation, Historical Sites, City Wandering' },
-      'goal-3': { zh: '学习3D建模, 系统学习产品方法论', en: 'Learn 3D Modeling, Study Product Methodology' },
-      'comm-1': { zh: '直奔主题, 循循善诱', en: 'Get to the Point, Patient & Guiding' },
-      'comm-2': { zh: '结构化表格, 思维导图, 简短总结', en: 'Structured Tables, Mind Maps, Concise Summary' },
-      'comm-3': { zh: '客观中立, 朋友般闲聊', en: 'Objective & Balanced, Like a Friend' }
+      'tech-1': { zh: 'Python, SQL, React/Vue', en: 'Python, SQL, React/Vue' },
+      'tech-2': { zh: '传感器, RTOS', en: 'Sensors, RTOS' },
+      'tech-3': { zh: 'Agent开发, 提示词工程(Prompt), 大语言模型(LLM)', en: 'Agent Dev, Prompt Eng, LLM' },
+      'tech-4': { zh: 'Git, 嵌入式Linux(Buildroot/Yocto)', en: 'Git, Embedded Linux' },
+      'art-1': { zh: '极简主义(Minimalism), 卡片式设计', en: 'Minimalism, Card-based' },
+      'art-2': { zh: '黑白灰克制, 大留白, 结构化网格', en: 'B&W Restraint, Generous White Space, Grid' },
+      'art-3': { zh: '技术图表, 纪实摄影', en: 'Tech Diagrams, Documentary' },
+      'ent-1': { zh: 'TED演讲, 科技数码评测, 纪录片', en: 'TED Talks, Tech Reviews, Documentaries' },
+      'ent-2': { zh: '商业分析, 新闻资讯, 历史人文', en: 'Business Analysis, News, History' },
+      'ent-3': { zh: '纯音乐/BGM, 流行(Pop), 爵士/古典', en: 'Instrumental/BGM, Pop, Jazz/Classical' },
+      'ent-4': { zh: '坂本龙一, 周杰伦', en: 'Ryuichi Sakamoto, Jay Chou' },
+      'life-1': { zh: '游泳, 跑步', en: 'Swimming, Running' },
+      'life-2': { zh: '看书, 看展, 冥想', en: 'Reading, Exhibitions, Meditation' },
+      'life-3': { zh: '降噪耳机, 大屏显示器, 智能手机', en: 'ANC Headphones, Large Monitor, Smartphone' },
+      'life-4': { zh: '苹果(Apple), 华为(Huawei), 微软', en: 'Apple, Huawei, Microsoft' },
+      'goal-1': { zh: '做个个人网站, 写个小脚本/工具', en: 'Personal Website, Small Script' },
+      'goal-2': { zh: '海边度假, 历史古迹', en: 'Beach Vacation, Historical Sites' },
+      'comm-1': { zh: '直奔主题, 严谨客观', en: 'Get to the Point, Rigorous' },
+      'comm-2': { zh: '结构化表格, 思维导图, 简短总结', en: 'Structured Tables, Mind Maps, Concise Summary' }
     }
   },
   creator: {
     name: { zh: '创作者', en: 'Creator' },
     icon: '✨',
     values: {
-      'tech-1': { zh: 'Arduino, ESP32, 全志', en: 'Arduino, ESP32, Allwinner' },
-      'tech-2': { zh: '提示词工程, Agent开发, AI生图, 视频生成', en: 'Prompt Eng, Agent Dev, AI Art, Video Gen' },
-      'tech-3': { zh: '前端(React/Vue), Python, Blender, After Effects', en: 'Frontend(React/Vue), Python, Blender, After Effects' },
-      'art-1': { zh: '极简主义, 赛博朋克, 毛玻璃/新拟态, 像素风', en: 'Minimalism, Cyberpunk, Glassmorphism, Pixel Art' },
-      'art-2': { zh: '莫兰迪色系, 高饱和霓虹, 大留白', en: 'Morandi Palette, Neon, Generous White Space' },
-      'art-3': { zh: '胶片摄影, 3D渲染, 矢量插画, 抽象艺术', en: 'Film Photography, 3D Render, Vector Art, Abstract Art' },
-      'music-1': { zh: '电子EDM, 摇滚, R&B, 纯音乐/BGM', en: 'Electronic EDM, Rock, R&B, Instrumental/BGM' },
-      'music-2': { zh: '泽野弘之, 坂本龙一, 落日飞车', en: 'Hiroyuki Sawano, Ryuichi Sakamoto, Sunset Rollercoaster' },
-      'ent-1': { zh: 'Vlog, 风景, 知识科普, 影视解说', en: 'Vlogs, Landscapes, Science Edu, Film Essays' },
-      'ent-2': { zh: 'TED演讲, 影视解说, 纪录片', en: 'TED Talks, Film Essays, Documentaries' },
-      'ent-3': { zh: '科幻小说, 历史人文, 艺术评论', en: 'Sci-Fi, History & Humanities, Art Criticism' },
-      'life-1': { zh: '力量训练, 散步, 骑行', en: 'Strength Training, Walking, Cycling' },
-      'life-2': { zh: '无辣不欢, 咖啡依赖', en: 'Spicy Food Lover, Coffee Dependent' },
-      'life-3': { zh: '打游戏, 看书, 听歌放空', en: 'Gaming, Reading, Music & Zoning Out' },
-      'design-1': { zh: 'Apple风, 卡片式, 拟物化', en: 'Apple Style, Card-based, Skeuomorphic' },
-      'design-2': { zh: '活泼/多彩, 极简/克制, 科技感/暗黑', en: 'Playful/Colorful, Minimalist/Controlled, Tech/Dark' },
-      'design-3': { zh: '细腻微动效, 手势操作, 丝滑动画', en: 'Subtle Micro-interactions, Gestures, Fluid Animations' },
-      'digital-1': { zh: '相机, VR/AR, 降噪耳机, 掌机', en: 'Camera, VR/AR, ANC Headphones, Handheld Console' },
-      'digital-2': { zh: '索尼(Sony), 大疆(DJI), 苹果(Apple)', en: 'Sony, DJI, Apple' },
-      'digital-3': { zh: '屏幕素质, 工业设计, 极致性能', en: 'Display Quality, Industrial Design, Peak Performance' },
-      'goal-1': { zh: '个人网站/作品集, 小工具/脚本', en: 'Personal Website/Portfolio, Small Tools/Scripts' },
-      'goal-2': { zh: '海边度假, 历史古迹, 艺术之旅', en: 'Beach Vacation, Historical Sites, Art Tours' },
-      'goal-3': { zh: '学一门乐器, 学习3D建模, 拍一个Vlog', en: 'Learn an Instrument, Learn 3D Modeling, Make a Vlog' },
-      'comm-1': { zh: '幽默风趣, 循循善诱', en: 'Humorous & Witty, Patient & Guiding' },
-      'comm-2': { zh: '简短总结, 思维导图, 图文并茂', en: 'Concise Summary, Mind Maps, Rich Visuals' },
-      'comm-3': { zh: '热情鼓励, 朋友般闲聊', en: 'Warm & Encouraging, Like a Friend' }
+      'tech-1': { zh: 'React/Vue, Node.js', en: 'React/Vue, Node.js' },
+      'tech-2': { zh: 'Arduino, 树莓派(Raspberry Pi)', en: 'Arduino, Raspberry Pi' },
+      'tech-3': { zh: 'AI生图, 提示词工程(Prompt), Agent开发', en: 'AI Art, Prompt Eng, Agent Dev' },
+      'tech-4': { zh: 'Git', en: 'Git' },
+      'art-1': { zh: '赛博朋克(Cyberpunk), 极简主义(Minimalism), 像素风(Pixel Art)', en: 'Cyberpunk, Minimalism, Pixel Art' },
+      'art-2': { zh: '高饱和霓虹, 丝滑微动效', en: 'Neon, Smooth Animations' },
+      'art-3': { zh: '胶片摄影, 3D渲染, 抽象艺术', en: 'Film Photo, 3D Render, Abstract Art' },
+      'ent-1': { zh: 'Vlog/生活记录, 影视解说, B站硬核科普', en: 'Vlogs, Film Essays, Deep Dives' },
+      'ent-2': { zh: '科幻小说, 艺术评论', en: 'Sci-Fi, Art Criticism' },
+      'ent-3': { zh: '电子(EDM), 摇滚(Rock), 纯音乐/BGM', en: 'EDM, Rock, Instrumental/BGM' },
+      'ent-4': { zh: '泽野弘之, 落日飞车, Hans Zimmer', en: 'Hiroyuki Sawano, Sunset Rollercoaster, Hans Zimmer' },
+      'life-1': { zh: '力量训练(健身), 骑行', en: 'Gym/Weights, Cycling' },
+      'life-2': { zh: '打游戏, 听歌放空, 看展', en: 'Gaming, Zoning Out, Exhibitions' },
+      'life-3': { zh: '相机, VR/AR, 掌机/主机', en: 'Camera, VR/AR, Console' },
+      'life-4': { zh: '大疆(DJI), 索尼(Sony), 极具性价比', en: 'DJI, Sony, Best Value' },
+      'goal-1': { zh: '拍个Vlog, 学习3D建模, 做个个人网站', en: 'Make Vlog, Learn 3D, Personal Website' },
+      'goal-2': { zh: '城市漫游, 逛艺术展', en: 'City Wandering, Art Exhibitions' },
+      'comm-1': { zh: '幽默风趣, 热情鼓励, 朋友般闲聊', en: 'Humorous & Witty, Warm, Like a Friend' },
+      'comm-2': { zh: '图文并茂, 简短总结', en: 'Rich Visuals, Concise Summary' }
     }
   },
   researcher: {
     name: { zh: '科研人员', en: 'Researcher' },
     icon: '🔬',
     values: {
-      'tech-1': { zh: 'STM32, Jetson, FPGA, RISC-V', en: 'STM32, Jetson, FPGA, RISC-V' },
-      'tech-2': { zh: '深度学习, Transformer, 强化学习, 论文复现', en: 'Deep Learning, Transformers, RL, Paper Reproduction' },
-      'tech-3': { zh: 'Python, C/C++, PyTorch, MATLAB, LaTeX', en: 'Python, C/C++, PyTorch, MATLAB, LaTeX' },
-      'tech-4': { zh: 'ARM架构, RISC-V, Jetson', en: 'ARM Architecture, RISC-V, Jetson' },
-      'tech-5': { zh: 'Ubuntu, Docker, Linux内核, Shell脚本', en: 'Ubuntu, Docker, Linux Kernel, Shell Scripts' },
-      'art-1': { zh: '极简主义, 扁平化', en: 'Minimalism, Flat Design' },
-      'art-2': { zh: '黑白灰克制, 大留白', en: 'B&W Restraint, Generous White Space' },
-      'art-3': { zh: '技术图表, 3D渲染, 纪实摄影', en: 'Tech Diagrams, 3D Rendering, Documentary Photography' },
-      'music-1': { zh: '古典/爵士, 纯音乐/BGM, 电子', en: 'Classical/Jazz, Instrumental/BGM, Electronic' },
-      'music-2': { zh: '坂本龙一, 贝多芬, 泽野弘之', en: 'Ryuichi Sakamoto, Beethoven, Hiroyuki Sawano' },
-      'ent-1': { zh: '知识科普, 科技数码, 纪录片', en: 'Science Edu, Tech Reviews, Documentaries' },
-      'ent-2': { zh: '学术论文, 网课/教程, TED演讲, 技术大会', en: 'Academic Papers, Online Courses, TED Talks, Tech Conferences' },
-      'ent-3': { zh: '技术博客, 科技科普, 哲学, 科幻小说', en: 'Tech Blogs, Science Articles, Philosophy, Sci-Fi' },
+      'tech-1': { zh: 'Python, C/C++, MATLAB', en: 'Python, C/C++, MATLAB' },
+      'tech-2': { zh: 'FPGA, RISC-V, ARM架构', en: 'FPGA, RISC-V, ARM' },
+      'tech-3': { zh: '深度学习, 机器视觉(CV), 大语言模型(LLM)', en: 'Deep Learning, CV, LLM' },
+      'tech-4': { zh: 'Linux内核, Docker/K8s, ROS', en: 'Linux Kernel, Docker/K8s, ROS' },
+      'art-1': { zh: '极简主义(Minimalism)', en: 'Minimalism' },
+      'art-2': { zh: '黑白灰克制, 大留白, 结构化网格', en: 'B&W Restraint, Generous White Space, Grid' },
+      'art-3': { zh: '技术图表, 纪实摄影', en: 'Tech Diagrams, Documentary' },
+      'ent-1': { zh: '学术论文, TED演讲, 纪录片', en: 'Papers, TED Talks, Documentaries' },
+      'ent-2': { zh: '学术论文, 哲学宗教, 历史人文', en: 'Papers, Philosophy, History' },
+      'ent-3': { zh: '爵士/古典, 纯音乐/BGM', en: 'Jazz/Classical, Instrumental/BGM' },
+      'ent-4': { zh: '贝多芬, 坂本龙一', en: 'Beethoven, Ryuichi Sakamoto' },
       'life-1': { zh: '跑步, 游泳, 散步', en: 'Running, Swimming, Walking' },
-      'life-2': { zh: '清淡, 随便对付', en: 'Light Diet, Whatever is easy' },
-      'life-3': { zh: '听歌, 看书, 放空', en: 'Music, Reading, Zoning Out' },
-      'design-1': { zh: 'Apple风, Material Design', en: 'Apple Style, Material Design' },
-      'design-2': { zh: '极简/克制, 商务/专业, 科技感/暗黑', en: 'Minimalist/Controlled, Business/Professional, Tech/Dark' },
-      'design-3': { zh: '快速响应, 丝滑动画', en: 'Fast Response, Smooth Animations' },
-      'digital-1': { zh: '降噪耳机, 机械键盘, 大屏显示器', en: 'ANC Headphones, Mech Keyboard, Large Monitor' },
-      'digital-2': { zh: '苹果(Apple), 索尼(Sony), Dell', en: 'Apple, Sony, Dell' },
-      'digital-3': { zh: '极致性能, 屏幕素质, 稳定性', en: 'Peak Performance, Display Quality, Stability' },
-      'goal-1': { zh: '发论文, 复现论文实验, 搭建实验平台', en: 'Publish Paper, Reproduce Experiments, Build Testbed' },
-      'goal-2': { zh: '学术会议, 历史古迹', en: 'Academic Conferences, Historical Sites' },
-      'goal-3': { zh: '深入一个研究方向, 学一门新技能', en: 'Go Deep in Research Area, Learn a New Skill' },
-      'comm-1': { zh: '直奔主题, 严谨客观', en: 'Get to the Point, Rigorous & Objective' },
-      'comm-2': { zh: '代码+注释, 结构化表格, 简短总结', en: 'Code + Comments, Structured Tables, Concise Summary' },
-      'comm-3': { zh: '专业高冷, 客观中立', en: 'Professional & Cool, Objective & Balanced' }
+      'life-2': { zh: '看书, 冥想, 听歌放空', en: 'Reading, Meditation, Zoning Out' },
+      'life-3': { zh: '大屏显示器, 降噪耳机, 机械键盘', en: 'Large Monitor, ANC Headphones, Mech Keyboard' },
+      'life-4': { zh: '极致性能, 苹果(Apple), 微软', en: 'Peak Performance, Apple, Microsoft' },
+      'goal-1': { zh: '发篇论文, 写个小脚本/工具', en: 'Publish Paper, Small Script' },
+      'goal-2': { zh: '历史古迹, 宅家云旅游', en: 'Historical Sites, Staycation' },
+      'comm-1': { zh: '严谨客观, 直奔主题, 专业高冷', en: 'Rigorous, Get to the Point, Professional' },
+      'comm-2': { zh: '结构化表格, 代码+注释, 步骤清晰', en: 'Structured Tables, Code+Comments, Clear Steps' }
     }
   }
 };
 
 const TABLE_ROWS = [
-  { category: { zh: '学习技术方向', en: 'Tech & Learning' }, items: [
-    ['tech-1', { zh: '最近想学习的嵌入式知识', en: 'Embedded knowledge to learn' }],
-    ['tech-2', { zh: '最近想学习的AI/大模型知识', en: 'AI / LLM knowledge to learn' }],
-    ['tech-3', { zh: '最近想掌握的编程/工具技能', en: 'Programming/tools to master' }],
-    ['tech-4', { zh: '最近想研究的硬件/开发板', en: 'Hardware/boards to research' }],
-    ['tech-5', { zh: '最近想深入的系统/环境', en: 'Systems/environments to dive into' }]
+  { category: { zh: '开发与学习方向', en: 'Tech & Learning' }, items: [
+    ['tech-1', { zh: '熟悉/想学的编程语言或框架', en: 'Programming languages / frameworks' }],
+    ['tech-2', { zh: '熟悉/想研究的硬件设备与平台', en: 'Hardware / boards / platforms' }],
+    ['tech-3', { zh: '关注的 AI 或算法方向', en: 'AI / LLM / Algorithm interests' }],
+    ['tech-4', { zh: '关注的系统、运维或工具链', en: 'Systems / DevOps / Toolchains' }]
   ]},
-  { category: { zh: '艺术审美偏好', en: 'Art & Aesthetics' }, items: [
-    ['art-1', { zh: '最近喜欢的艺术/视觉风格', en: 'Art/visual style you like' }],
-    ['art-2', { zh: '最近喜欢的配色/排版风格', en: 'Color scheme/layout style' }],
-    ['art-3', { zh: '最近喜欢的插画/渲染/摄影风格', en: 'Illustration/render/photo style' }]
+  { category: { zh: '艺术与视觉偏好', en: 'Art & Design' }, items: [
+    ['art-1', { zh: '喜欢的 UI/整体设计风格', en: 'UI / Overall design style' }],
+    ['art-2', { zh: '喜欢的排版、色彩与交互氛围', en: 'Layout / Color / Interaction vibe' }],
+    ['art-3', { zh: '偏好的插画、摄影与渲染形式', en: 'Illustration / Photo / Render style' }]
   ]},
-  { category: { zh: '音乐喜好', en: 'Music Taste' }, items: [
-    ['music-1', { zh: '最近喜欢的音乐类型/曲风', en: 'Music genre/style you like' }],
-    ['music-2', { zh: '最近常听的歌手/乐队', en: 'Artists/bands you listen to' }]
+  { category: { zh: '内容与娱乐喜好', en: 'Entertainment' }, items: [
+    ['ent-1', { zh: '常看的视频/短视频类型', en: 'Video / Short video content' }],
+    ['ent-2', { zh: '常看的文字/书籍/博客类型', en: 'Text / Book / Blog content' }],
+    ['ent-3', { zh: '喜欢的音乐类型/曲风', en: 'Music genres / styles' }],
+    ['ent-4', { zh: '常听的歌手/乐队/音乐人', en: 'Artists / Bands / Composers' }]
   ]},
-  { category: { zh: '内容娱乐偏好', en: 'Content & Entertainment' }, items: [
-    ['ent-1', { zh: '最近喜欢的短视频类型', en: 'Short video content you like' }],
-    ['ent-2', { zh: '最近喜欢看的视频/纪录片/课程', en: 'Videos/documentaries/courses you watch' }],
-    ['ent-3', { zh: '最近喜欢的文字内容', en: 'Text content you enjoy' }]
+  { category: { zh: '生活与数码习惯', en: 'Life & Devices' }, items: [
+    ['life-1', { zh: '常做的运动或锻炼方式', en: 'Sports / Exercises' }],
+    ['life-2', { zh: '休息时的放松方式', en: 'How you relax in free time' }],
+    ['life-3', { zh: '日常重度依赖的数码产品', en: 'Heavily used digital devices' }],
+    ['life-4', { zh: '买数码产品时看重的品牌或特质', en: 'Preferred brands or features' }]
   ]},
-  { category: { zh: '生活运动习惯', en: 'Lifestyle & Exercise' }, items: [
-    ['life-1', { zh: '最近喜欢的锻炼/运动方式', en: 'Exercise/workout you enjoy' }],
-    ['life-2', { zh: '最近偏好的饮食/口味', en: 'Food/diet preferences' }],
-    ['life-3', { zh: '最近喜欢的放松方式', en: 'How you relax' }]
-  ]},
-  { category: { zh: '设计界面偏好', en: 'Design & UI' }, items: [
-    ['design-1', { zh: '最近喜欢的网页/APP风格', en: 'Web/APP style you like' }],
-    ['design-2', { zh: '喜欢的UI氛围', en: 'Preferred UI vibe' }],
-    ['design-3', { zh: '偏好的交互体验风格', en: 'Interaction experience preference' }]
-  ]},
-  { category: { zh: '数码产品喜好', en: 'Digital Products' }, items: [
-    ['digital-1', { zh: '最近感兴趣的数码产品', en: 'Digital products you are interested in' }],
-    ['digital-2', { zh: '最近关注的品牌/新品', en: 'Brands/new products you follow' }],
-    ['digital-3', { zh: '看重的设备体验', en: 'Device experience you value most' }]
-  ]},
-  { category: { zh: '近期计划目标', en: 'Goals & Plans' }, items: [
-    ['goal-1', { zh: '最近想完成的小项目/小目标', en: 'Small projects/goals you want to achieve' }],
-    ['goal-2', { zh: '最近想去的地方/旅行计划', en: 'Places/travel plans' }],
-    ['goal-3', { zh: '最近想尝试的新事物', en: 'New things you want to try' }]
-  ]},
-  { category: { zh: '沟通表达偏好', en: 'Communication Style' }, items: [
-    ['comm-1', { zh: '喜欢的沟通风格', en: 'Communication style you prefer' }],
-    ['comm-2', { zh: '喜欢的回答形式', en: 'Response format you prefer' }],
-    ['comm-3', { zh: '偏好的语气氛围', en: 'Tone and atmosphere you prefer' }]
+  { category: { zh: '目标与沟通方式', en: 'Goals & Comm' }, items: [
+    ['goal-1', { zh: '近期想完成的具体小目标', en: 'Short-term small goals' }],
+    ['goal-2', { zh: '近期想去的地方或旅行计划', en: 'Places to visit / Travel plans' }],
+    ['comm-1', { zh: '希望 AI 采用的沟通语气', en: 'Preferred AI tone/vibe' }],
+    ['comm-2', { zh: '希望 AI 采用的回答排版形式', en: 'Preferred AI response format' }]
   ]}
 ];
-
 // ====== STATE ======
 const STORAGE_KEY = 'ai_pref_profiles';
 const THEME_KEY = 'theme_v3';
