@@ -522,6 +522,7 @@
       transition: all 0.2s;
       text-align: center;
     }
+    .template-card.selected { border-color: var(--accent-start); background: rgba(139,92,246,0.15); box-shadow: 0 0 0 1px var(--accent-start); }
     .template-card:hover { border-color: var(--accent-start); background: rgba(139,92,246,0.1); }
     .template-card .icon { font-size: 24px; margin-bottom: 6px; }
     .template-card .name { font-size: 12px; font-weight: 600; color: var(--text-main); }
@@ -670,6 +671,12 @@
       <h2 id="modal-new-profile-title">新建档案</h2>
       <p id="modal-new-profile-desc">为新档案起一个名字，比如"程序员"、"生活"、"工作"等。</p>
       <input class="modal-input" id="new-profile-name" type="text" placeholder="档案名称..." maxlength="20" onkeydown="if(event.key==='Enter')createProfile()">
+      
+      <div style="margin-bottom: 8px; font-size: 13px; color: var(--text-main); font-weight: 600;" id="modal-new-profile-template-label">基于模板创建 (可选)</div>
+      <div class="template-grid" id="new-profile-template-grid" style="margin-bottom: 24px; max-height: 200px; overflow-y: auto;">
+        <!-- Injected by JS -->
+      </div>
+
       <div class="modal-actions">
         <button class="btn btn-secondary" onclick="closeModal('modal-new-profile')" id="modal-cancel-text">取消</button>
         <button class="btn btn-primary" onclick="createProfile()" id="modal-create-text">创建</button>
@@ -743,7 +750,9 @@ const I18N = {
     exportMd: 'Markdown',
     exportJson: 'JSON',
     exportPrompt: 'System Prompt',
-    exportText: '纯文本'
+    exportText: '纯文本',
+    templateLabel: '基于模板创建 (可选)',
+    blankTemplate: '空白档案'
   },
   en: {
     siteTitle: 'My Preferences & Goals',
@@ -792,7 +801,9 @@ const I18N = {
     exportMd: 'Markdown',
     exportJson: 'JSON',
     exportPrompt: 'System Prompt',
-    exportText: 'Plain Text'
+    exportText: 'Plain Text',
+    templateLabel: 'Start from template (Optional)',
+    blankTemplate: 'Blank Profile'
   }
 };
 
@@ -1018,6 +1029,7 @@ const LANG_KEY = 'lang_v3';
 let currentProfile = 'default';
 let profiles = {};
 let lang = localStorage.getItem(LANG_KEY) || 'zh';
+let selectedTemplateForNewProfile = '';
 
 function applyI18n() {
   const t = I18N[lang];
@@ -1043,6 +1055,7 @@ function applyI18n() {
   document.getElementById('modal-new-profile-desc').innerText = t.modalNewProfileDesc;
   document.getElementById('modal-cancel-text').innerText = t.modalCancel;
   document.getElementById('modal-create-text').innerText = t.modalCreate;
+  document.getElementById('modal-new-profile-template-label').innerText = t.templateLabel;
   document.getElementById('modal-template-title').innerText = t.modalTemplateTitle;
   document.getElementById('modal-template-desc').innerText = t.modalTemplateDesc;
   document.getElementById('modal-template-cancel').innerText = t.modalTemplateCancel;
@@ -1053,6 +1066,9 @@ function applyI18n() {
   
   // Re-render template modal if open
   if(document.getElementById('modal-template').classList.contains('show')) openTemplateModal();
+  
+  // Re-render new profile templates if open
+  if(document.getElementById('modal-new-profile').classList.contains('show')) renderNewProfileTemplates();
 }
 
 function toggleLang() {
@@ -1154,8 +1170,34 @@ function saveCurrentToProfile() {
 
 function openNewProfileModal() {
   document.getElementById('new-profile-name').value = '';
+  selectedTemplateForNewProfile = '';
+  renderNewProfileTemplates();
   document.getElementById('modal-new-profile').classList.add('show');
   setTimeout(() => document.getElementById('new-profile-name').focus(), 100);
+}
+
+function renderNewProfileTemplates() {
+  const grid = document.getElementById('new-profile-template-grid');
+  let html = `
+    <div class="template-card ${selectedTemplateForNewProfile === '' ? 'selected' : ''}" onclick="selectNewProfileTemplate('')">
+      <div class="icon">📄</div>
+      <div class="name">${I18N[lang].blankTemplate}</div>
+      <div class="name-en"></div>
+    </div>
+  `;
+  html += Object.entries(PRESET_TEMPLATES).map(([id, t]) => `
+    <div class="template-card ${selectedTemplateForNewProfile === id ? 'selected' : ''}" onclick="selectNewProfileTemplate('${id}')">
+      <div class="icon">${t.icon}</div>
+      <div class="name">${t.name[lang] || t.name.zh}</div>
+      <div class="name-en">${t.name.en || ''}</div>
+    </div>
+  `).join('');
+  grid.innerHTML = html;
+}
+
+function selectNewProfileTemplate(id) {
+  selectedTemplateForNewProfile = id;
+  renderNewProfileTemplates();
 }
 
 function closeModal(id) {
@@ -1166,7 +1208,17 @@ function createProfile() {
   const name = document.getElementById('new-profile-name').value.trim();
   if (!name) return;
   const id = 'profile_' + Date.now();
-  profiles[id] = { name, values: {} };
+  
+  // Get values from selected template if any
+  let initialValues = {};
+  if (selectedTemplateForNewProfile && PRESET_TEMPLATES[selectedTemplateForNewProfile]) {
+    const t = PRESET_TEMPLATES[selectedTemplateForNewProfile];
+    Object.entries(t.values).forEach(([cellId, val]) => {
+      initialValues[cellId] = val[lang] || val['zh'] || val;
+    });
+  }
+  
+  profiles[id] = { name, values: initialValues };
   saveProfiles();
   closeModal('modal-new-profile');
   renderProfileBar();
