@@ -17,6 +17,7 @@
       --progress-bg: rgba(255, 255, 255, 0.05);
       --progress-fill: linear-gradient(90deg, var(--accent-start), var(--accent-end));
       --shadow-color: rgba(0,0,0,0.2);
+      --modal-bg: rgba(0,0,0,0.6);
     }
 
     :root.light {
@@ -29,6 +30,7 @@
       --progress-bg: rgba(0, 0, 0, 0.05);
       --progress-fill: linear-gradient(90deg, #0070f3, #5856d6);
       --shadow-color: rgba(0,0,0,0.08);
+      --modal-bg: rgba(0,0,0,0.3);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -40,7 +42,7 @@
       line-height: 1.6;
       padding: 64px 20px;
       min-height: 100vh;
-      background-image: 
+      background-image:
         radial-gradient(circle at 15% 50%, rgba(120, 119, 198, 0.12), transparent 25%),
         radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.12), transparent 25%);
       background-attachment: fixed;
@@ -65,11 +67,14 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* ---- Header ---- */
     header {
-      margin-bottom: 32px;
+      margin-bottom: 28px;
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
     }
 
     .header-left { text-align: left; }
@@ -92,7 +97,55 @@
       text-transform: uppercase;
     }
 
-    /* --- Theme Toggle --- */
+    /* ---- Profile Selector ---- */
+    .profile-bar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .profile-tab {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 99px;
+      border: 1px solid var(--border-color);
+      background: var(--progress-bg);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .profile-tab:hover { border-color: var(--accent-start); color: var(--text-main); }
+    .profile-tab.active { background: var(--accent-start); border-color: var(--accent-start); color: #fff; }
+    .profile-tab .del {
+      width: 12px; height: 12px; border-radius: 50%;
+      background: rgba(239,68,68,0.4); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; line-height: 1; padding-bottom: 1px;
+      cursor: pointer; border: none;
+    }
+    .profile-tab .del:hover { background: #ef4444; }
+
+    .btn-new-profile {
+      padding: 6px 14px;
+      border-radius: 99px;
+      border: 1px dashed var(--border-color);
+      background: transparent;
+      font-size: 12px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .btn-new-profile:hover { border-color: var(--accent-start); color: var(--accent-start); }
+
+    /* ---- Theme Toggle ---- */
     .theme-toggle {
       background: var(--progress-bg);
       border: 1px solid var(--border-color);
@@ -111,10 +164,8 @@
     .theme-toggle:hover { color: var(--text-main); border-color: var(--accent-start); }
     .theme-toggle svg { width: 16px; height: 16px; flex-shrink: 0; }
 
-    /* --- Progress Bar --- */
-    .progress-wrapper {
-      margin-bottom: 32px;
-    }
+    /* ---- Progress Bar ---- */
+    .progress-wrapper { margin-bottom: 28px; }
     .progress-label {
       display: flex;
       justify-content: space-between;
@@ -205,7 +256,7 @@
     }
     :root.light .input-cell:focus { background-color: rgba(0,0,0,0.03); border-color: var(--accent-start); }
 
-    /* --- Suggestion Menu --- */
+    /* ---- Suggestion Menu ---- */
     #suggestion-menu {
       position: absolute;
       background: rgba(20, 20, 25, 0.9);
@@ -226,7 +277,6 @@
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
     :root.light #suggestion-menu { background: rgba(255,255,255,0.95); border-color: rgba(0,0,0,0.15); }
-
     #suggestion-menu.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
 
     .suggestion-item {
@@ -241,10 +291,10 @@
       white-space: nowrap;
       user-select: none;
     }
-    :root.light .suggestion-item { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.1); color: var(--text-muted); }
+    :root.light .suggestion-item { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.1); }
     .suggestion-item:hover { background: var(--accent-start); border-color: var(--accent-start); color: #fff; transform: translateY(-1px); }
 
-    /* --- Actions Bar --- */
+    /* ---- Actions Bar ---- */
     .actions {
       margin-top: 48px;
       display: flex;
@@ -255,15 +305,15 @@
       flex-wrap: wrap;
       gap: 16px;
     }
-    
+
     .note { color: var(--text-muted); font-size: 13px; display: flex; align-items: center; gap: 6px; }
     .note::before { content: '💡'; }
 
-    .actions-right { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .actions-right { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 
-    /* Export Format Dropdown */
-    .export-dropdown { position: relative; }
-    .export-dropdown-menu {
+    /* Export / Import Dropdown */
+    .dropdown { position: relative; }
+    .dropdown-menu {
       position: absolute;
       bottom: calc(100% + 8px);
       right: 0;
@@ -273,16 +323,17 @@
       border-radius: 12px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.5);
       padding: 8px;
-      min-width: 200px;
+      min-width: 210px;
       z-index: 1001;
       opacity: 0;
       pointer-events: none;
       transform: translateY(8px);
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    :root.light .export-dropdown-menu { background: rgba(255,255,255,0.97); border-color: rgba(0,0,0,0.12); }
-    .export-dropdown-menu.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
-    .export-option {
+    :root.light .dropdown-menu { background: rgba(255,255,255,0.97); border-color: rgba(0,0,0,0.12); }
+    .dropdown-menu.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+    .dropdown-item {
       padding: 10px 14px;
       border-radius: 8px;
       font-size: 13px;
@@ -297,9 +348,9 @@
       width: 100%;
       text-align: left;
     }
-    .export-option:hover { background: rgba(255,255,255,0.08); color: var(--text-main); }
-    :root.light .export-option:hover { background: rgba(0,0,0,0.05); }
-    .export-option .tag {
+    .dropdown-item:hover { background: rgba(255,255,255,0.08); color: var(--text-main); }
+    :root.light .dropdown-item:hover { background: rgba(0,0,0,0.05); }
+    .dropdown-item .tag {
       font-size: 11px;
       padding: 2px 6px;
       border-radius: 4px;
@@ -307,10 +358,11 @@
       color: var(--accent-start);
       font-weight: 600;
     }
-    .export-option .desc { display: block; font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+    .dropdown-item .desc { display: block; font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+    .dropdown-divider { height: 1px; background: var(--border-color); margin: 6px 0; }
 
     .btn {
-      padding: 10px 20px;
+      padding: 10px 18px;
       border-radius: 8px;
       font-size: 13px;
       font-weight: 500;
@@ -365,18 +417,80 @@
     }
     #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--modal-bg);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .modal-overlay.show { opacity: 1; pointer-events: auto; }
+    .modal {
+      background: var(--card-bg);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 32px;
+      width: min(480px, 90vw);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .modal h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.02em; }
+    .modal p { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
+    .modal-input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: var(--progress-bg);
+      color: var(--text-main);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+      margin-bottom: 16px;
+    }
+    .modal-input:focus { border-color: var(--accent-start); }
+    :root.light .modal-input { background: rgba(0,0,0,0.04); }
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+
+    /* Template Grid */
+    .template-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .template-card {
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+      background: var(--progress-bg);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .template-card:hover { border-color: var(--accent-start); background: rgba(139,92,246,0.1); }
+    .template-card .icon { font-size: 24px; margin-bottom: 6px; }
+    .template-card .name { font-size: 12px; font-weight: 600; color: var(--text-main); }
+
     /* Responsive */
     @media (max-width: 640px) {
       body { padding: 24px 16px; }
       .container { padding: 24px 20px; }
       h1 { font-size: 24px; }
-      header { flex-direction: column; gap: 16px; }
+      header { flex-direction: column; gap: 12px; }
       .header-left { text-align: center; width: 100%; }
       .theme-toggle { align-self: center; }
+      .profile-bar { justify-content: center; }
       .actions { flex-direction: column-reverse; align-items: stretch; }
       .actions-right { justify-content: center; }
       .note { justify-content: center; }
-      .input-cell { padding: 8px 10px; font-size: 13px; }
     }
   </style>
 </head>
@@ -388,12 +502,17 @@
         <h1>My Preferences & Goals</h1>
         <div class="subtitle">个人偏好与技能设定</div>
       </div>
-      <button class="theme-toggle" onclick="toggleTheme()" title="切换深浅色模式">
+      <button class="theme-toggle" onclick="toggleTheme()">
         <svg id="theme-icon-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
         <svg id="theme-icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
         <span id="theme-label">深色</span>
       </button>
     </header>
+
+    <!-- Profile Selector -->
+    <div class="profile-bar" id="profile-bar">
+      <button class="btn-new-profile" onclick="openNewProfileModal()">+ 新建档案</button>
+    </div>
 
     <div class="progress-wrapper">
       <div class="progress-label">
@@ -414,174 +533,47 @@
             <th>你的填写 (可自填或选标签)</th>
           </tr>
         </thead>
-        <tbody>
-          <!-- 学习技术方向 (5项) -->
-          <tr>
-            <td rowspan="5" class="category-cell">学习技术方向</td>
-            <td class="item-cell">最近想学习的嵌入式知识</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="STM32, ESP32, 树莓派, Arduino, RTOS, 瑞芯微, 全志" id="tech-1"></td>
-          </tr>
-          <tr>
-            <td class="item-cell">最近想学习的AI/大模型知识</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="Agent开发, Skill, 神经网络, Transformer, GPT, 提示词工程(Prompt), RAG, 部署微调, LangChain" id="tech-2"></td>
-          </tr>
-          <tr>
-            <td class="item-cell">最近想掌握的编程/工具技能</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="Python, C/C++, PyTorch, QT, LVGL, Rust, Go, 前端(React/Vue), Git" id="tech-3"></td>
-          </tr>
-          <tr>
-            <td class="item-cell">最近想研究的硬件/开发板</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="RISC-V, ARM架构, RT-thread, Jetson" id="tech-4"></td>
-          </tr>
-          <tr>
-            <td class="item-cell">最近想深入的系统/环境</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="Linux内核, 设备树, ROS, 机器人运动学, 机械臂仿真, Shell脚本, Docker/K8s, Ubuntu" id="tech-5"></td>
-          </tr>
-          <!-- 艺术审美偏好 (3项) -->
-          <tr>
-            <td rowspan="3" class="category-cell">艺术审美偏好</td>
-            <td class="item-cell">最近喜欢的艺术/视觉风格</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="极简主义, 赛博朋克, 像素风, 毛玻璃/新拟态, 扁平化" id="art-1"></td>
-          </tr>
-          <tr>
-            <td class="item-cell">最近喜欢的配色/排版风格</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="莫兰迪色系, 黑白灰克制, 高饱和霓虹, 大留白, 网格排版" id="art-2"></td>
-          </tr>
-          <tr>
-            <td class="item-cell">最近喜欢的插画/渲染/摄影风格</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="3D渲染, LUT, 胶片摄影, 矢量插画, 抽象艺术, 纪实摄影" id="art-3"></td>
-          </tr>
-          <!-- 音乐喜好 (2项) -->
-          <tr>
-            <td rowspan="2" class="category-cell">音乐喜好</td>
-            <td class="item-cell">最近喜欢的音乐类型/曲风</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="流行, 纯音乐/BGM, 电子EDM, 摇滚, 爵士/古典, 嘻哈, R&B" id="music-1"></td>
-          </tr>
-          <tr>
-            <td class="item-cell">最近常听的歌手/乐队</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="周杰伦, 泽野弘之, 泰勒·斯威夫特, 坂本龙一, 林俊杰, 伍佰" id="music-2"></td>
-          </tr>
-          <!-- 内容娱乐偏好 (3项) -->
-          <tr>
-            <td rowspan="3" class="category-cell">内容娱乐偏好</td>
-            <td class="item-cell">最近喜欢的短视频类型</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="科技数码, Vlog, 风景, 知识科普, 游戏解说, 萌宠" id="ent-1"></td>
-          </tr>
-          <tr>
-            <td class="item-cell">最近喜欢看的视频/纪录片/课程</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="B站硬核科普, TED演讲, 网课/教程, 影视解说, 机器人教程" id="ent-2"></td>
-          </tr>
-          <tr>
-            <td class="item-cell">最近喜欢的文字内容</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="技术博客, 哲学宗教, 科幻小说, 科技科普, 商业分析, 历史人文, 新闻资讯, 哲学自我成长" id="ent-3"></td>
-          </tr>
-          <!-- 生活运动习惯 (3项) -->
-          <tr>
-            <td rowspan="3" class="category-cell">生活运动习惯</td>
-            <td class="item-cell">最近喜欢的锻炼/运动方式</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="跑步, 游泳, 力量训练, 羽毛球, 骑行, 散步, 躺平" id="life-1"></td>
-          </tr>
-          <tr>
-            <td class="item-cell">最近偏好的饮食/口味</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="清淡, 无辣不欢, 甜食控, 咖啡/茶依赖, 随便对付" id="life-2"></td>
-          </tr>
-          <tr>
-            <td class="item-cell">最近喜欢的放松方式</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="听歌, 放空, 公园, 打游戏, 睡觉, 看书, 刷短视频" id="life-3"></td>
-          </tr>
-          <!-- 设计界面偏好 (3项) -->
-          <tr>
-            <td rowspan="3" class="category-cell">设计界面偏好</td>
-            <td class="item-cell">最近喜欢的网页/APP风格</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="Apple风, Material Design, 拟物化, 卡片式" id="design-1"></td>
-          </tr>
-          <tr>
-            <td class="item-cell">喜欢的UI氛围</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="极简/克制, 科技感/暗黑, 活泼/多彩, 商务/专业" id="design-2"></td>
-          </tr>
-          <tr>
-            <td class="item-cell">偏好的交互体验风格</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="丝滑动画, 快速响应, 细腻微动效, 手势操作" id="design-3"></td>
-          </tr>
-          <!-- 数码产品喜好 (3项) -->
-          <tr>
-            <td rowspan="3" class="category-cell">数码产品喜好</td>
-            <td class="item-cell">最近感兴趣的数码产品</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="智能手机, 相机, VR/AR, 降噪耳机, 掌机/主机, 大疆Pocket4" id="digital-1"></td>
-          </tr>
-          <tr>
-            <td class="item-cell">最近关注的品牌/新品</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="苹果(Apple), 索尼(Sony), 大疆(DJI), 华为(Huawei), 任天堂" id="digital-2"></td>
-          </tr>
-          <tr>
-            <td class="item-cell">看重的设备体验</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="极致性能, 续航无忧, 屏幕素质, 工业设计, 极具性价比" id="digital-3"></td>
-          </tr>
-          <!-- 近期计划目标 (3项) -->
-          <tr>
-            <td rowspan="3" class="category-cell">近期计划目标</td>
-            <td class="item-cell">最近想完成的小项目/小目标</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="学习机械臂, 个人网站, 小工具/脚本, 点亮开发板, 读完一本书" id="goal-1"></td>
-          </tr>
-          <tr>
-            <td class="item-cell">最近想去的地方/旅行计划</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="海边度假, 爬山徒步, 历史古迹, 城市漫游, 云南, 宅家云旅游" id="goal-2"></td>
-          </tr>
-          <tr>
-            <td class="item-cell">最近想尝试的新事物</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="学一门乐器, 尝试新运动, 做一次饭, 学习3D建模, 学习机器人" id="goal-3"></td>
-          </tr>
-          <!-- 沟通表达偏好 (3项) -->
-          <tr>
-            <td rowspan="3" class="category-cell" style="border-bottom: none;">沟通表达偏好</td>
-            <td class="item-cell">喜欢的沟通风格</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="直奔主题, 循循善诱, 幽默风趣, 严谨客观" id="comm-1"></td>
-          </tr>
-          <tr>
-            <td class="item-cell">喜欢的回答形式</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="结构化表格, 代码+注释, 思维导图, 简短总结" id="comm-2"></td>
-          </tr>
-          <tr>
-            <td class="item-cell" style="border-bottom: none;">偏好的语气氛围</td>
-            <td class="input-cell" style="border-bottom: none;" contenteditable="true" data-placeholder="点击输入..." data-options="热情鼓励, 专业高冷, 朋友般闲聊, 客观中立" id="comm-3"></td>
-          </tr>
+        <tbody id="table-body">
+          <!-- Injected by JS from TEMPLATE_DATA -->
         </tbody>
       </table>
     </div>
 
     <div class="actions">
-      <div class="note">直接点击表格中的“你的填写”列进行编辑，支持打字或选择标签，数据会自动保存在浏览器中。</div>
+      <div class="note">直接点击表格中的"你的填写"列进行编辑，支持打字或选择标签，数据会自动保存在浏览器中。</div>
       <div class="actions-right">
-        <button class="btn btn-secondary" onclick="resetAll()">
+        <button class="btn btn-secondary" onclick="resetCurrentProfile()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
           重置
         </button>
-        <div class="export-dropdown">
-          <button class="btn btn-primary" onclick="toggleExportMenu()">
+        <div class="dropdown">
+          <button class="btn btn-secondary" onclick="toggleMenu('import-menu')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            导入
+          </button>
+          <div class="dropdown-menu" id="import-menu">
+            <button class="dropdown-item" onclick="openTemplateModal()">
+              <strong>从模板加载</strong>
+              <span class="tag">NEW</span>
+              <span class="desc">程序员 / 产品经理 / 学生...</span>
+            </button>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item" onclick="importFromJSON()">
+              <strong>导入 JSON 文件</strong>
+              <span class="desc">恢复之前导出的配置</span>
+            </button>
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="btn btn-primary" onclick="toggleMenu('export-menu')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
             导出 ▾
           </button>
-          <div class="export-dropdown-menu" id="export-menu">
-            <button class="export-option" onclick="exportAs('markdown')">
-              <strong>Markdown</strong>
-              <span class="tag">AI 助手</span>
-              <span class="desc">复制给 ChatGPT / Claude / Trae 使用</span>
-            </button>
-            <button class="export-option" onclick="exportAs('json')">
-              <strong>JSON</strong>
-              <span class="tag">数据</span>
-              <span class="desc">结构化数据，方便程序读取或导入</span>
-            </button>
-            <button class="export-option" onclick="exportAs('prompt')">
-              <strong>System Prompt</strong>
-              <span class="tag">角色</span>
-              <span class="desc">直接粘贴到 AI 的系统提示词中</span>
-            </button>
-            <button class="export-option" onclick="exportAs('text')">
-              <strong>纯文本</strong>
-              <span class="tag">通用</span>
-              <span class="desc">简单文字，复制到任何地方</span>
-            </button>
+          <div class="dropdown-menu" id="export-menu">
+            <button class="dropdown-item" onclick="exportAs('markdown')"><strong>Markdown</strong><span class="tag">AI</span><span class="desc">复制给 Trae / ChatGPT / Claude</span></button>
+            <button class="dropdown-item" onclick="exportAs('json')"><strong>JSON</strong><span class="tag">数据</span><span class="desc">备份配置，换设备可导入恢复</span></button>
+            <button class="dropdown-item" onclick="exportAs('prompt')"><strong>System Prompt</strong><span class="tag">角色</span><span class="desc">粘贴到 AI 的系统提示词中</span></button>
+            <button class="dropdown-item" onclick="exportAs('text')"><strong>纯文本</strong><span class="tag">通用</span><span class="desc">简单文字，复制到任何地方</span></button>
           </div>
         </div>
       </div>
@@ -590,39 +582,430 @@
 
   <div id="toast"></div>
 
+  <!-- Modal: New Profile -->
+  <div class="modal-overlay" id="modal-new-profile">
+    <div class="modal">
+      <h2>新建档案</h2>
+      <p>为新档案起一个名字，比如"程序员"、"生活"、"工作"等。</p>
+      <input class="modal-input" id="new-profile-name" type="text" placeholder="档案名称..." maxlength="20" onkeydown="if(event.key==='Enter')createProfile()">
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('modal-new-profile')">取消</button>
+        <button class="btn btn-primary" onclick="createProfile()">创建</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Load Template -->
+  <div class="modal-overlay" id="modal-template">
+    <div class="modal">
+      <h2>从模板加载</h2>
+      <p>选择一个模板一键填充内容，之后可以自由修改。</p>
+      <div class="template-grid" id="template-grid"></div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal('modal-template')">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden file input for JSON import -->
+  <input type="file" id="json-file-input" accept=".json" style="display:none" onchange="handleFileImport(event)">
+
 <script>
-const cells = document.querySelectorAll('.input-cell');
-let currentCell = null;
+// ====== PRESET TEMPLATES ======
+const TEMPLATE_DATA = [
+  { id: 'tech-1', options: 'STM32, ESP32, 树莓派, Arduino, RTOS, 瑞芯微, 全志' },
+  { id: 'tech-2', options: 'Agent开发, Skill, 神经网络, Transformer, GPT, 提示词工程(Prompt), RAG, 部署微调, LangChain' },
+  { id: 'tech-3', options: 'Python, C/C++, PyTorch, QT, LVGL, Rust, Go, 前端(React/Vue), Git' },
+  { id: 'tech-4', options: 'RISC-V, ARM架构, RT-thread, Jetson' },
+  { id: 'tech-5', options: 'Linux内核, 设备树, ROS, 机器人运动学, 机械臂仿真, Shell脚本, Docker/K8s, Ubuntu' },
+  { id: 'art-1', options: '极简主义, 赛博朋克, 像素风, 毛玻璃/新拟态, 扁平化' },
+  { id: 'art-2', options: '莫兰迪色系, 黑白灰克制, 高饱和霓虹, 大留白, 网格排版' },
+  { id: 'art-3', options: '3D渲染, LUT, 胶片摄影, 矢量插画, 抽象艺术, 纪实摄影' },
+  { id: 'music-1', options: '流行, 纯音乐/BGM, 电子EDM, 摇滚, 爵士/古典, 嘻哈, R&B' },
+  { id: 'music-2', options: '周杰伦, 泽野弘之, 泰勒·斯威夫特, 坂本龙一, 林俊杰, 伍佰' },
+  { id: 'ent-1', options: '科技数码, Vlog, 风景, 知识科普, 游戏解说, 萌宠' },
+  { id: 'ent-2', options: 'B站硬核科普, TED演讲, 网课/教程, 影视解说, 机器人教程' },
+  { id: 'ent-3', options: '技术博客, 哲学宗教, 科幻小说, 科技科普, 商业分析, 历史人文, 新闻资讯, 哲学自我成长' },
+  { id: 'life-1', options: '跑步, 游泳, 力量训练, 羽毛球, 骑行, 散步, 躺平' },
+  { id: 'life-2', options: '清淡, 无辣不欢, 甜食控, 咖啡/茶依赖, 随便对付' },
+  { id: 'life-3', options: '听歌, 放空, 公园, 打游戏, 睡觉, 看书, 刷短视频' },
+  { id: 'design-1', options: 'Apple风, Material Design, 拟物化, 卡片式' },
+  { id: 'design-2', options: '极简/克制, 科技感/暗黑, 活泼/多彩, 商务/专业' },
+  { id: 'design-3', options: '丝滑动画, 快速响应, 细腻微动效, 手势操作' },
+  { id: 'digital-1', options: '智能手机, 相机, VR/AR, 降噪耳机, 掌机/主机, 大疆Pocket4' },
+  { id: 'digital-2', options: '苹果(Apple), 索尼(Sony), 大疆(DJI), 华为(Huawei), 任天堂' },
+  { id: 'digital-3', options: '极致性能, 续航无忧, 屏幕素质, 工业设计, 极具性价比' },
+  { id: 'goal-1', options: '学习机械臂, 个人网站, 小工具/脚本, 点亮开发板, 读完一本书' },
+  { id: 'goal-2', options: '海边度假, 爬山徒步, 历史古迹, 城市漫游, 云南, 宅家云旅游' },
+  { id: 'goal-3', options: '学一门乐器, 尝试新运动, 做一次饭, 学习3D建模, 学习机器人' },
+  { id: 'comm-1', options: '直奔主题, 循循善诱, 幽默风趣, 严谨客观' },
+  { id: 'comm-2', options: '结构化表格, 代码+注释, 思维导图, 简短总结' },
+  { id: 'comm-3', options: '热情鼓励, 专业高冷, 朋友般闲聊, 客观中立' }
+];
 
-// ---- Theme Toggle ----
-function toggleTheme() {
-  const isLight = document.documentElement.classList.toggle('light');
-  localStorage.setItem('theme', isLight ? 'light' : 'dark');
-  updateThemeUI(isLight);
-}
-function updateThemeUI(isLight) {
-  document.getElementById('theme-icon-dark').style.display = isLight ? 'none' : '';
-  document.getElementById('theme-icon-light').style.display = isLight ? '' : 'none';
-  document.getElementById('theme-label').innerText = isLight ? '浅色' : '深色';
-}
-(function(){
-  const saved = localStorage.getItem('theme');
-  if(saved === 'light') {
-    document.documentElement.classList.add('light');
-    updateThemeUI(true);
+const PRESET_TEMPLATES = {
+  programmer: {
+    name: '程序员',
+    icon: '⌨️',
+    values: {
+      'tech-1': 'RTOS, 瑞芯微',
+      'tech-2': 'Agent开发, LangChain, RAG',
+      'tech-3': 'Python, Rust, Go, Git',
+      'tech-4': 'ARM架构, Jetson',
+      'tech-5': 'Linux内核, Docker/K8s',
+      'art-1': '极简主义, 赛博朋克',
+      'art-2': '黑白灰克制, 大留白',
+      'art-3': '纪实摄影, 3D渲染',
+      'music-1': '电子EDM, 纯音乐/BGM',
+      'music-2': '泽野弘之',
+      'ent-1': '科技数码, 知识科普',
+      'ent-2': 'B站硬核科普, 网课/教程',
+      'ent-3': '技术博客, 科技科普',
+      'life-1': '力量训练, 跑步',
+      'life-2': '随便对付, 咖啡/茶依赖',
+      'life-3': '打游戏, 听歌放空',
+      'design-1': 'Apple风',
+      'design-2': '极简/克制, 科技感/暗黑',
+      'design-3': '丝滑动画, 快速响应',
+      'digital-1': '降噪耳机, 机械键盘',
+      'digital-2': '苹果(Apple), 大疆(DJI)',
+      'digital-3': '屏幕素质, 极致性能',
+      'goal-1': '学习机械臂, 小工具/脚本',
+      'goal-2': '云南',
+      'goal-3': '学习机器人',
+      'comm-1': '直奔主题, 严谨客观',
+      'comm-2': '代码+注释, 结构化表格',
+      'comm-3': '专业高冷'
+    }
+  },
+  designer: {
+    name: '设计师',
+    icon: '🎨',
+    values: {
+      'tech-1': 'Arduino',
+      'tech-2': '提示词工程(Prompt)',
+      'tech-3': '前端(React/Vue), Figma',
+      'art-1': '极简主义, 扁平化',
+      'art-2': '莫兰迪色系, 高饱和霓虹',
+      'art-3': '矢量插画, 胶片摄影, 3D渲染',
+      'music-1': '流行, 嘻哈',
+      'music-2': '周杰伦',
+      'ent-1': 'Vlog, 风景',
+      'ent-2': 'TED演讲, 影视解说',
+      'ent-3': '科幻小说, 历史人文',
+      'life-1': '瑜伽, 散步',
+      'life-2': '清淡, 甜食控',
+      'life-3': '看书, 刷短视频',
+      'design-1': 'Apple风, 卡片式',
+      'design-2': '活泼/多彩, 极简/克制',
+      'design-3': '细腻微动效, 手势操作',
+      'digital-1': '相机, 降噪耳机',
+      'digital-2': '苹果(Apple), 索尼(Sony)',
+      'digital-3': '工业设计, 屏幕素质',
+      'goal-1': '读完一本书',
+      'goal-2': '海边度假',
+      'goal-3': '学一门乐器',
+      'comm-1': '循循善诱, 幽默风趣',
+      'comm-2': '思维导图',
+      'comm-3': '热情鼓励, 朋友般闲聊'
+    }
+  },
+  student: {
+    name: '学生',
+    icon: '📚',
+    values: {
+      'tech-1': 'STM32, Arduino',
+      'tech-2': '神经网络, Transformer',
+      'tech-3': 'Python, C/C++',
+      'tech-5': 'Ubuntu, Shell脚本',
+      'art-1': '扁平化, 像素风',
+      'art-2': '高饱和霓虹',
+      'art-3': '矢量插画',
+      'music-1': '流行, 嘻哈, R&B',
+      'music-2': '周杰伦, 林俊杰',
+      'ent-1': 'Vlog, 游戏解说, 萌宠',
+      'ent-2': 'B站硬核科普, 网课/教程',
+      'ent-3': '科幻小说, 技术博客',
+      'life-1': '羽毛球, 骑行',
+      'life-2': '随便对付, 甜食控',
+      'life-3': '打游戏, 刷短视频',
+      'design-1': 'Material Design',
+      'design-2': '活泼/多彩',
+      'design-3': '丝滑动画',
+      'digital-1': '掌机/主机, 智能手机',
+      'digital-2': '任天堂, 华为(Huawei)',
+      'digital-3': '极具性价比',
+      'goal-1': '点亮开发板, 读完一本书',
+      'goal-2': '爬山徒步',
+      'goal-3': '尝试新运动',
+      'comm-1': '幽默风趣, 循循善诱',
+      'comm-2': '简短总结',
+      'comm-3': '朋友般闲聊'
+    }
+  },
+  pm: {
+    name: '产品经理',
+    icon: '📋',
+    values: {
+      'tech-1': 'RTOS',
+      'tech-2': 'Agent开发, GPT',
+      'tech-3': 'Python, 前端(React/Vue), Git',
+      'art-1': '极简主义, Apple风',
+      'art-2': '黑白灰克制, 大留白',
+      'art-3': '纪实摄影',
+      'music-1': '流行, 爵士/古典',
+      'ent-1': '知识科普, Vlog',
+      'ent-2': 'TED演讲, 商业分析',
+      'ent-3': '商业分析, 历史人文, 新闻资讯',
+      'life-1': '游泳, 跑步',
+      'life-2': '清淡, 咖啡/茶依赖',
+      'life-3': '看书, 听歌放空',
+      'design-1': 'Apple风, Material Design',
+      'design-2': '商务/专业, 极简/克制',
+      'design-3': '快速响应, 丝滑动画',
+      'digital-1': '智能手机, 降噪耳机',
+      'digital-2': '苹果(Apple), 华为(Huawei)',
+      'digital-3': '工业设计, 续航无忧',
+      'goal-1': '个人网站',
+      'goal-2': '城市漫游',
+      'goal-3': '学习3D建模',
+      'comm-1': '直奔主题, 循循善诱',
+      'comm-2': '结构化表格, 思维导图',
+      'comm-3': '客观中立'
+    }
+  },
+  creator: {
+    name: '创作者',
+    icon: '✨',
+    values: {
+      'tech-2': '提示词工程(Prompt), Agent开发',
+      'tech-3': '前端(React/Vue), Python',
+      'art-1': '极简主义, 赛博朋克, 毛玻璃/新拟态',
+      'art-2': '莫兰迪色系, 高饱和霓虹',
+      'art-3': '胶片摄影, 3D渲染, 矢量插画, 抽象艺术',
+      'music-1': '电子EDM, 摇滚, R&B, 纯音乐/BGM',
+      'music-2': '泽野弘之, 坂本龙一',
+      'ent-1': 'Vlog, 风景, 知识科普',
+      'ent-2': 'TED演讲, 影视解说',
+      'ent-3': '科幻小说, 历史人文',
+      'life-1': '力量训练, 散步',
+      'life-2': '无辣不欢',
+      'life-3': '打游戏, 看书, 听歌放空',
+      'design-1': 'Apple风, 卡片式',
+      'design-2': '活泼/多彩, 极简/克制',
+      'design-3': '细腻微动效, 手势操作, 丝滑动画',
+      'digital-1': '相机, VR/AR, 降噪耳机',
+      'digital-2': '索尼(Sony), 大疆(DJI)',
+      'digital-3': '屏幕素质, 工业设计',
+      'goal-1': '个人网站, 小工具/脚本',
+      'goal-2': '海边度假, 历史古迹',
+      'goal-3': '学一门乐器, 学习3D建模',
+      'comm-1': '幽默风趣',
+      'comm-2': '简短总结, 思维导图',
+      'comm-3': '热情鼓励, 朋友般闲聊'
+    }
   }
-})();
+};
 
-// ---- Progress Bar ----
-function updateProgress() {
-  const filled = document.querySelectorAll('.input-cell:not(:empty)').length;
-  const total = cells.length;
-  const pct = Math.round((filled / total) * 100);
-  document.getElementById('progress-fill').style.width = pct + '%';
-  document.getElementById('progress-text').innerText = filled + ' / ' + total;
+const TABLE_ROWS = [
+  { category: '学习技术方向', items: [
+    ['tech-1', '最近想学习的嵌入式知识'],
+    ['tech-2', '最近想学习的AI/大模型知识'],
+    ['tech-3', '最近想掌握的编程/工具技能'],
+    ['tech-4', '最近想研究的硬件/开发板'],
+    ['tech-5', '最近想深入的系统/环境']
+  ]},
+  { category: '艺术审美偏好', items: [
+    ['art-1', '最近喜欢的艺术/视觉风格'],
+    ['art-2', '最近喜欢的配色/排版风格'],
+    ['art-3', '最近喜欢的插画/渲染/摄影风格']
+  ]},
+  { category: '音乐喜好', items: [
+    ['music-1', '最近喜欢的音乐类型/曲风'],
+    ['music-2', '最近常听的歌手/乐队']
+  ]},
+  { category: '内容娱乐偏好', items: [
+    ['ent-1', '最近喜欢的短视频类型'],
+    ['ent-2', '最近喜欢看的视频/纪录片/课程'],
+    ['ent-3', '最近喜欢的文字内容']
+  ]},
+  { category: '生活运动习惯', items: [
+    ['life-1', '最近喜欢的锻炼/运动方式'],
+    ['life-2', '最近偏好的饮食/口味'],
+    ['life-3', '最近喜欢的放松方式']
+  ]},
+  { category: '设计界面偏好', items: [
+    ['design-1', '最近喜欢的网页/APP风格'],
+    ['design-2', '喜欢的UI氛围'],
+    ['design-3', '偏好的交互体验风格']
+  ]},
+  { category: '数码产品喜好', items: [
+    ['digital-1', '最近感兴趣的数码产品'],
+    ['digital-2', '最近关注的品牌/新品'],
+    ['digital-3', '看重的设备体验']
+  ]},
+  { category: '近期计划目标', items: [
+    ['goal-1', '最近想完成的小项目/小目标'],
+    ['goal-2', '最近想去的地方/旅行计划'],
+    ['goal-3', '最近想尝试的新事物']
+  ]},
+  { category: '沟通表达偏好', items: [
+    ['comm-1', '喜欢的沟通风格'],
+    ['comm-2', '喜欢的回答形式'],
+    ['comm-3', '偏好的语气氛围']
+  ]}
+];
+
+// ====== STATE ======
+const STORAGE_KEY = 'ai_pref_profiles';
+const THEME_KEY = 'theme';
+let currentProfile = 'default';
+let profiles = {};
+
+function getTemplateOptions(id) {
+  const t = TEMPLATE_DATA.find(t => t.id === id);
+  return t ? t.options : '';
 }
 
-// ---- Suggestion Dropdown ----
+// ====== INIT ======
+function init() {
+  loadProfiles();
+  renderTable();
+  renderProfileBar();
+  loadTheme();
+  updateProgress();
+  // Load current profile data into cells
+  Object.entries(profiles[currentProfile]?.values || {}).forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    if (el) el.innerText = val;
+  });
+  // Update progress after loading
+  setTimeout(updateProgress, 50);
+}
+
+// ====== PROFILES ======
+function loadProfiles() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      profiles = JSON.parse(saved);
+    } else {
+      profiles = { default: { name: '默认档案', values: {} } };
+    }
+    currentProfile = Object.keys(profiles)[0];
+  } catch(e) {
+    profiles = { default: { name: '默认档案', values: {} } };
+    currentProfile = 'default';
+  }
+}
+
+function saveProfiles() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(profiles));
+}
+
+function renderProfileBar() {
+  const bar = document.getElementById('profile-bar');
+  const tabs = Object.entries(profiles).map(([id, p]) => `
+    <div class="profile-tab ${id === currentProfile ? 'active' : ''}" onclick="switchProfile('${id}')">
+      ${p.name}
+      ${id !== 'default' ? `<button class="del" onclick="event.stopPropagation();deleteProfile('${id}')">×</button>` : ''}
+    </div>
+  `).join('');
+  bar.innerHTML = `<button class="btn-new-profile" onclick="openNewProfileModal()">+ 新建档案</button>` + tabs;
+}
+
+function switchProfile(id) {
+  // Save current
+  saveCurrentToProfile();
+  currentProfile = id;
+  // Clear cells
+  document.querySelectorAll('.input-cell').forEach(c => c.innerText = '');
+  // Load new
+  Object.entries(profiles[id]?.values || {}).forEach(([cellId, val]) => {
+    const el = document.getElementById(cellId);
+    if (el) el.innerText = val;
+  });
+  renderProfileBar();
+  updateProgress();
+}
+
+function saveCurrentToProfile() {
+  const values = {};
+  document.querySelectorAll('.input-cell').forEach(c => {
+    if (c.innerText.trim()) values[c.id] = c.innerText.trim();
+  });
+  profiles[currentProfile] = profiles[currentProfile] || { name: profiles[currentProfile]?.name || '默认档案', values: {} };
+  profiles[currentProfile].values = values;
+  saveProfiles();
+}
+
+function openNewProfileModal() {
+  document.getElementById('new-profile-name').value = '';
+  document.getElementById('modal-new-profile').classList.add('show');
+  setTimeout(() => document.getElementById('new-profile-name').focus(), 100);
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('show');
+}
+
+function createProfile() {
+  const name = document.getElementById('new-profile-name').value.trim();
+  if (!name) return;
+  const id = 'profile_' + Date.now();
+  profiles[id] = { name, values: {} };
+  saveProfiles();
+  closeModal('modal-new-profile');
+  renderProfileBar();
+  switchProfile(id);
+  showToast(`已创建档案：${name}`);
+}
+
+function deleteProfile(id) {
+  if (!confirm(`确定删除档案"${profiles[id]?.name}"吗？`)) return;
+  const name = profiles[id]?.name;
+  delete profiles[id];
+  saveProfiles();
+  if (currentProfile === id) currentProfile = Object.keys(profiles)[0];
+  renderProfileBar();
+  switchProfile(currentProfile);
+  showToast(`已删除：${name}`);
+}
+
+// ====== RENDER TABLE ======
+function renderTable() {
+  const tbody = document.getElementById('table-body');
+  let html = '';
+  TABLE_ROWS.forEach((section, si) => {
+    section.items.forEach(([id, label], ii) => {
+      const isFirst = si === 0 && ii === 0;
+      const isCategoryFirst = ii === 0;
+      const isLast = si === TABLE_ROWS.length - 1 && ii === section.items.length - 1;
+      const catRowspan = section.items.length;
+      const options = getTemplateOptions(id);
+      html += `<tr>
+        ${isCategoryFirst ? `<td rowspan="${catRowspan}" class="category-cell" style="${isLast ? 'border-bottom:none' : ''}">${section.category}</td>` : ''}
+        <td class="item-cell">${label}</td>
+        <td class="input-cell" contenteditable="true" data-placeholder="点击输入..."
+          data-options="${options}"
+          id="${id}" ${isLast ? 'style="border-bottom:none"' : ''}></td>
+      </tr>`;
+    });
+  });
+  tbody.innerHTML = html;
+
+  // Reattach cell events
+  document.querySelectorAll('.input-cell').forEach(cell => {
+    cell.addEventListener('focus', () => showSuggestions(cell));
+    cell.addEventListener('input', e => {
+      localStorage.setItem('self_analysis_' + currentProfile + '_' + e.target.id, e.target.innerText);
+      updateProgress();
+    });
+  });
+}
+
+// ====== SUGGESTIONS ======
+let currentCell = null;
 const suggestionMenu = document.createElement('div');
 suggestionMenu.id = 'suggestion-menu';
 document.body.appendChild(suggestionMenu);
@@ -632,7 +1015,7 @@ function showSuggestions(cell) {
   const opts = cell.getAttribute('data-options');
   if (!opts) { suggestionMenu.classList.remove('show'); return; }
   suggestionMenu.innerHTML = '';
-  opts.split(',').map(s => s.trim()).forEach(opt => {
+  opts.split(',').map(s => s.trim()).filter(Boolean).forEach(opt => {
     const item = document.createElement('div');
     item.className = 'suggestion-item';
     item.innerText = opt;
@@ -652,7 +1035,8 @@ function insertOption(text) {
   let cur = currentCell.innerText.trim();
   if (cur && !cur.endsWith('，') && !cur.endsWith(',')) cur += '，';
   currentCell.innerText = cur + text;
-  localStorage.setItem('self_analysis_' + currentCell.id, currentCell.innerText);
+  const key = 'self_analysis_' + currentProfile + '_' + currentCell.id;
+  localStorage.setItem(key, currentCell.innerText);
   currentCell.focus();
   updateProgress();
   const range = document.createRange();
@@ -669,98 +1053,208 @@ document.addEventListener('mousedown', e => {
   }
 });
 
-// ---- Export Dropdown ----
-function toggleExportMenu() {
-  document.getElementById('export-menu').classList.toggle('show');
+// ====== PROGRESS ======
+function updateProgress() {
+  const filled = document.querySelectorAll('.input-cell:not(:empty)').length;
+  const total = TEMPLATE_DATA.length;
+  const pct = Math.round((filled / total) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-text').innerText = filled + ' / ' + total;
+}
+
+// ====== THEME ======
+function toggleTheme() {
+  const isLight = document.documentElement.classList.toggle('light');
+  localStorage.setItem(THEME_KEY, isLight ? 'light' : 'dark');
+  updateThemeUI(isLight);
+}
+function updateThemeUI(isLight) {
+  document.getElementById('theme-icon-dark').style.display = isLight ? 'none' : '';
+  document.getElementById('theme-icon-light').style.display = isLight ? '' : 'none';
+  document.getElementById('theme-label').innerText = isLight ? '浅色' : '深色';
+}
+function loadTheme() {
+  const saved = localStorage.getItem(THEME_KEY);
+  if (saved === 'light') {
+    document.documentElement.classList.add('light');
+    updateThemeUI(true);
+  }
+}
+
+// ====== DROPDOWNS ======
+function toggleMenu(id) {
+  ['export-menu', 'import-menu'].forEach(m => {
+    if (m !== id) document.getElementById(m).classList.remove('show');
+  });
+  document.getElementById(id).classList.toggle('show');
 }
 document.addEventListener('click', e => {
-  if (!e.target.closest('.export-dropdown')) {
-    document.getElementById('export-menu').classList.remove('show');
+  if (!e.target.closest('.dropdown')) {
+    document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
   }
 });
 
-// ---- Export Functions ----
+// ====== EXPORT ======
 function exportAs(format) {
-  document.getElementById('export-menu').classList.remove('show');
+  document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
+  saveCurrentToProfile();
   const now = new Date();
   const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-  const data = getFormData();
+  const profileName = profiles[currentProfile]?.name || '默认档案';
+  const data = getAllData();
   let content = '';
-  if (format === 'markdown') content = buildMarkdown(data, dateStr);
-  else if (format === 'json') content = buildJSON(data, dateStr);
-  else if (format === 'prompt') content = buildSystemPrompt(data, dateStr);
-  else if (format === 'text') content = buildText(data, dateStr);
-  copyToClipboard(content, format + ' ' + (format==='markdown'?'Markdown':format==='json'?'JSON':format==='prompt'?'System Prompt':'纯文本') + ' 已复制！');
+  if (format === 'markdown') content = buildMarkdown(data, dateStr, profileName);
+  else if (format === 'json') content = buildJSON(data, dateStr, profileName);
+  else if (format === 'prompt') content = buildSystemPrompt(data, dateStr, profileName);
+  else if (format === 'text') content = buildText(data, dateStr, profileName);
+  copyToClipboard(content, `已复制为${format === 'markdown'?'Markdown':format==='json'?'JSON':format==='prompt'?'System Prompt':'纯文本'}！`);
 }
 
-function getFormData() {
-  const rows = document.querySelectorAll('tbody tr');
+function getAllData() {
   const result = {};
-  let currentCategory = '';
-  rows.forEach(row => {
-    const cat = row.querySelector('.category-cell');
-    if (cat) currentCategory = cat.innerText;
-    const item = row.querySelector('.item-cell');
-    const input = row.querySelector('.input-cell');
-    if (item && input) {
-      result[input.id] = { category: currentCategory, item: item.innerText, value: input.innerText.trim() };
-    }
+  document.querySelectorAll('.input-cell').forEach(c => {
+    result[c.id] = c.innerText.trim();
   });
   return result;
 }
 
-function buildMarkdown(data, dateStr) {
-  let md = `## 🤖 给 AI 的指令\n请你扮演一位专业的个人成长教练和数字管家，帮我处理以下任务：\n1. **建立个人档案 (Memory)**：在 \\\`cc-connect/记录\\\` 中创建 \\\`自我分析报告_${dateStr.replace(/[ :]/g,'-')}.md\\\` 并保存数据。\n2. **深度偏好分析**：分析我的技术倾向、审美偏好与生活节奏。\n3. **定制成长计划**：基于我的近期目标，制定4周可行性计划并推荐3个匹配资源。\n---\n# 个人偏好与学习方向自我分析表\n> 更新时间：${dateStr}\n\n| 分类 | 具体项目 | 你的填写 |\n| :--- | :--- | :--- |\n`;
-  Object.values(data).forEach(({ category, item, value }) => {
-    md += `| **${category}** | ${item} | ${value || '—'} |\n`;
+function buildMarkdown(data, dateStr, profileName) {
+  const rows = [];
+  TABLE_ROWS.forEach(section => {
+    section.items.forEach(([id, label]) => {
+      rows.push({ category: section.category, item: label, value: data[id] || '—' });
+    });
+  });
+  const沟风格 = data['comm-1'] || '待填写';
+  const回答形式 = data['comm-2'] || '待填写';
+  const语气 = data['comm-3'] || '待填写';
+  let md = `## 🤖 给 AI 的指令\n`;
+  md += `请以"${语气}"的风格，用"${回答形式}"的形式回答。\n`;
+  md += `【档案】${profileName} | 更新时间：${dateStr}\n---\n# 个人偏好与技能设定\n\n`;
+  rows.forEach(({ category, item, value }) => {
+    md += `| **${category}** | ${item} | ${value} |\n`;
   });
   return md;
 }
 
-function buildJSON(data, dateStr) {
-  const out = { updatedAt: dateStr, total: 28, filled: Object.values(data).filter(v=>v.value).length, entries: {} };
-  Object.entries(data).forEach(([id, v]) => { out.entries[id] = { category: v.category, item: v.item, value: v.value }; });
+function buildJSON(data, dateStr, profileName) {
+  const out = {
+    profile: profileName,
+    updatedAt: dateStr,
+    total: TEMPLATE_DATA.length,
+    filled: Object.values(data).filter(Boolean).length,
+    values: data
+  };
   return JSON.stringify(out, null, 2);
 }
 
-function buildSystemPrompt(data, dateStr) {
-  const沟风格 = data['comm-1']?.value || '专业直接';
-  const回答形式 = data['comm-2']?.value || '结构化表格';
-  const语气 = data['comm-3']?.value || '客观专业';
-  const审美 = data['art-1']?.value || '极简主义';
-  return `【角色设定】你是一位${语气}的个人成长助理。你将根据以下用户画像提供回答。
+function buildSystemPrompt(data, dateStr, profileName) {
+  const沟风格 = data['comm-1'] || '专业直接';
+  const回答形式 = data['comm-2'] || '结构化表格';
+  const语气 = data['comm-3'] || '客观专业';
+  const审美 = data['art-1'] || '极简主义';
+  return `【角色设定】你是一位${语气}的个人成长助理，代号"${profileName}"。
 
-【用户偏好】
+【用户画像】
 - 沟通风格：${沟风格}
 - 回答形式：${回答形式}
 - 语气氛围：${语气}
 - 审美偏好：${审美}
-- 技术方向：${data['tech-3']?.value || '待填写'}
-- AI/大模型：${data['tech-2']?.value || '待填写'}
-- 近期目标：${data['goal-1']?.value || '待填写'}
+- 技术栈：${data['tech-3'] || '待填写'}
+- AI/大模型：${data['tech-2'] || '待填写'}
+- 近期目标：${data['goal-1'] || '待填写'}
 
 【行为准则】
 - 风格：${语气}，${沟风格}
 - 优先使用${回答形式}形式回复
-- 代码示例使用高对比度配色（${审美}）
+- 代码示例使用${审美}风格
 - 避免冗余，每句话要有信息量
 
 【更新时间】${dateStr}`;
 }
 
-function buildText(data, dateStr) {
-  let txt = `个人偏好与技能设定 (${dateStr})\n${'='.repeat(40)}\n\n`;
+function buildText(data, dateStr, profileName) {
+  let txt = `【${profileName}】个人偏好与技能设定 (${dateStr})\n${'='.repeat(36)}\n\n`;
   let lastCat = '';
-  Object.values(data).forEach(({ category, item, value }) => {
-    if (category !== lastCat) { txt += `\n【${category}】\n`; lastCat = category; }
-    txt += `  · ${item}：${value || '(未填写)'}\n`;
+  TABLE_ROWS.forEach(section => {
+    txt += `\n【${section.category}】\n`;
+    section.items.forEach(([id, label]) => {
+      txt += `  · ${label}：${data[id] || '(未填写)'}\n`;
+    });
   });
   return txt;
 }
 
-// ---- Copy Helper ----
+// ====== IMPORT ======
+function importFromJSON() {
+  document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
+  document.getElementById('json-file-input').click();
+}
+
+function handleFileImport(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    try {
+      const json = JSON.parse(ev.target.result);
+      const values = json.values || json.entries || {};
+      // Detect if profile name in JSON
+      const profileName = json.profile || '导入档案';
+      const id = 'profile_' + Date.now();
+      profiles[id] = { name: profileName, values };
+      saveProfiles();
+      switchProfile(id);
+      showToast(`已导入${profileName}，共 ${Object.values(values).filter(Boolean).length} 项`);
+    } catch(err) {
+      showToast('JSON 格式错误，导入失败');
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+function openTemplateModal() {
+  document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
+  const grid = document.getElementById('template-grid');
+  grid.innerHTML = Object.entries(PRESET_TEMPLATES).map(([id, t]) => `
+    <div class="template-card" onclick="loadTemplate('${id}')">
+      <div class="icon">${t.icon}</div>
+      <div class="name">${t.name}</div>
+    </div>
+  `).join('');
+  document.getElementById('modal-template').classList.add('show');
+}
+
+function loadTemplate(id) {
+  const t = PRESET_TEMPLATES[id];
+  if (!t) return;
+  saveCurrentToProfile();
+  // Clear current
+  document.querySelectorAll('.input-cell').forEach(c => c.innerText = '');
+  // Fill with template
+  Object.entries(t.values).forEach(([cellId, val]) => {
+    const el = document.getElementById(cellId);
+    if (el) el.innerText = val;
+  });
+  closeModal('modal-template');
+  updateProgress();
+  showToast(`已加载"${t.name}"模板`);
+}
+
+// ====== RESET ======
+function resetCurrentProfile() {
+  if (!confirm('确定要清空当前档案的所有内容吗？')) return;
+  document.querySelectorAll('.input-cell').forEach(c => c.innerText = '');
+  profiles[currentProfile].values = {};
+  saveProfiles();
+  updateProgress();
+  showToast('当前档案已重置');
+}
+
+// ====== COPY ======
 function copyToClipboard(text, msg) {
-  if (navigator.clipboard && navigator.clipboard.writeText) {
+  if (navigator.clipboard?.writeText) {
     navigator.clipboard.writeText(text).then(() => showToast(msg)).catch(() => fallbackCopy(text, msg));
   } else { fallbackCopy(text, msg); }
 }
@@ -768,7 +1262,7 @@ function fallbackCopy(text, msg) {
   const ta = document.createElement('textarea');
   ta.value = text; ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px';
   document.body.appendChild(ta); ta.focus(); ta.select();
-  try { document.execCommand('copy'); showToast(msg); } catch { showToast('复制失败，请手动复制'); }
+  try { document.execCommand('copy'); showToast(msg); } catch { showToast('复制失败'); }
   document.body.removeChild(ta);
 }
 function showToast(msg) {
@@ -777,25 +1271,17 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-// ---- Reset ----
-function resetAll() {
-  if (!confirm('确定要清空所有已填写的内容吗？此操作不可恢复。')) return;
-  cells.forEach(c => { c.innerText = ''; localStorage.removeItem('self_analysis_' + c.id); });
-  updateProgress();
-  showToast('已重置全部内容');
-}
-
-// ---- Init ----
-cells.forEach(cell => {
-  const saved = localStorage.getItem('self_analysis_' + cell.id);
-  if (saved) cell.innerText = saved;
-  cell.addEventListener('focus', () => showSuggestions(cell));
+// ====== AUTO-SAVE on input ======
+document.querySelectorAll('.input-cell').forEach(cell => {
   cell.addEventListener('input', e => {
-    localStorage.setItem('self_analysis_' + e.target.id, e.target.innerText);
+    const key = 'self_analysis_' + currentProfile + '_' + e.target.id;
+    localStorage.setItem(key, e.target.innerText);
     updateProgress();
   });
 });
-updateProgress();
+
+// ====== BOOT ======
+init();
 </script>
 </body>
 </html>
