@@ -14,13 +14,24 @@
       --accent-start: #8b5cf6;
       --accent-end: #3b82f6;
       --focus-glow: rgba(139, 92, 246, 0.3);
+      --progress-bg: rgba(255, 255, 255, 0.05);
+      --progress-fill: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+      --shadow-color: rgba(0,0,0,0.2);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    :root.light {
+      --bg-color: #f5f5f7;
+      --card-bg: rgba(255, 255, 255, 0.8);
+      --text-main: #1d1d1f;
+      --text-muted: #86868b;
+      --border-color: rgba(0, 0, 0, 0.1);
+      --focus-glow: rgba(139, 92, 246, 0.2);
+      --progress-bg: rgba(0, 0, 0, 0.05);
+      --progress-fill: linear-gradient(90deg, #0070f3, #5856d6);
+      --shadow-color: rgba(0,0,0,0.08);
     }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -29,11 +40,11 @@
       line-height: 1.6;
       padding: 64px 20px;
       min-height: 100vh;
-      /* Subtle mesh gradient background */
       background-image: 
-        radial-gradient(circle at 15% 50%, rgba(120, 119, 198, 0.15), transparent 25%),
-        radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.15), transparent 25%);
+        radial-gradient(circle at 15% 50%, rgba(120, 119, 198, 0.12), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.12), transparent 25%);
       background-attachment: fixed;
+      transition: background-color 0.3s, color 0.3s;
     }
 
     .container {
@@ -43,7 +54,7 @@
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       border-radius: 24px;
-      box-shadow: 0 4px 24px -1px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+      box-shadow: 0 4px 24px -1px var(--shadow-color), inset 0 1px 0 rgba(255,255,255,0.1);
       padding: 48px;
       border: 1px solid var(--border-color);
       animation: fadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
@@ -55,16 +66,20 @@
     }
 
     header {
-      margin-bottom: 48px;
-      text-align: center;
+      margin-bottom: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
     }
+
+    .header-left { text-align: left; }
 
     h1 {
       font-size: 32px;
       font-weight: 800;
       letter-spacing: -0.04em;
       margin-bottom: 8px;
-      background: linear-gradient(to right, #fff, #a1a1aa);
+      background: linear-gradient(to right, var(--text-main), var(--text-muted));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -77,10 +92,53 @@
       text-transform: uppercase;
     }
 
-    .table-wrapper {
-      overflow-x: auto;
-      padding-bottom: 24px; /* Space for dropdown */
+    /* --- Theme Toggle --- */
+    .theme-toggle {
+      background: var(--progress-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 99px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
     }
+    .theme-toggle:hover { color: var(--text-main); border-color: var(--accent-start); }
+    .theme-toggle svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* --- Progress Bar --- */
+    .progress-wrapper {
+      margin-bottom: 32px;
+    }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .progress-bar {
+      width: 100%;
+      height: 4px;
+      background: var(--progress-bg);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--progress-fill);
+      border-radius: 99px;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .table-wrapper { overflow-x: auto; padding-bottom: 24px; }
 
     table {
       width: 100%;
@@ -89,10 +147,7 @@
       font-size: 14px;
     }
 
-    th, td {
-      padding: 16px 20px;
-      text-align: left;
-    }
+    th, td { padding: 16px 20px; text-align: left; }
 
     th {
       font-weight: 600;
@@ -104,14 +159,9 @@
       padding-bottom: 12px;
     }
 
-    /* Add spacing between categories instead of full borders */
-    tbody tr {
-      transition: background-color 0.2s ease;
-    }
-    
-    tbody tr:not(:last-child) td {
-      border-bottom: 1px solid rgba(255,255,255,0.03);
-    }
+    tbody tr { transition: background-color 0.2s ease; }
+    tbody tr:not(:last-child) td { border-bottom: 1px solid rgba(255,255,255,0.03); }
+    :root.light tbody tr:not(:last-child) td { border-bottom: 1px solid rgba(0,0,0,0.04); }
 
     .category-cell {
       font-weight: 600;
@@ -121,10 +171,7 @@
       padding-top: 24px;
     }
 
-    .item-cell {
-      width: 35%;
-      color: var(--text-muted);
-    }
+    .item-cell { width: 35%; color: var(--text-muted); }
 
     .input-cell {
       width: 45%;
@@ -137,50 +184,50 @@
       margin: 4px 0;
       background: rgba(255,255,255,0.01);
       border: 1px solid transparent;
+      color: var(--text-main);
     }
+    :root.light .input-cell { background: rgba(0,0,0,0.02); }
 
     .input-cell:empty:before {
       content: attr(data-placeholder);
       color: rgba(255,255,255,0.15);
       pointer-events: none;
     }
+    :root.light .input-cell:empty:before { color: rgba(0,0,0,0.2); }
 
-    .input-cell:hover {
-      background-color: rgba(255,255,255,0.03);
-    }
+    .input-cell:hover { background-color: rgba(255,255,255,0.04); }
+    :root.light .input-cell:hover { background-color: rgba(0,0,0,0.04); }
 
     .input-cell:focus {
-      background-color: rgba(255,255,255,0.04);
-      border-color: rgba(255, 255, 255, 0.15);
+      background-color: rgba(255,255,255,0.05);
+      border-color: rgba(255, 255, 255, 0.2);
       box-shadow: 0 0 0 2px var(--focus-glow);
     }
+    :root.light .input-cell:focus { background-color: rgba(0,0,0,0.03); border-color: var(--accent-start); }
 
-    /* --- Suggestion Menu Dropdown --- */
+    /* --- Suggestion Menu --- */
     #suggestion-menu {
       position: absolute;
-      background: rgba(20, 20, 25, 0.85);
+      background: rgba(20, 20, 25, 0.9);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 12px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
       padding: 12px;
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      max-width: 320px;
+      max-width: 360px;
       z-index: 1000;
       opacity: 0;
       pointer-events: none;
       transform: translateY(-8px);
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
+    :root.light #suggestion-menu { background: rgba(255,255,255,0.95); border-color: rgba(0,0,0,0.15); }
 
-    #suggestion-menu.show {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
-    }
+    #suggestion-menu.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
 
     .suggestion-item {
       background: rgba(255, 255, 255, 0.05);
@@ -194,14 +241,10 @@
       white-space: nowrap;
       user-select: none;
     }
+    :root.light .suggestion-item { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.1); color: var(--text-muted); }
+    .suggestion-item:hover { background: var(--accent-start); border-color: var(--accent-start); color: #fff; transform: translateY(-1px); }
 
-    .suggestion-item:hover {
-      background: var(--accent-start);
-      border-color: var(--accent-start);
-      color: #fff;
-      transform: translateY(-1px);
-    }
-
+    /* --- Actions Bar --- */
     .actions {
       margin-top: 48px;
       display: flex;
@@ -209,24 +252,62 @@
       align-items: center;
       border-top: 1px solid var(--border-color);
       padding-top: 32px;
-    }
-    
-    .note {
-      color: var(--text-muted);
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    
-    .note::before {
-      content: '💡';
-    }
-
-    .btn-group {
-      display: flex;
+      flex-wrap: wrap;
       gap: 16px;
     }
+    
+    .note { color: var(--text-muted); font-size: 13px; display: flex; align-items: center; gap: 6px; }
+    .note::before { content: '💡'; }
+
+    .actions-right { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+
+    /* Export Format Dropdown */
+    .export-dropdown { position: relative; }
+    .export-dropdown-menu {
+      position: absolute;
+      bottom: calc(100% + 8px);
+      right: 0;
+      background: rgba(20,20,25,0.95);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      padding: 8px;
+      min-width: 200px;
+      z-index: 1001;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    :root.light .export-dropdown-menu { background: rgba(255,255,255,0.97); border-color: rgba(0,0,0,0.12); }
+    .export-dropdown-menu.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .export-option {
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.15s;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+    }
+    .export-option:hover { background: rgba(255,255,255,0.08); color: var(--text-main); }
+    :root.light .export-option:hover { background: rgba(0,0,0,0.05); }
+    .export-option .tag {
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(139,92,246,0.2);
+      color: var(--accent-start);
+      font-weight: 600;
+    }
+    .export-option .desc { display: block; font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 
     .btn {
       padding: 10px 20px;
@@ -240,44 +321,38 @@
       align-items: center;
       gap: 8px;
     }
+    .btn svg { width: 14px; height: 14px; flex-shrink: 0; }
 
     .btn-primary {
       background-color: rgba(255, 255, 255, 0.1);
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+      border-color: var(--border-color);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
-
-    .btn-primary:hover {
-      background-color: rgba(255, 255, 255, 0.15);
-      border-color: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
-    
-    .btn-primary:active {
-      transform: scale(0.96);
-    }
+    .btn-primary:hover { background-color: rgba(255, 255, 255, 0.15); border-color: var(--accent-start); }
+    .btn-primary:active { transform: scale(0.96); }
+    :root.light .btn-primary { background-color: rgba(0,0,0,0.05); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
 
     .btn-secondary {
       background-color: transparent;
       color: var(--text-muted);
+      border-color: var(--border-color);
     }
+    .btn-secondary:hover { color: var(--text-main); background-color: rgba(255,255,255,0.05); }
+    :root.light .btn-secondary:hover { background-color: rgba(0,0,0,0.04); }
 
-    .btn-secondary:hover {
-      color: var(--text-main);
-      background-color: rgba(255,255,255,0.05);
-    }
+    .btn-danger { background-color: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: rgba(239, 68, 68, 0.3); }
+    .btn-danger:hover { background-color: rgba(239, 68, 68, 0.25); }
 
-    /* Toast Notification */
+    /* Toast */
     #toast {
       position: fixed;
       bottom: 40px;
       left: 50%;
       transform: translateX(-50%) translateY(100px);
-      background: rgba(255,255,255,0.1);
+      background: var(--card-bg);
       backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid var(--border-color);
       color: var(--text-main);
       padding: 12px 24px;
       border-radius: 99px;
@@ -285,24 +360,50 @@
       font-weight: 500;
       opacity: 0;
       transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      z-index: 1000;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      z-index: 10000;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
     }
+    #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-    #toast.show {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
+    /* Responsive */
+    @media (max-width: 640px) {
+      body { padding: 24px 16px; }
+      .container { padding: 24px 20px; }
+      h1 { font-size: 24px; }
+      header { flex-direction: column; gap: 16px; }
+      .header-left { text-align: center; width: 100%; }
+      .theme-toggle { align-self: center; }
+      .actions { flex-direction: column-reverse; align-items: stretch; }
+      .actions-right { justify-content: center; }
+      .note { justify-content: center; }
+      .input-cell { padding: 8px 10px; font-size: 13px; }
     }
-
   </style>
 </head>
 <body>
 
   <div class="container">
     <header>
-      <h1>My Preferences & Goals</h1>
-      <div class="subtitle">个人偏好与技能设定</div>
+      <div class="header-left">
+        <h1>My Preferences & Goals</h1>
+        <div class="subtitle">个人偏好与技能设定</div>
+      </div>
+      <button class="theme-toggle" onclick="toggleTheme()" title="切换深浅色模式">
+        <svg id="theme-icon-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <svg id="theme-icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <span id="theme-label">深色</span>
+      </button>
     </header>
+
+    <div class="progress-wrapper">
+      <div class="progress-label">
+        <span>填写进度</span>
+        <span id="progress-text">0 / 28</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
 
     <div class="table-wrapper">
       <table id="analysis-table">
@@ -334,9 +435,8 @@
           </tr>
           <tr>
             <td class="item-cell">最近想深入的系统/环境</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="Linux内核, 设备树, ROS, 机器人, 机器人运动学, 机械臂仿真, Shell脚本, Docker/K8s, Ubuntu" id="tech-5"></td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="Linux内核, 设备树, ROS, 机器人运动学, 机械臂仿真, Shell脚本, Docker/K8s, Ubuntu" id="tech-5"></td>
           </tr>
-
           <!-- 艺术审美偏好 (3项) -->
           <tr>
             <td rowspan="3" class="category-cell">艺术审美偏好</td>
@@ -351,18 +451,16 @@
             <td class="item-cell">最近喜欢的插画/渲染/摄影风格</td>
             <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="3D渲染, LUT, 胶片摄影, 矢量插画, 抽象艺术, 纪实摄影" id="art-3"></td>
           </tr>
-
           <!-- 音乐喜好 (2项) -->
           <tr>
             <td rowspan="2" class="category-cell">音乐喜好</td>
             <td class="item-cell">最近喜欢的音乐类型/曲风</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="流行, 纯音乐/BGM, 电子EDM, 摇滚, 爵士/古典, 嘻哈" id="music-1"></td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="流行, 纯音乐/BGM, 电子EDM, 摇滚, 爵士/古典, 嘻哈, R&B" id="music-1"></td>
           </tr>
           <tr>
             <td class="item-cell">最近常听的歌手/乐队</td>
             <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="周杰伦, 泽野弘之, 泰勒·斯威夫特, 坂本龙一, 林俊杰, 伍佰" id="music-2"></td>
           </tr>
-
           <!-- 内容娱乐偏好 (3项) -->
           <tr>
             <td rowspan="3" class="category-cell">内容娱乐偏好</td>
@@ -371,13 +469,12 @@
           </tr>
           <tr>
             <td class="item-cell">最近喜欢看的视频/纪录片/课程</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="B站硬核科普, TED演讲, 网课/教程, 影视解说" id="ent-2"></td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="B站硬核科普, TED演讲, 网课/教程, 影视解说, 机器人教程" id="ent-2"></td>
           </tr>
           <tr>
             <td class="item-cell">最近喜欢的文字内容</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="技术博客, 哲学宗教, 科幻小说, 科技科普, 商业分析, 历史人文, 新闻资讯" id="ent-3"></td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="技术博客, 哲学宗教, 科幻小说, 科技科普, 商业分析, 历史人文, 新闻资讯, 哲学自我成长" id="ent-3"></td>
           </tr>
-
           <!-- 生活运动习惯 (3项) -->
           <tr>
             <td rowspan="3" class="category-cell">生活运动习惯</td>
@@ -392,7 +489,6 @@
             <td class="item-cell">最近喜欢的放松方式</td>
             <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="听歌, 放空, 公园, 打游戏, 睡觉, 看书, 刷短视频" id="life-3"></td>
           </tr>
-
           <!-- 设计界面偏好 (3项) -->
           <tr>
             <td rowspan="3" class="category-cell">设计界面偏好</td>
@@ -407,12 +503,11 @@
             <td class="item-cell">偏好的交互体验风格</td>
             <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="丝滑动画, 快速响应, 细腻微动效, 手势操作" id="design-3"></td>
           </tr>
-
           <!-- 数码产品喜好 (3项) -->
           <tr>
             <td rowspan="3" class="category-cell">数码产品喜好</td>
             <td class="item-cell">最近感兴趣的数码产品</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="智能手机, 相机, VR/AR, 降噪耳机, 掌机/主机" id="digital-1"></td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="智能手机, 相机, VR/AR, 降噪耳机, 掌机/主机, 大疆Pocket4" id="digital-1"></td>
           </tr>
           <tr>
             <td class="item-cell">最近关注的品牌/新品</td>
@@ -422,22 +517,20 @@
             <td class="item-cell">看重的设备体验</td>
             <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="极致性能, 续航无忧, 屏幕素质, 工业设计, 极具性价比" id="digital-3"></td>
           </tr>
-
           <!-- 近期计划目标 (3项) -->
           <tr>
             <td rowspan="3" class="category-cell">近期计划目标</td>
             <td class="item-cell">最近想完成的小项目/小目标</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="做个个人网站, 写个小工具/脚本, 点亮开发板, 读完一本书" id="goal-1"></td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="学习机械臂, 个人网站, 小工具/脚本, 点亮开发板, 读完一本书" id="goal-1"></td>
           </tr>
           <tr>
             <td class="item-cell">最近想去的地方/旅行计划</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="海边度假, 爬山徒步, 历史古迹, 城市漫游, 宅家云旅游" id="goal-2"></td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="海边度假, 爬山徒步, 历史古迹, 城市漫游, 云南, 宅家云旅游" id="goal-2"></td>
           </tr>
           <tr>
             <td class="item-cell">最近想尝试的新事物</td>
-            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="学一门乐器, 尝试新运动, 做一次饭, 学习3D建模" id="goal-3"></td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="学一门乐器, 尝试新运动, 做一次饭, 学习3D建模, 学习机器人" id="goal-3"></td>
           </tr>
-
           <!-- 沟通表达偏好 (3项) -->
           <tr>
             <td rowspan="3" class="category-cell" style="border-bottom: none;">沟通表达偏好</td>
@@ -458,231 +551,251 @@
 
     <div class="actions">
       <div class="note">直接点击表格中的“你的填写”列进行编辑，支持打字或选择标签，数据会自动保存在浏览器中。</div>
-      <div class="btn-group">
-        <button class="btn btn-secondary" onclick="clearData()">清空</button>
-        <button class="btn btn-primary" onclick="exportToMarkdown()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-          复制为 Markdown
+      <div class="actions-right">
+        <button class="btn btn-secondary" onclick="resetAll()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+          重置
         </button>
+        <div class="export-dropdown">
+          <button class="btn btn-primary" onclick="toggleExportMenu()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            导出 ▾
+          </button>
+          <div class="export-dropdown-menu" id="export-menu">
+            <button class="export-option" onclick="exportAs('markdown')">
+              <strong>Markdown</strong>
+              <span class="tag">AI 助手</span>
+              <span class="desc">复制给 ChatGPT / Claude / Trae 使用</span>
+            </button>
+            <button class="export-option" onclick="exportAs('json')">
+              <strong>JSON</strong>
+              <span class="tag">数据</span>
+              <span class="desc">结构化数据，方便程序读取或导入</span>
+            </button>
+            <button class="export-option" onclick="exportAs('prompt')">
+              <strong>System Prompt</strong>
+              <span class="tag">角色</span>
+              <span class="desc">直接粘贴到 AI 的系统提示词中</span>
+            </button>
+            <button class="export-option" onclick="exportAs('text')">
+              <strong>纯文本</strong>
+              <span class="tag">通用</span>
+              <span class="desc">简单文字，复制到任何地方</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div id="toast">已复制到剪贴板</div>
+  <div id="toast"></div>
 
-  <script>
-    const cells = document.querySelectorAll('.input-cell');
-    let currentCell = null;
+<script>
+const cells = document.querySelectorAll('.input-cell');
+let currentCell = null;
 
-    // --- Dropdown Menu Logic ---
-    const suggestionMenu = document.createElement('div');
-    suggestionMenu.id = 'suggestion-menu';
-    document.body.appendChild(suggestionMenu);
+// ---- Theme Toggle ----
+function toggleTheme() {
+  const isLight = document.documentElement.classList.toggle('light');
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+  updateThemeUI(isLight);
+}
+function updateThemeUI(isLight) {
+  document.getElementById('theme-icon-dark').style.display = isLight ? 'none' : '';
+  document.getElementById('theme-icon-light').style.display = isLight ? '' : 'none';
+  document.getElementById('theme-label').innerText = isLight ? '浅色' : '深色';
+}
+(function(){
+  const saved = localStorage.getItem('theme');
+  if(saved === 'light') {
+    document.documentElement.classList.add('light');
+    updateThemeUI(true);
+  }
+})();
 
-    function showSuggestions(cell) {
-      currentCell = cell;
-      const optionsStr = cell.getAttribute('data-options');
-      
-      if (!optionsStr) {
-        suggestionMenu.classList.remove('show');
-        return;
-      }
-      
-      const options = optionsStr.split(',').map(s => s.trim());
-      suggestionMenu.innerHTML = ''; // clear
-      
-      options.forEach(opt => {
-        const item = document.createElement('div');
-        item.className = 'suggestion-item';
-        item.innerText = opt;
-        
-        // Use mousedown instead of click to prevent focus loss from input-cell
-        item.addEventListener('mousedown', (e) => {
-          e.preventDefault(); 
-        });
-        
-        item.addEventListener('click', () => {
-          insertOption(opt);
-        });
-        
-        suggestionMenu.appendChild(item);
-      });
-      
-      // Calculate Position
-      const rect = cell.getBoundingClientRect();
-      suggestionMenu.style.top = (rect.bottom + window.scrollY + 8) + 'px';
-      suggestionMenu.style.left = (rect.left + window.scrollX) + 'px';
-      suggestionMenu.style.width = Math.max(300, rect.width) + 'px';
-      
-      suggestionMenu.classList.add('show');
+// ---- Progress Bar ----
+function updateProgress() {
+  const filled = document.querySelectorAll('.input-cell:not(:empty)').length;
+  const total = cells.length;
+  const pct = Math.round((filled / total) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-text').innerText = filled + ' / ' + total;
+}
+
+// ---- Suggestion Dropdown ----
+const suggestionMenu = document.createElement('div');
+suggestionMenu.id = 'suggestion-menu';
+document.body.appendChild(suggestionMenu);
+
+function showSuggestions(cell) {
+  currentCell = cell;
+  const opts = cell.getAttribute('data-options');
+  if (!opts) { suggestionMenu.classList.remove('show'); return; }
+  suggestionMenu.innerHTML = '';
+  opts.split(',').map(s => s.trim()).forEach(opt => {
+    const item = document.createElement('div');
+    item.className = 'suggestion-item';
+    item.innerText = opt;
+    item.addEventListener('mousedown', e => e.preventDefault());
+    item.addEventListener('click', () => { insertOption(opt); });
+    suggestionMenu.appendChild(item);
+  });
+  const rect = cell.getBoundingClientRect();
+  suggestionMenu.style.top = (rect.bottom + window.scrollY + 8) + 'px';
+  suggestionMenu.style.left = (rect.left + window.scrollX) + 'px';
+  suggestionMenu.style.width = Math.max(300, rect.width) + 'px';
+  suggestionMenu.classList.add('show');
+}
+
+function insertOption(text) {
+  if (!currentCell) return;
+  let cur = currentCell.innerText.trim();
+  if (cur && !cur.endsWith('，') && !cur.endsWith(',')) cur += '，';
+  currentCell.innerText = cur + text;
+  localStorage.setItem('self_analysis_' + currentCell.id, currentCell.innerText);
+  currentCell.focus();
+  updateProgress();
+  const range = document.createRange();
+  range.selectNodeContents(currentCell);
+  range.collapse(false);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+
+document.addEventListener('mousedown', e => {
+  if (!suggestionMenu.contains(e.target) && e.target !== currentCell) {
+    suggestionMenu.classList.remove('show');
+  }
+});
+
+// ---- Export Dropdown ----
+function toggleExportMenu() {
+  document.getElementById('export-menu').classList.toggle('show');
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.export-dropdown')) {
+    document.getElementById('export-menu').classList.remove('show');
+  }
+});
+
+// ---- Export Functions ----
+function exportAs(format) {
+  document.getElementById('export-menu').classList.remove('show');
+  const now = new Date();
+  const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  const data = getFormData();
+  let content = '';
+  if (format === 'markdown') content = buildMarkdown(data, dateStr);
+  else if (format === 'json') content = buildJSON(data, dateStr);
+  else if (format === 'prompt') content = buildSystemPrompt(data, dateStr);
+  else if (format === 'text') content = buildText(data, dateStr);
+  copyToClipboard(content, format + ' ' + (format==='markdown'?'Markdown':format==='json'?'JSON':format==='prompt'?'System Prompt':'纯文本') + ' 已复制！');
+}
+
+function getFormData() {
+  const rows = document.querySelectorAll('tbody tr');
+  const result = {};
+  let currentCategory = '';
+  rows.forEach(row => {
+    const cat = row.querySelector('.category-cell');
+    if (cat) currentCategory = cat.innerText;
+    const item = row.querySelector('.item-cell');
+    const input = row.querySelector('.input-cell');
+    if (item && input) {
+      result[input.id] = { category: currentCategory, item: item.innerText, value: input.innerText.trim() };
     }
+  });
+  return result;
+}
 
-    function insertOption(text) {
-      if (!currentCell) return;
-      
-      let currentText = currentCell.innerText.trim();
-      
-      // Append logic
-      if (currentText && !currentText.endsWith('，') && !currentText.endsWith(',')) {
-        currentCell.innerText = currentText + '，' + text;
-      } else if (currentText) {
-        currentCell.innerText = currentText + text;
-      } else {
-        currentCell.innerText = text;
-      }
-      
-      // Trigger save
-      localStorage.setItem('self_analysis_' + currentCell.id, currentCell.innerText);
-      
-      // Keep focus and place caret at end
-      currentCell.focus();
-      if (typeof window.getSelection !== "undefined" && typeof document.createRange !== "undefined") {
-        const range = document.createRange();
-        range.selectNodeContents(currentCell);
-        range.collapse(false);
-        const sel = window.getSelection();
-        sel.removeAllRanges();
-        sel.addRange(range);
-      }
-    }
+function buildMarkdown(data, dateStr) {
+  let md = `## 🤖 给 AI 的指令\n请你扮演一位专业的个人成长教练和数字管家，帮我处理以下任务：\n1. **建立个人档案 (Memory)**：在 \\\`cc-connect/记录\\\` 中创建 \\\`自我分析报告_${dateStr.replace(/[ :]/g,'-')}.md\\\` 并保存数据。\n2. **深度偏好分析**：分析我的技术倾向、审美偏好与生活节奏。\n3. **定制成长计划**：基于我的近期目标，制定4周可行性计划并推荐3个匹配资源。\n---\n# 个人偏好与学习方向自我分析表\n> 更新时间：${dateStr}\n\n| 分类 | 具体项目 | 你的填写 |\n| :--- | :--- | :--- |\n`;
+  Object.values(data).forEach(({ category, item, value }) => {
+    md += `| **${category}** | ${item} | ${value || '—'} |\n`;
+  });
+  return md;
+}
 
-    // Hide menu on outside click
-    document.addEventListener('mousedown', (e) => {
-      if (!suggestionMenu.contains(e.target) && e.target !== currentCell) {
-        suggestionMenu.classList.remove('show');
-      }
-    });
+function buildJSON(data, dateStr) {
+  const out = { updatedAt: dateStr, total: 28, filled: Object.values(data).filter(v=>v.value).length, entries: {} };
+  Object.entries(data).forEach(([id, v]) => { out.entries[id] = { category: v.category, item: v.item, value: v.value }; });
+  return JSON.stringify(out, null, 2);
+}
 
-    // --- LocalStorage & Editing Logic ---
-    cells.forEach(cell => {
-      // Load saved data
-      const savedContent = localStorage.getItem('self_analysis_' + cell.id);
-      if (savedContent) {
-        cell.innerText = savedContent;
-      }
-      
-      // Listen for focus to show menu
-      cell.addEventListener('focus', () => showSuggestions(cell));
-      
-      // Listen for changes and save
-      cell.addEventListener('input', (e) => {
-        localStorage.setItem('self_analysis_' + e.target.id, e.target.innerText);
-      });
-    });
+function buildSystemPrompt(data, dateStr) {
+  const沟风格 = data['comm-1']?.value || '专业直接';
+  const回答形式 = data['comm-2']?.value || '结构化表格';
+  const语气 = data['comm-3']?.value || '客观专业';
+  const审美 = data['art-1']?.value || '极简主义';
+  return `【角色设定】你是一位${语气}的个人成长助理。你将根据以下用户画像提供回答。
 
-    // Clear all data
-    function clearData() {
-      if(confirm('确定要清空所有已填写的内容吗？')) {
-        cells.forEach(cell => {
-          cell.innerText = '';
-          localStorage.removeItem('self_analysis_' + cell.id);
-        });
-        showToast('内容已清空');
-      }
-    }
+【用户偏好】
+- 沟通风格：${沟风格}
+- 回答形式：${回答形式}
+- 语气氛围：${语气}
+- 审美偏好：${审美}
+- 技术方向：${data['tech-3']?.value || '待填写'}
+- AI/大模型：${data['tech-2']?.value || '待填写'}
+- 近期目标：${data['goal-1']?.value || '待填写'}
 
-    // Export to Markdown format with AI Prompt
-    function exportToMarkdown() {
-      // 生成当前时间
-      const now = new Date();
-      const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+【行为准则】
+- 风格：${语气}，${沟风格}
+- 优先使用${回答形式}形式回复
+- 代码示例使用高对比度配色（${审美}）
+- 避免冗余，每句话要有信息量
 
-      // --- AI 提示词 (Prompt) ---
-      let md = `## 🤖 给 AI 的指令 (Prompt)
-请你扮演一位专业的个人成长教练和数字管家，帮我处理以下任务：
+【更新时间】${dateStr}`;
+}
 
-1. **建立个人档案 (Memory)**：
-   - 请在 \`cc-connect/记录\`（或其他你认为合适的本地文件夹）中，创建一个名为 \`自我分析报告_${dateStr}.md\` 的文件，并将下面的表格数据保存进去。
-   - 提取表格中的核心偏好和技能方向，作为你的长期记忆，以便在未来的对话中为我提供更个性化的回答和代码风格。
+function buildText(data, dateStr) {
+  let txt = `个人偏好与技能设定 (${dateStr})\n${'='.repeat(40)}\n\n`;
+  let lastCat = '';
+  Object.values(data).forEach(({ category, item, value }) => {
+    if (category !== lastCat) { txt += `\n【${category}】\n`; lastCat = category; }
+    txt += `  · ${item}：${value || '(未填写)'}\n`;
+  });
+  return txt;
+}
 
-2. **深度偏好分析**：
-   - 根据我在表格中的填写，分析我的技术倾向（全栈/底层/AI等）和审美偏好（极简/赛博等）。
-   - 分析我的生活与娱乐习惯，指出这体现了怎样的工作/生活节奏。
+// ---- Copy Helper ----
+function copyToClipboard(text, msg) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => showToast(msg)).catch(() => fallbackCopy(text, msg));
+  } else { fallbackCopy(text, msg); }
+}
+function fallbackCopy(text, msg) {
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px';
+  document.body.appendChild(ta); ta.focus(); ta.select();
+  try { document.execCommand('copy'); showToast(msg); } catch { showToast('复制失败，请手动复制'); }
+  document.body.removeChild(ta);
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.innerText = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
 
-3. **定制成长计划与建议**：
-   - 基于我的“近期计划目标”和“技术学习方向”，为我制定一个**为期 4 周的可行性成长计划**。
-   - 给我推荐 3 个与我审美偏好相符的优秀开源项目、设计网站或相关资源。
-   - 根据我的“沟通表达偏好”，调整你接下来给我的回复语气。
+// ---- Reset ----
+function resetAll() {
+  if (!confirm('确定要清空所有已填写的内容吗？此操作不可恢复。')) return;
+  cells.forEach(c => { c.innerText = ''; localStorage.removeItem('self_analysis_' + c.id); });
+  updateProgress();
+  showToast('已重置全部内容');
+}
 
-请先确认你已经保存了数据，然后直接以我偏好的语气输出你的分析和建议。
-
----
-
-`;
-
-      md += "# 个人偏好与学习方向自我分析表\n";
-      md += `> 更新时间：${dateStr}\n\n`;
-      md += "| 分类 | 具体项目 | 你的填写 |\n";
-      md += "| :--- | :--- | :--- |\n";
-
-      const rows = document.querySelectorAll('tbody tr');
-      let currentCategory = "";
-
-      rows.forEach(row => {
-        const categoryNode = row.querySelector('.category-cell');
-        if (categoryNode) {
-          currentCategory = `**${categoryNode.innerText}**`;
-        } else {
-          currentCategory = "";
-        }
-
-        const item = row.querySelector('.item-cell').innerText;
-        const input = row.querySelector('.input-cell').innerText.replace(/\n/g, ' ');
-
-        md += `| ${currentCategory} | ${item} | ${input} |\n`;
-      });
-
-      // 尝试使用现代 Clipboard API
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(md).then(() => {
-          showToast('已复制包含 AI Prompt 的完整报告！');
-        }).catch(err => {
-          console.warn('现代剪贴板 API 失败，尝试降级方案:', err);
-          fallbackCopy(md);
-        });
-      } else {
-        fallbackCopy(md);
-      }
-    }
-
-    // 经典降级复制方案 (兼容受限的 iframe 预览环境)
-    function fallbackCopy(text) {
-      const textArea = document.createElement("textarea");
-      textArea.value = text;
-      
-      // 确保文本域不可见，并且不会导致页面跳动
-      textArea.style.position = "fixed";
-      textArea.style.top = "-9999px";
-      textArea.style.left = "-9999px";
-      
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-
-      try {
-        const successful = document.execCommand('copy');
-        if (successful) {
-          showToast('已复制包含 AI Prompt 的完整报告！');
-        } else {
-          showToast('复制失败，您的浏览器禁用了复制权限');
-        }
-      } catch (err) {
-        console.error('降级复制也失败了:', err);
-        showToast('复制失败，请手动全选复制');
-      }
-      
-      document.body.removeChild(textArea);
-    }
-
-    // Toast notification helper
-    function showToast(message) {
-      const toast = document.getElementById('toast');
-      toast.innerText = message;
-      toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 3000);
-    }
-  </script>
+// ---- Init ----
+cells.forEach(cell => {
+  const saved = localStorage.getItem('self_analysis_' + cell.id);
+  if (saved) cell.innerText = saved;
+  cell.addEventListener('focus', () => showSuggestions(cell));
+  cell.addEventListener('input', e => {
+    localStorage.setItem('self_analysis_' + e.target.id, e.target.innerText);
+    updateProgress();
+  });
+});
+updateProgress();
+</script>
 </body>
 </html>
