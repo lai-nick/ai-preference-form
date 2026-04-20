@@ -1,37 +1,38 @@
-# Modern Tech & Glassmorphism Design System (Linear / Raycast Inspired)
+# Modern Tech & Glassmorphism Design System (Apple / Vercel Inspired)
 
 ## Visual Theme & Atmosphere
-- **Mood**: 未来感、沉浸式、极客专业、优雅且轻盈。
-- **Philosophy**: 模糊物理与数字的边界，通过光影、磨砂玻璃质感和微妙的层级关系打造高级感。
-- **Signature Details**: 动态网格/径向渐变背景、半透明磨砂玻璃卡片（Backdrop Blur）、1px 极细发光边框、平滑入场动画。
+- **Mood**: 未来感、沉浸式、极客专业、优雅且极其克制。
+- **Philosophy**: 模糊物理与数字的边界，通过光影、高级毛玻璃质感和微妙的层级关系打造高奢感。完全摒弃大面积的彩色霓虹渐变，转而追求 Apple 硬件设计般的物理材质感（阳极氧化铝/钛金属光泽）。
+- **Signature Details**: 
+  - 点阵网格（Dotted Matrix）与多重径向渐变（Radial Gradient）组成的环境光背景。
+  - 半透明高级毛玻璃卡片（`backdrop-filter: blur(32px) saturate(150%)`）。
+  - 1px 极细高光内边框（模拟玻璃/金属倒角反光）。
+  - 极简黑白灰（Monochrome）高对比度文字。
 
 ## Color Palette & Roles (Dark Mode First)
-- **Background**: `#09090b` (深邃黑) 搭配微弱的紫色/蓝色径向渐变光源（如 `radial-gradient(circle at 50% 0%, rgba(120,119,198,0.15), transparent)`）。
-- **Card Background**: `rgba(255, 255, 255, 0.03)` (极低透明度白)。
-- **Primary Text**: `#ffffff` (纯白，用于标题和输入内容)。
+- **Background**: `#000000` (纯黑) 搭配多层纯白微弱径向渐变光源（如 `rgba(255,255,255,0.05)`）以及点阵背景。
+- **Card Background**: `rgba(24, 24, 27, 0.4)` (极低透明度黑灰)，透过背景光效呈现深空灰色。
+- **Primary Text**: `#f4f4f5` (高亮白，用于标题和输入内容)。
 - **Muted Text**: `#a1a1aa` (高级灰，用于分类、提示文本)。
-- **Accents**: `#8b5cf6` (霓虹紫) 到 `#3b82f6` (科技蓝) 的渐变，用于按钮和聚焦状态。
-- **Borders**: `rgba(255, 255, 255, 0.1)` (半透明细边框，模拟玻璃边缘的反光)。
+- **Accents**: `#e4e4e7` (白银色) 到 `#71717a` (深空灰) 的渐变，完全取代了前期的蓝紫渐变。用于按钮、进度条和聚焦状态。
+- **Borders**: 外边框 `rgba(255, 255, 255, 0.06)` 配合内高光 `rgba(255, 255, 255, 0.1)` 制造物理厚度感。
 
 ## Typography Rules
-- **Primary Font**: `Inter`, `system-ui`, `-apple-system`。
-- **Headings**: 追踪字距收紧 (`letter-spacing: -0.03em`)，呈现锐利的专业感。
-- **Data Table**: 表格字体略小（14px），分类标签使用大写字母（Uppercase）增加结构感。
-
-## Layout Principles
-- **Container**: 居中对齐，最大宽度 900px，周围留有充足的呼吸空间。
-- **Spacing**: 采用 8px 基础网格系统（16px, 24px, 32px, 48px, 64px）。
+- **Primary Font**: `-apple-system`, `BlinkMacSystemFont`, `"SF Pro Display"`, `"PingFang SC"`。全面向 Apple 原生字体栈靠拢。
+- **Headings**: 追踪字距收紧 (`letter-spacing: -0.05em`)，采用金属拉丝风格的文字渐变填色，呈现极其锐利的专业感。
+- **Data Table**: 表格字体略小（14px），内边距紧凑 (`10px 16px`)，分类标签使用大写字母（Uppercase）增加结构感。
 
 ## Depth & Elevation
-- **Glass Cards**: 采用 `backdrop-filter: blur(24px)` 配合多重微弱阴影（如 `box-shadow: 0 4px 24px -1px rgba(0,0,0,0.2), 0 0 1px rgba(255,255,255,0.1)`）制造悬浮感。
-- **Inputs/Rows**: 交互元素在 Hover 时，背景亮度微调 (`rgba(255,255,255,0.06)`)，Focus 时出现柔和的外发光（Glow）。
+- **Glass Cards**: 采用强效 `backdrop-filter: blur(32px) saturate(150%)` 配合厚重的底部柔和阴影 (`box-shadow: 0 24px 48px -12px rgba(0,0,0,0.8)`) 和顶部内高光，制造强烈的悬浮与物理质感。
+- **Inputs/Rows**: 交互元素在 Hover 时，背景亮度微调 (`rgba(255,255,255,0.04)`)，Focus 时出现柔和的纯白外发光。
+- **Active States**: 激活的标签页（Active Tab）采用高反差（白底黑字或黑底白字），配以微弱阴影使其从背景中凸显。
 
 ## Component Stylings
-- **Table**: 摒弃传统的全包围网格线，仅保留极其微弱的行底边（或者在深色模式下使用行间距），让数据“悬浮”在玻璃板上。分类单元格（Category）高亮展示。
-- **Editable Cells**: 类似 Notion 的无缝编辑体验。平时就像普通文本，悬停时出现微妙底色，点击时出现紫色光环边框。
-- **Buttons**: 
-  - **Primary**: 带有微妙渐变和发光阴影的实心按钮，点击时有真实的物理下压感（`transform: scale(0.96)`）。
-  - **Secondary**: 玻璃质感描边按钮，Hover 时边框变亮。
+- **Table**: 摒弃传统的全包围网格线，仅保留极其微弱的行底边，让数据“悬浮”在玻璃板上。
+- **Editable Cells**: 类似 Notion 的无缝编辑体验。平时就像普通文本，悬停时出现微妙底色，点击时出现纯白/银色光环边框。
+- **Buttons / Dropdowns**: 
+  - 下拉菜单（Dropdowns）与弹窗（Modals）同样继承高级毛玻璃质感，悬浮于页面最顶层。
+  - 操作按钮回归极简，使用无彩色的高对比色调，点击时有真实的物理下压感（`transform: scale(0.96)`）。
 
 ## Animations & Interactions
 - **Reveal**: 页面加载时内容容器从下往上渐现（Fade in up）。

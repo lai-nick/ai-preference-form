@@ -12,21 +12,22 @@
 
 ## ✨ 核心特性 (Features)
 
-- 🎨 **极简高级的 UI 设计 (Modern Tech & Glassmorphism)**
-  - 沉浸式的暗黑科技背景与动态微弱光源映射。
-  - 毛玻璃（Backdrop Blur）质感的悬浮卡片。
-  - 克制的交互反馈与丝滑的 CSS 动画。
-- ⚡ **无后端依赖 (Serverless & Zero-Backend)**
+- 🎨 **极简高级的 Apple 风 UI 设计 (Modern Tech & Glassmorphism)**
+  - 沉浸式的暗黑科技背景与动态点阵/微弱光源映射。
+  - 高级毛玻璃（Backdrop Blur）质感的悬浮卡片，模拟阳极氧化铝与钛金属光泽。
+  - 极度克制的黑白灰 (Monochrome) 交互反馈与丝滑的 CSS 动画。
+- ⚡ **无后端依赖与多档案管理 (Serverless & Multi-Profile)**
   - 纯前端实现，无需配置任何数据库或服务端。
-  - 数据自动实时保存在浏览器的本地存储（LocalStorage）中，刷新不丢失。
-- 🏷️ **智能悬浮标签 (Smart Dropdown Tags)**
-  - 内置 28 个维度（技术栈、审美、习惯等）的丰富预设标签。
+  - 支持创建无限数量的数字分身（如“工作”、“生活”、“科研”），数据完全独立。
+  - 数据自动实时保存在浏览器的本地存储（LocalStorage）中，并支持导入/导出 JSON 备份。
+- 🌍 **全界面双语切换 (i18n)**
+  - 内置中英双语 (Chinese/English) 无缝切换，包含提示词、分类项及自动补全标签。
+- 🏷️ **智能预设模板与悬浮标签 (Smart Templates & Dropdown Tags)**
+  - 内置 6 套高级职业画像模板（工程师、设计师、产品经理等），新建档案时一键加载。
+  - 精简为 18 项高密度分析维度（涵盖技术栈、审美、习惯等）。
   - 点击单元格自动弹出下拉菜单，支持鼠标点击与手写输入无缝混排。
-- 🤖 **AI Prompt 工程级导出 (Prompt Engineering Export)**
-  - 一键导出包含特定指令的 Markdown 文本。
-  - 引导 AI 建立本地记忆、深度分析用户偏好、定制学习计划及调整回复语气。
-- 📱 **响应式布局 (Responsive Design)**
-  - 完美适配桌面端和移动端浏览。
+- 🤖 **多格式导出 (Multi-Format Export)**
+  - 支持导出 Markdown（含 AI 提示词）、JSON 数据备份、System Prompt 纯系统指令或 Plain Text。
 
 ## 📖 如何使用？
 
