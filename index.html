@@ -6,60 +6,62 @@
   <title>个人偏好与学习方向自我分析表</title>
   <style>
     :root {
-      --bg-color: #050505;
-      --card-bg: rgba(255, 255, 255, 0.03);
+      --bg-color: #000000;
+      --card-bg: rgba(20, 20, 25, 0.4);
       --text-main: #ffffff;
-      --text-muted: #a1a1aa;
-      --border-color: rgba(255, 255, 255, 0.1);
+      --text-muted: #9ca3af;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-light: rgba(255, 255, 255, 0.15);
       --accent-start: #8b5cf6;
       --accent-end: #3b82f6;
-      --focus-glow: rgba(139, 92, 246, 0.3);
-      --progress-bg: rgba(255, 255, 255, 0.05);
-      --progress-fill: linear-gradient(90deg, var(--accent-start), var(--accent-end));
-      --shadow-color: rgba(0,0,0,0.2);
-      --modal-bg: rgba(0,0,0,0.6);
+      --focus-glow: rgba(139, 92, 246, 0.4);
+      --progress-bg: rgba(255, 255, 255, 0.06);
+      --progress-fill: linear-gradient(90deg, #a855f7, #3b82f6, #06b6d4);
+      --shadow-color: rgba(0,0,0,0.4);
+      --modal-bg: rgba(0,0,0,0.7);
     }
 
     :root.light {
-      --bg-color: #fafafa;
-      --card-bg: rgba(255, 255, 255, 0.8);
-      --text-main: #1d1d1f;
-      --text-muted: #86868b;
-      --border-color: rgba(0, 0, 0, 0.1);
-      --focus-glow: rgba(139, 92, 246, 0.2);
-      --progress-bg: rgba(0, 0, 0, 0.05);
-      --progress-fill: linear-gradient(90deg, #0070f3, #5856d6);
-      --shadow-color: rgba(0,0,0,0.05);
-      --modal-bg: rgba(0,0,0,0.3);
+      --bg-color: #f8fafc;
+      --card-bg: rgba(255, 255, 255, 0.6);
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: rgba(0, 0, 0, 0.06);
+      --border-light: rgba(255, 255, 255, 0.8);
+      --focus-glow: rgba(139, 92, 246, 0.3);
+      --progress-bg: rgba(0, 0, 0, 0.06);
+      --progress-fill: linear-gradient(90deg, #8b5cf6, #3b82f6, #0ea5e9);
+      --shadow-color: rgba(0,0,0,0.06);
+      --modal-bg: rgba(255,255,255,0.4);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "PingFang SC", "Helvetica Neue", Helvetica, Arial, sans-serif;
       background-color: var(--bg-color);
       color: var(--text-main);
       line-height: 1.6;
       padding: 64px 20px;
       min-height: 100vh;
-      /* Modern dotted background + soft ambient glows */
+      /* Bold glowing orbs to emphasize glassmorphism */
       background-image:
-        radial-gradient(circle at 15% 0%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 85% 100%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.05) 0%, transparent 50%),
-        radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+        radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.35) 0%, transparent 45%),
+        radial-gradient(circle at 90% 80%, rgba(37, 99, 235, 0.35) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.15) 0%, transparent 60%),
+        radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
       background-size: 100% 100%, 100% 100%, 100% 100%, 24px 24px;
       background-position: 0 0, 0 0, 0 0, 12px 12px;
       background-attachment: fixed;
-      transition: background-color 0.3s, color 0.3s;
+      transition: background-color 0.4s ease, color 0.4s ease;
     }
 
     :root.light body {
       background-image:
-        radial-gradient(circle at 15% 0%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 85% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.03) 0%, transparent 50%),
-        radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+        radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.25) 0%, transparent 45%),
+        radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.25) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.15) 0%, transparent 60%),
+        radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px);
       background-size: 100% 100%, 100% 100%, 100% 100%, 24px 24px;
       background-position: 0 0, 0 0, 0 0, 12px 12px;
     }
@@ -68,13 +70,18 @@
       max-width: 900px;
       margin: 0 auto;
       background: var(--card-bg);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border-radius: 24px;
-      box-shadow: 0 4px 24px -1px var(--shadow-color), inset 0 1px 0 rgba(255,255,255,0.1);
-      padding: 48px;
-      border: 1px solid var(--border-color);
-      animation: fadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      backdrop-filter: blur(32px) saturate(150%);
+      -webkit-backdrop-filter: blur(32px) saturate(150%);
+      border-radius: 28px;
+      /* Thick soft shadow + crisp top border highlight for physical glass feel */
+      box-shadow: 
+        0 24px 48px -12px var(--shadow-color), 
+        inset 0 1px 1px var(--border-light),
+        inset 0 0 0 1px var(--border-color);
+      padding: 56px;
+      animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      position: relative;
+      overflow: hidden;
     }
 
     @keyframes fadeUp {
@@ -95,20 +102,27 @@
     .header-left { text-align: left; }
 
     h1 {
-      font-size: 32px;
+      font-size: 38px;
       font-weight: 800;
-      letter-spacing: -0.04em;
-      margin-bottom: 8px;
-      background: linear-gradient(to right, var(--text-main), var(--text-muted));
+      letter-spacing: -0.05em;
+      margin-bottom: 6px;
+      background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    :root.light h1 {
+      background: linear-gradient(135deg, #0f172a 0%, #64748b 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .subtitle {
-      font-size: 14px;
-      font-weight: 500;
+      font-size: 15px;
+      font-weight: 600;
       color: var(--text-muted);
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
     }
 
@@ -241,13 +255,13 @@
     th, td { padding: 10px 16px; text-align: left; }
 
     th {
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      font-size: 12px;
+      letter-spacing: 0.08em;
+      font-size: 11px;
       border-bottom: 1px solid var(--border-color);
-      padding-bottom: 10px;
+      padding-bottom: 12px;
     }
 
     tbody tr { transition: background-color 0.2s ease; }
