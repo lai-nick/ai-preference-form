@@ -97,6 +97,31 @@
       text-transform: uppercase;
     }
 
+    .header-controls {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .lang-toggle {
+      background: var(--progress-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 99px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      letter-spacing: 0.02em;
+    }
+    .lang-toggle:hover { color: var(--accent-start); border-color: var(--accent-start); }
+    .lang-toggle .lang-active { color: var(--accent-start); }
+
     /* ---- Profile Selector ---- */
     .profile-bar {
       display: flex;
@@ -486,7 +511,7 @@
       h1 { font-size: 24px; }
       header { flex-direction: column; gap: 12px; }
       .header-left { text-align: center; width: 100%; }
-      .theme-toggle { align-self: center; }
+      .header-controls { align-self: center; justify-content: center; }
       .profile-bar { justify-content: center; }
       .actions { flex-direction: column-reverse; align-items: stretch; }
       .actions-right { justify-content: center; }
@@ -499,24 +524,31 @@
   <div class="container">
     <header>
       <div class="header-left">
-        <h1>My Preferences & Goals</h1>
-        <div class="subtitle">个人偏好与技能设定</div>
+        <h1 id="site-title">My Preferences & Goals</h1>
+        <div class="subtitle" id="site-subtitle">个人偏好与技能设定</div>
       </div>
-      <button class="theme-toggle" onclick="toggleTheme()">
-        <svg id="theme-icon-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-        <svg id="theme-icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-        <span id="theme-label">深色</span>
-      </button>
+      <div class="header-controls">
+        <button class="lang-toggle" onclick="toggleLang()" title="Switch Language">
+          <span id="lang-zh" class="lang-active">中</span>
+          <span>/</span>
+          <span id="lang-en">EN</span>
+        </button>
+        <button class="theme-toggle" onclick="toggleTheme()">
+          <svg id="theme-icon-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg id="theme-icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <span id="theme-label">深色</span>
+        </button>
+      </div>
     </header>
 
     <!-- Profile Selector -->
     <div class="profile-bar" id="profile-bar">
-      <button class="btn-new-profile" onclick="openNewProfileModal()">+ 新建档案</button>
+      <button class="btn-new-profile" id="btn-new-profile" onclick="openNewProfileModal()">+ 新建档案</button>
     </div>
 
     <div class="progress-wrapper">
       <div class="progress-label">
-        <span>填写进度</span>
+        <span id="progress-label-text">填写进度</span>
         <span id="progress-text">0 / 28</span>
       </div>
       <div class="progress-bar">
@@ -528,9 +560,9 @@
       <table id="analysis-table">
         <thead>
           <tr>
-            <th>分类</th>
-            <th>具体项目</th>
-            <th>你的填写 (可自填或选标签)</th>
+            <th id="th-category">分类</th>
+            <th id="th-item">具体项目</th>
+            <th id="th-input">你的填写 (可自填或选标签)</th>
           </tr>
         </thead>
         <tbody id="table-body">
@@ -540,40 +572,40 @@
     </div>
 
     <div class="actions">
-      <div class="note">直接点击表格中的"你的填写"列进行编辑，支持打字或选择标签，数据会自动保存在浏览器中。</div>
+      <div class="note" id="note-text">直接点击表格中的"你的填写"列进行编辑，支持打字或选择标签，数据会自动保存在浏览器中。</div>
       <div class="actions-right">
         <button class="btn btn-secondary" onclick="resetCurrentProfile()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
-          重置
+          <span id="btn-reset-text">重置</span>
         </button>
         <div class="dropdown">
           <button class="btn btn-secondary" onclick="toggleMenu('import-menu')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-            导入
+            <span id="btn-import-text">导入</span>
           </button>
           <div class="dropdown-menu" id="import-menu">
             <button class="dropdown-item" onclick="openTemplateModal()">
-              <strong>从模板加载</strong>
+              <strong id="import-template-title">从模板加载</strong>
               <span class="tag">NEW</span>
-              <span class="desc">程序员 / 产品经理 / 学生...</span>
+              <span class="desc" id="import-template-desc">程序员 / 产品经理 / 学生...</span>
             </button>
             <div class="dropdown-divider"></div>
             <button class="dropdown-item" onclick="importFromJSON()">
-              <strong>导入 JSON 文件</strong>
-              <span class="desc">恢复之前导出的配置</span>
+              <strong id="import-json-title">导入 JSON 文件</strong>
+              <span class="desc" id="import-json-desc">恢复之前导出的配置</span>
             </button>
           </div>
         </div>
         <div class="dropdown">
           <button class="btn btn-primary" onclick="toggleMenu('export-menu')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-            导出 ▾
+            <span id="btn-export-text">导出 ▾</span>
           </button>
           <div class="dropdown-menu" id="export-menu">
-            <button class="dropdown-item" onclick="exportAs('markdown')"><strong>Markdown</strong><span class="tag">AI</span><span class="desc">复制给 Trae / ChatGPT / Claude</span></button>
-            <button class="dropdown-item" onclick="exportAs('json')"><strong>JSON</strong><span class="tag">数据</span><span class="desc">备份配置，换设备可导入恢复</span></button>
-            <button class="dropdown-item" onclick="exportAs('prompt')"><strong>System Prompt</strong><span class="tag">角色</span><span class="desc">粘贴到 AI 的系统提示词中</span></button>
-            <button class="dropdown-item" onclick="exportAs('text')"><strong>纯文本</strong><span class="tag">通用</span><span class="desc">简单文字，复制到任何地方</span></button>
+            <button class="dropdown-item" onclick="exportAs('markdown')"><strong>Markdown</strong><span class="tag">AI</span><span class="desc" id="export-md-desc">复制给 Trae / ChatGPT / Claude</span></button>
+            <button class="dropdown-item" onclick="exportAs('json')"><strong>JSON</strong><span class="tag">数据</span><span class="desc" id="export-json-desc">备份配置，换设备可导入恢复</span></button>
+            <button class="dropdown-item" onclick="exportAs('prompt')"><strong>System Prompt</strong><span class="tag">角色</span><span class="desc" id="export-prompt-desc">粘贴到 AI 的系统提示词中</span></button>
+            <button class="dropdown-item" onclick="exportAs('text')"><strong>纯文本</strong><span class="tag">通用</span><span class="desc" id="export-text-desc">简单文字，复制到任何地方</span></button>
           </div>
         </div>
       </div>
@@ -585,12 +617,12 @@
   <!-- Modal: New Profile -->
   <div class="modal-overlay" id="modal-new-profile">
     <div class="modal">
-      <h2>新建档案</h2>
-      <p>为新档案起一个名字，比如"程序员"、"生活"、"工作"等。</p>
+      <h2 id="modal-new-profile-title">新建档案</h2>
+      <p id="modal-new-profile-desc">为新档案起一个名字，比如"程序员"、"生活"、"工作"等。</p>
       <input class="modal-input" id="new-profile-name" type="text" placeholder="档案名称..." maxlength="20" onkeydown="if(event.key==='Enter')createProfile()">
       <div class="modal-actions">
-        <button class="btn btn-secondary" onclick="closeModal('modal-new-profile')">取消</button>
-        <button class="btn btn-primary" onclick="createProfile()">创建</button>
+        <button class="btn btn-secondary" onclick="closeModal('modal-new-profile')" id="modal-cancel-text">取消</button>
+        <button class="btn btn-primary" onclick="createProfile()" id="modal-create-text">创建</button>
       </div>
     </div>
   </div>
@@ -598,11 +630,11 @@
   <!-- Modal: Load Template -->
   <div class="modal-overlay" id="modal-template">
     <div class="modal">
-      <h2>从模板加载</h2>
-      <p>选择一个模板一键填充内容，之后可以自由修改。</p>
+      <h2 id="modal-template-title">从模板加载</h2>
+      <p id="modal-template-desc">选择一个模板一键填充内容，之后可以自由修改。</p>
       <div class="template-grid" id="template-grid"></div>
       <div class="modal-actions">
-        <button class="btn btn-secondary" onclick="closeModal('modal-template')">取消</button>
+        <button class="btn btn-secondary" onclick="closeModal('modal-template')" id="modal-template-cancel">取消</button>
       </div>
     </div>
   </div>
@@ -611,265 +643,459 @@
   <input type="file" id="json-file-input" accept=".json" style="display:none" onchange="handleFileImport(event)">
 
 <script>
-// ====== PRESET TEMPLATES ======
+
+// ====== i18n ======
+const I18N = {
+  zh: {
+    siteTitle: 'My Preferences & Goals',
+    siteSubtitle: '个人偏好与技能设定',
+    thCategory: '分类',
+    thItem: '具体项目',
+    thInput: '你的填写 (可自填或选标签)',
+    progressLabel: '填写进度',
+    note: '直接点击表格中的"你的填写"列进行编辑，支持打字或选择标签，数据会自动保存在浏览器中。',
+    btnReset: '重置',
+    btnImport: '导入',
+    btnExport: '导出 ▾',
+    importTemplateTitle: '从模板加载',
+    importTemplateDesc: '程序员 / 产品经理 / 学生...',
+    importJsonTitle: '导入 JSON 文件',
+    importJsonDesc: '恢复之前导出的配置',
+    exportMdDesc: '复制给 Trae / ChatGPT / Claude',
+    exportJsonDesc: '备份配置，换设备可导入恢复',
+    exportPromptDesc: '粘贴到 AI 的系统提示词中',
+    exportTextDesc: '简单文字，复制到任何地方',
+    modalNewProfileTitle: '新建档案',
+    modalNewProfileDesc: '为新档案起一个名字，比如"程序员"、"生活"、"工作"等。',
+    modalCancel: '取消',
+    modalCreate: '创建',
+    modalTemplateTitle: '从模板加载',
+    modalTemplateDesc: '选择一个模板一键填充内容，之后可以自由修改。',
+    modalTemplateCancel: '取消',
+    themeDark: '深色',
+    themeLight: '浅色',
+    btnNewProfile: '+ 新建档案',
+    placeholder: '点击输入...',
+    profileDefault: '默认档案',
+    toastCreated: '已创建档案：',
+    toastDeleted: '已删除：',
+    toastLoaded: '已加载"',
+    toastTemplate: '"模板',
+    toastReset: '当前档案已重置',
+    toastCopied: '已复制为',
+    toastImport: '已导入',
+    toastImportItems: '项',
+    toastJsonError: 'JSON 格式错误，导入失败',
+    toastCopyFail: '复制失败',
+    confirmDelete: '确定删除档案"',
+    confirmDeleteSuffix: '"吗？',
+    confirmReset: '确定要清空当前档案的所有内容吗？',
+    exportMd: 'Markdown',
+    exportJson: 'JSON',
+    exportPrompt: 'System Prompt',
+    exportText: '纯文本'
+  },
+  en: {
+    siteTitle: 'My Preferences & Goals',
+    siteSubtitle: 'AI Preference & Skill Profile',
+    thCategory: 'Category',
+    thItem: 'Item',
+    thInput: 'Your Input (Type or select)',
+    progressLabel: 'Completion',
+    note: 'Click any cell in "Your Input" to edit or pick from suggestions. Data auto-saves to browser.',
+    btnReset: 'Reset',
+    btnImport: 'Import',
+    btnExport: 'Export ▾',
+    importTemplateTitle: 'Load Template',
+    importTemplateDesc: 'Engineer / Designer / Student / PM...',
+    importJsonTitle: 'Import JSON File',
+    importJsonDesc: 'Restore a previously exported config',
+    exportMdDesc: 'Copy for Trae / ChatGPT / Claude',
+    exportJsonDesc: 'Backup config, import on another device',
+    exportPromptDesc: 'Paste into AI system prompt',
+    exportTextDesc: 'Plain text, copy anywhere',
+    modalNewProfileTitle: 'New Profile',
+    modalNewProfileDesc: 'Give your profile a name, like "Engineer", "Life", "Work", etc.',
+    modalCancel: 'Cancel',
+    modalCreate: 'Create',
+    modalTemplateTitle: 'Load Template',
+    modalTemplateDesc: 'Pick a template to auto-fill, then customize freely.',
+    modalTemplateCancel: 'Cancel',
+    themeDark: 'Dark',
+    themeLight: 'Light',
+    btnNewProfile: '+ New Profile',
+    placeholder: 'Click to enter...',
+    profileDefault: 'Default Profile',
+    toastCreated: 'Profile created: ',
+    toastDeleted: 'Deleted: ',
+    toastLoaded: 'Loaded "',
+    toastTemplate: '" template',
+    toastReset: 'Profile has been reset',
+    toastCopied: 'Copied as ',
+    toastImport: 'Imported ',
+    toastImportItems: ' items',
+    toastJsonError: 'JSON format error, import failed',
+    toastCopyFail: 'Copy failed',
+    confirmDelete: 'Delete profile "',
+    confirmDeleteSuffix: '"?',
+    confirmReset: 'Clear all content in the current profile?',
+    exportMd: 'Markdown',
+    exportJson: 'JSON',
+    exportPrompt: 'System Prompt',
+    exportText: 'Plain Text'
+  }
+};
+
 const TEMPLATE_DATA = [
-  { id: 'tech-1', options: 'STM32, ESP32, 树莓派, Arduino, RTOS, 瑞芯微, 全志' },
-  { id: 'tech-2', options: 'Agent开发, Skill, 神经网络, Transformer, GPT, 提示词工程(Prompt), RAG, 部署微调, LangChain' },
-  { id: 'tech-3', options: 'Python, C/C++, PyTorch, QT, LVGL, Rust, Go, 前端(React/Vue), Git' },
-  { id: 'tech-4', options: 'RISC-V, ARM架构, RT-thread, Jetson' },
-  { id: 'tech-5', options: 'Linux内核, 设备树, ROS, 机器人运动学, 机械臂仿真, Shell脚本, Docker/K8s, Ubuntu' },
-  { id: 'art-1', options: '极简主义, 赛博朋克, 像素风, 毛玻璃/新拟态, 扁平化' },
-  { id: 'art-2', options: '莫兰迪色系, 黑白灰克制, 高饱和霓虹, 大留白, 网格排版' },
-  { id: 'art-3', options: '3D渲染, LUT, 胶片摄影, 矢量插画, 抽象艺术, 纪实摄影' },
-  { id: 'music-1', options: '流行, 纯音乐/BGM, 电子EDM, 摇滚, 爵士/古典, 嘻哈, R&B' },
-  { id: 'music-2', options: '周杰伦, 泽野弘之, 泰勒·斯威夫特, 坂本龙一, 林俊杰, 伍佰' },
-  { id: 'ent-1', options: '科技数码, Vlog, 风景, 知识科普, 游戏解说, 萌宠' },
-  { id: 'ent-2', options: 'B站硬核科普, TED演讲, 网课/教程, 影视解说, 机器人教程' },
-  { id: 'ent-3', options: '技术博客, 哲学宗教, 科幻小说, 科技科普, 商业分析, 历史人文, 新闻资讯, 哲学自我成长' },
-  { id: 'life-1', options: '跑步, 游泳, 力量训练, 羽毛球, 骑行, 散步, 躺平' },
-  { id: 'life-2', options: '清淡, 无辣不欢, 甜食控, 咖啡/茶依赖, 随便对付' },
-  { id: 'life-3', options: '听歌, 放空, 公园, 打游戏, 睡觉, 看书, 刷短视频' },
-  { id: 'design-1', options: 'Apple风, Material Design, 拟物化, 卡片式' },
-  { id: 'design-2', options: '极简/克制, 科技感/暗黑, 活泼/多彩, 商务/专业' },
-  { id: 'design-3', options: '丝滑动画, 快速响应, 细腻微动效, 手势操作' },
-  { id: 'digital-1', options: '智能手机, 相机, VR/AR, 降噪耳机, 掌机/主机, 大疆Pocket4' },
-  { id: 'digital-2', options: '苹果(Apple), 索尼(Sony), 大疆(DJI), 华为(Huawei), 任天堂' },
-  { id: 'digital-3', options: '极致性能, 续航无忧, 屏幕素质, 工业设计, 极具性价比' },
-  { id: 'goal-1', options: '学习机械臂, 个人网站, 小工具/脚本, 点亮开发板, 读完一本书' },
-  { id: 'goal-2', options: '海边度假, 爬山徒步, 历史古迹, 城市漫游, 云南, 宅家云旅游' },
-  { id: 'goal-3', options: '学一门乐器, 尝试新运动, 做一次饭, 学习3D建模, 学习机器人' },
-  { id: 'comm-1', options: '直奔主题, 循循善诱, 幽默风趣, 严谨客观' },
-  { id: 'comm-2', options: '结构化表格, 代码+注释, 思维导图, 简短总结' },
-  { id: 'comm-3', options: '热情鼓励, 专业高冷, 朋友般闲聊, 客观中立' }
+  { id: 'tech-1', options: { zh: 'STM32, ESP32, 树莓派, Arduino, RTOS, FreeRTOS, 瑞芯微, 全志, RISC-V, ARM架构', en: 'STM32, ESP32, Raspberry Pi, Arduino, RTOS, FreeRTOS, RISC-V, ARM' } },
+  { id: 'tech-2', options: { zh: 'Agent开发, Skill, 神经网络, Transformer, GPT, 提示词工程(Prompt), RAG, 部署微调, LangChain, AI生图, 深度学习', en: 'Agent Dev, Neural Networks, Transformer, GPT, Prompt Eng, RAG, LangChain, Deep Learning' } },
+  { id: 'tech-3', options: { zh: 'Python, C/C++, PyTorch, QT, LVGL, Rust, Go, 前端(React/Vue), Git, MATLAB, LaTeX, Makefile', en: 'Python, C/C++, PyTorch, QT, Rust, Go, Frontend(React/Vue), Git, MATLAB, LaTeX' } },
+  { id: 'tech-4', options: { zh: 'RISC-V, ARM架构, RT-thread, Jetson, FPGA, 传感器', en: 'RISC-V, ARM, RT-thread, Jetson, FPGA, Sensors' } },
+  { id: 'tech-5', options: { zh: 'Linux内核, 设备树, ROS, 机器人运动学, 机械臂仿真, Shell脚本, Docker/K8s, Ubuntu, Buildroot, Yocto', en: 'Linux Kernel, Device Tree, ROS, Robotics, Shell, Docker/K8s, Ubuntu, Buildroot, Yocto' } },
+  { id: 'art-1', options: { zh: '极简主义, 赛博朋克, 像素风, 毛玻璃/新拟态, 扁平化, 拟物化, 抽象艺术', en: 'Minimalism, Cyberpunk, Pixel Art, Glassmorphism, Flat, Skeuomorphism' } },
+  { id: 'art-2', options: { zh: '莫兰迪色系, 黑白灰克制, 高饱和霓虹, 大留白, 网格排版', en: 'Morandi, B&W Restraint, Neon, White Space, Grid Layout' } },
+  { id: 'art-3', options: { zh: '3D渲染, LUT, 胶片摄影, 矢量插画, 抽象艺术, 纪实摄影, 技术图表', en: '3D Render, Film Photo, Vector Art, Abstract Art, Documentary Photo, Tech Diagrams' } },
+  { id: 'music-1', options: { zh: '流行, 纯音乐/BGM, 电子EDM, 摇滚, 爵士/古典, 嘻哈, R&B', en: 'Pop, Instrumental/BGM, EDM, Rock, Jazz/Classical, Hip-hop, R&B' } },
+  { id: 'music-2', options: { zh: '周杰伦, 泽野弘之, 泰勒·斯威夫特, 坂本龙一, 林俊杰, 伍佰, 落日飞车, Hans Zimmer, 贝多芬', en: 'Jay Chou, Hiroyuki Sawano, Taylor Swift, Ryuichi Sakamoto, JJ Lin, Hans Zimmer, Beethoven' } },
+  { id: 'ent-1', options: { zh: '科技数码, Vlog, 风景, 知识科普, 游戏解说, 萌宠, 影视解说', en: 'Tech Reviews, Vlogs, Landscapes, Science Edu, Gaming, Cute Animals' } },
+  { id: 'ent-2', options: { zh: 'B站硬核科普, TED演讲, 网课/教程, 影视解说, 机器人教程, 技术大会演讲, 学术论文, 纪录片', en: 'Deep Dives, TED Talks, Online Courses, Tech Talks, Academic Papers, Documentaries' } },
+  { id: 'ent-3', options: { zh: '技术博客, 哲学宗教, 科幻小说, 科技科普, 商业分析, 历史人文, 新闻资讯, 哲学自我成长, 艺术评论', en: 'Tech Blogs, Sci-Fi, Science Articles, Business Analysis, History, Philosophy, Art Criticism' } },
+  { id: 'life-1', options: { zh: '跑步, 游泳, 力量训练, 羽毛球, 骑行, 散步, 瑜伽, 冥想, 爬山徒步', en: 'Running, Swimming, Strength Training, Badminton, Cycling, Walking, Yoga, Meditation' } },
+  { id: 'life-2', options: { zh: '清淡, 无辣不欢, 甜食控, 咖啡/茶依赖, 随便对付', en: 'Light Diet, Spicy Lover, Sweet Tooth, Coffee/Tea Dependent, Whatever is easy' } },
+  { id: 'life-3', options: { zh: '听歌, 放空, 公园, 打游戏, 睡觉, 看书, 刷短视频, 看展, 冥想', en: 'Music, Zoning Out, Park, Gaming, Sleeping, Reading, Exhibitions' } },
+  { id: 'design-1', options: { zh: 'Apple风, Material Design, 拟物化, 卡片式', en: 'Apple Style, Material Design, Skeuomorphic, Card-based' } },
+  { id: 'design-2', options: { zh: '极简/克制, 科技感/暗黑, 活泼/多彩, 商务/专业', en: 'Minimalist/Controlled, Tech/Dark, Playful/Colorful, Business/Professional' } },
+  { id: 'design-3', options: { zh: '丝滑动画, 快速响应, 细腻微动效, 手势操作', en: 'Smooth Animations, Fast Response, Micro-interactions, Gestures' } },
+  { id: 'digital-1', options: { zh: '智能手机, 相机, VR/AR, 降噪耳机, 掌机/主机, 大疆Pocket4, 机械键盘, 示波器, 大屏显示器', en: 'Smartphone, Camera, VR/AR, ANC Headphones, Console, DJI Pocket, Mech Keyboard' } },
+  { id: 'digital-2', options: { zh: '苹果(Apple), 索尼(Sony), 大疆(DJI), 华为(Huawei), 任天堂, 富士(Fuji), Keysight, Dell, 微软', en: 'Apple, Sony, DJI, Huawei, Nintendo, Fujifilm, Keysight, Dell, Microsoft' } },
+  { id: 'digital-3', options: { zh: '极致性能, 续航无忧, 屏幕素质, 工业设计, 极具性价比, 稳定性, 色彩准确', en: 'Peak Performance, Battery Life, Display Quality, Industrial Design, Value, Stability' } },
+  { id: 'goal-1', options: { zh: '学习机械臂, 个人网站, 小工具/脚本, 点亮开发板, 读完一本书, 发论文, 复现实验', en: 'Learn Robotics, Personal Website, Scripts, Board Bring-up, Finish a Book, Publish Paper' } },
+  { id: 'goal-2', options: { zh: '海边度假, 爬山徒步, 历史古迹, 城市漫游, 云南, 宅家云旅游, 逛艺术展, 学术会议', en: 'Beach Vacation, Hiking, Historical Sites, City Wandering, Art Exhibitions, Conferences' } },
+  { id: 'goal-3', options: { zh: '学一门乐器, 尝试新运动, 做一次饭, 学习3D建模, 学习机器人, 拍一个Vlog, 深入研究方向', en: 'Learn an Instrument, Try New Sport, Learn 3D Modeling, Learn Robotics, Make a Vlog' } },
+  { id: 'comm-1', options: { zh: '直奔主题, 循循善诱, 幽默风趣, 严谨客观', en: 'Get to the Point, Patient & Guiding, Humorous & Witty, Rigorous & Objective' } },
+  { id: 'comm-2', options: { zh: '结构化表格, 代码+注释, 思维导图, 简短总结, 图文并茂', en: 'Structured Tables, Code+Comments, Mind Maps, Concise Summary, Rich Visuals' } },
+  { id: 'comm-3', options: { zh: '热情鼓励, 专业高冷, 朋友般闲聊, 客观中立', en: 'Warm & Encouraging, Professional & Cool, Like a Friend, Objective & Balanced' } }
 ];
 
 const PRESET_TEMPLATES = {
-  programmer: {
-    name: '程序员',
-    icon: '⌨️',
+  engineer: {
+    name: { zh: '嵌入式工程师', en: 'Embedded Engineer' },
+    icon: '⚡',
     values: {
-      'tech-1': 'RTOS, 瑞芯微',
-      'tech-2': 'Agent开发, LangChain, RAG',
-      'tech-3': 'Python, Rust, Go, Git',
-      'tech-4': 'ARM架构, Jetson',
-      'tech-5': 'Linux内核, Docker/K8s',
-      'art-1': '极简主义, 赛博朋克',
-      'art-2': '黑白灰克制, 大留白',
-      'art-3': '纪实摄影, 3D渲染',
-      'music-1': '电子EDM, 纯音乐/BGM',
-      'music-2': '泽野弘之',
-      'ent-1': '科技数码, 知识科普',
-      'ent-2': 'B站硬核科普, 网课/教程',
-      'ent-3': '技术博客, 科技科普',
-      'life-1': '力量训练, 跑步',
-      'life-2': '随便对付, 咖啡/茶依赖',
-      'life-3': '打游戏, 听歌放空',
-      'design-1': 'Apple风',
-      'design-2': '极简/克制, 科技感/暗黑',
-      'design-3': '丝滑动画, 快速响应',
-      'digital-1': '降噪耳机, 机械键盘',
-      'digital-2': '苹果(Apple), 大疆(DJI)',
-      'digital-3': '屏幕素质, 极致性能',
-      'goal-1': '学习机械臂, 小工具/脚本',
-      'goal-2': '云南',
-      'goal-3': '学习机器人',
-      'comm-1': '直奔主题, 严谨客观',
-      'comm-2': '代码+注释, 结构化表格',
-      'comm-3': '专业高冷'
+      'tech-1': { zh: 'STM32, ESP32, RTOS, FreeRTOS, 驱动开发', en: 'STM32, ESP32, RTOS, FreeRTOS, Driver Dev' },
+      'tech-2': { zh: 'Agent开发, RAG, 提示词工程, 神经网络', en: 'Agent Dev, RAG, Prompt Eng, Neural Nets' },
+      'tech-3': { zh: 'C/C++, Python, Rust, Git, Makefile', en: 'C/C++, Python, Rust, Git, Makefile' },
+      'tech-4': { zh: 'RISC-V, ARM Cortex-M, 瑞芯微, 全志', en: 'RISC-V, ARM Cortex-M, Rockchip, Allwinner' },
+      'tech-5': { zh: 'Linux内核, 设备树, Buildroot, Yocto', en: 'Linux Kernel, Device Tree, Buildroot, Yocto' },
+      'art-1': { zh: '极简主义, 赛博朋克', en: 'Minimalism, Cyberpunk' },
+      'art-2': { zh: '黑白灰克制, 大留白', en: 'B&W Restraint, Generous White Space' },
+      'art-3': { zh: '纪实摄影, 技术图表', en: 'Documentary Photography, Tech Diagrams' },
+      'music-1': { zh: '电子EDM, 纯音乐/BGM', en: 'Electronic EDM, Instrumental/BGM' },
+      'music-2': { zh: '泽野弘之, Hans Zimmer', en: 'Hiroyuki Sawano, Hans Zimmer' },
+      'ent-1': { zh: '科技数码, 知识科普, 机器人教程', en: 'Tech Reviews, Science Edu, Robotics Tutorials' },
+      'ent-2': { zh: 'B站硬核科普, 网课/教程, 技术大会演讲', en: 'B-site Deep Dives, Online Courses, Tech Talks' },
+      'ent-3': { zh: '技术博客, 科技科普, 科幻小说', en: 'Tech Blogs, Science Articles, Sci-Fi Novels' },
+      'life-1': { zh: '跑步, 骑行, 游泳', en: 'Running, Cycling, Swimming' },
+      'life-2': { zh: '随便对付, 咖啡依赖', en: 'Whatever is easy, Coffee Dependent' },
+      'life-3': { zh: '打游戏, 听歌, 放空', en: 'Gaming, Listening to Music, Zoning Out' },
+      'design-1': { zh: 'Apple风, Material Design', en: 'Apple Style, Material Design' },
+      'design-2': { zh: '极简/克制, 科技感/暗黑', en: 'Minimalist/Controlled, Tech/Dark' },
+      'design-3': { zh: '丝滑动画, 快速响应', en: 'Smooth Animations, Fast Response' },
+      'digital-1': { zh: '降噪耳机, 机械键盘, 示波器', en: 'ANC Headphones, Mech Keyboard, Oscilloscope' },
+      'digital-2': { zh: '苹果(Apple), 大疆(DJI), Keysight', en: 'Apple, DJI, Keysight' },
+      'digital-3': { zh: '极致性能, 屏幕素质, 稳定性', en: 'Peak Performance, Display Quality, Stability' },
+      'goal-1': { zh: '点亮开发板, 学习机械臂, 小工具/脚本', en: 'Board Bring-up, Learn Robotics Arm, Scripts' },
+      'goal-2': { zh: '云南, 历史古迹', en: 'Yunnan, Historical Sites' },
+      'goal-3': { zh: '学习机器人, 深入内核', en: 'Learn Robotics, Kernel Deep Dive' },
+      'comm-1': { zh: '直奔主题, 严谨客观', en: 'Get to the point, Rigorous & Objective' },
+      'comm-2': { zh: '代码+注释, 结构化表格', en: 'Code + Comments, Structured Tables' },
+      'comm-3': { zh: '专业高冷', en: 'Professional & Cool' }
     }
   },
   designer: {
-    name: '设计师',
+    name: { zh: '设计师', en: 'Designer' },
     icon: '🎨',
     values: {
-      'tech-1': 'Arduino',
-      'tech-2': '提示词工程(Prompt)',
-      'tech-3': '前端(React/Vue), Figma',
-      'art-1': '极简主义, 扁平化',
-      'art-2': '莫兰迪色系, 高饱和霓虹',
-      'art-3': '矢量插画, 胶片摄影, 3D渲染',
-      'music-1': '流行, 嘻哈',
-      'music-2': '周杰伦',
-      'ent-1': 'Vlog, 风景',
-      'ent-2': 'TED演讲, 影视解说',
-      'ent-3': '科幻小说, 历史人文',
-      'life-1': '瑜伽, 散步',
-      'life-2': '清淡, 甜食控',
-      'life-3': '看书, 刷短视频',
-      'design-1': 'Apple风, 卡片式',
-      'design-2': '活泼/多彩, 极简/克制',
-      'design-3': '细腻微动效, 手势操作',
-      'digital-1': '相机, 降噪耳机',
-      'digital-2': '苹果(Apple), 索尼(Sony)',
-      'digital-3': '工业设计, 屏幕素质',
-      'goal-1': '读完一本书',
-      'goal-2': '海边度假',
-      'goal-3': '学一门乐器',
-      'comm-1': '循循善诱, 幽默风趣',
-      'comm-2': '思维导图',
-      'comm-3': '热情鼓励, 朋友般闲聊'
+      'tech-1': { zh: 'Arduino, 树莓派', en: 'Arduino, Raspberry Pi' },
+      'tech-2': { zh: '提示词工程, AI生图, Stable Diffusion', en: 'Prompt Eng, AI Art, Stable Diffusion' },
+      'tech-3': { zh: 'Figma, 前端(React/Vue), Processing', en: 'Figma, Frontend(React/Vue), Processing' },
+      'art-1': { zh: '极简主义, 扁平化, 毛玻璃/新拟态', en: 'Minimalism, Flat Design, Glassmorphism' },
+      'art-2': { zh: '莫兰迪色系, 高饱和霓虹, 大留白', en: 'Morandi Palette, Neon, Generous White Space' },
+      'art-3': { zh: '矢量插画, 胶片摄影, 3D渲染, 抽象艺术', en: 'Vector Art, Film Photography, 3D Render, Abstract Art' },
+      'music-1': { zh: '流行, 嘻哈, R&B', en: 'Pop, Hip-hop, R&B' },
+      'music-2': { zh: '周杰伦, 落日飞车, City Pop', en: 'Jay Chou, Sunset Rollercoaster, City Pop' },
+      'ent-1': { zh: 'Vlog, 风景, 艺术展览', en: 'Vlogs, Landscapes, Art Exhibitions' },
+      'ent-2': { zh: 'TED演讲, 影视解说, 艺术设计类', en: 'TED Talks, Film Essays, Art & Design' },
+      'ent-3': { zh: '科幻小说, 历史人文, 艺术评论', en: 'Sci-Fi, History & Humanities, Art Criticism' },
+      'life-1': { zh: '瑜伽, 散步, 冥想', en: 'Yoga, Walking, Meditation' },
+      'life-2': { zh: '清淡, 甜食控', en: 'Light Diet, Sweet Tooth' },
+      'life-3': { zh: '看书, 看展, 刷短视频', en: 'Reading, Exhibitions, Short Videos' },
+      'design-1': { zh: 'Apple风, 卡片式, 拟物化', en: 'Apple Style, Card-based, Skeuomorphic' },
+      'design-2': { zh: '活泼/多彩, 极简/克制', en: 'Playful/Colorful, Minimalist/Controlled' },
+      'design-3': { zh: '细腻微动效, 手势操作, 丝滑动画', en: 'Subtle Micro-interactions, Gestures, Fluid Animations' },
+      'digital-1': { zh: '相机, 降噪耳机, iPad Pro', en: 'Camera, ANC Headphones, iPad Pro' },
+      'digital-2': { zh: '苹果(Apple), 索尼(Sony), 富士(Fuji)', en: 'Apple, Sony, Fujifilm' },
+      'digital-3': { zh: '工业设计, 屏幕素质, 色彩准确', en: 'Industrial Design, Display Quality, Color Accuracy' },
+      'goal-1': { zh: '读完一本书, 个人作品集网站', en: 'Finish a Book, Portfolio Website' },
+      'goal-2': { zh: '海边度假, 逛艺术展', en: 'Beach Vacation, Art Exhibitions' },
+      'goal-3': { zh: '学一门乐器, 尝试3D建模', en: 'Learn an Instrument, Try 3D Modeling' },
+      'comm-1': { zh: '循循善诱, 幽默风趣', en: 'Guiding & Patient, Humorous & Witty' },
+      'comm-2': { zh: '思维导图, 图文并茂', en: 'Mind Maps, Rich Visuals' },
+      'comm-3': { zh: '热情鼓励, 朋友般闲聊', en: 'Warm & Encouraging, Like a Friend' }
     }
   },
   student: {
-    name: '学生',
+    name: { zh: '学生', en: 'Student' },
     icon: '📚',
     values: {
-      'tech-1': 'STM32, Arduino',
-      'tech-2': '神经网络, Transformer',
-      'tech-3': 'Python, C/C++',
-      'tech-5': 'Ubuntu, Shell脚本',
-      'art-1': '扁平化, 像素风',
-      'art-2': '高饱和霓虹',
-      'art-3': '矢量插画',
-      'music-1': '流行, 嘻哈, R&B',
-      'music-2': '周杰伦, 林俊杰',
-      'ent-1': 'Vlog, 游戏解说, 萌宠',
-      'ent-2': 'B站硬核科普, 网课/教程',
-      'ent-3': '科幻小说, 技术博客',
-      'life-1': '羽毛球, 骑行',
-      'life-2': '随便对付, 甜食控',
-      'life-3': '打游戏, 刷短视频',
-      'design-1': 'Material Design',
-      'design-2': '活泼/多彩',
-      'design-3': '丝滑动画',
-      'digital-1': '掌机/主机, 智能手机',
-      'digital-2': '任天堂, 华为(Huawei)',
-      'digital-3': '极具性价比',
-      'goal-1': '点亮开发板, 读完一本书',
-      'goal-2': '爬山徒步',
-      'goal-3': '尝试新运动',
-      'comm-1': '幽默风趣, 循循善诱',
-      'comm-2': '简短总结',
-      'comm-3': '朋友般闲聊'
+      'tech-1': { zh: 'STM32, Arduino, ESP32', en: 'STM32, Arduino, ESP32' },
+      'tech-2': { zh: '神经网络, Transformer, 机器学习基础', en: 'Neural Networks, Transformers, ML Basics' },
+      'tech-3': { zh: 'Python, C/C++, PyTorch, Git', en: 'Python, C/C++, PyTorch, Git' },
+      'tech-4': { zh: ' Jetson Nano, 树莓派', en: 'Jetson Nano, Raspberry Pi' },
+      'tech-5': { zh: 'Ubuntu, Shell脚本, Docker', en: 'Ubuntu, Shell Scripts, Docker' },
+      'art-1': { zh: '扁平化, 像素风, 赛博朋克', en: 'Flat Design, Pixel Art, Cyberpunk' },
+      'art-2': { zh: '高饱和霓虹, 黑白灰克制', en: 'High-saturation Neon, B&W Restraint' },
+      'art-3': { zh: '矢量插画, 3D渲染', en: 'Vector Art, 3D Rendering' },
+      'music-1': { zh: '流行, 嘻哈, R&B, 电子', en: 'Pop, Hip-hop, R&B, Electronic' },
+      'music-2': { zh: '周杰伦, 林俊杰, 泰勒·斯威夫特', en: 'Jay Chou, JJ Lin, Taylor Swift' },
+      'ent-1': { zh: '游戏解说, Vlog, 萌宠, 知识科普', en: 'Gaming, Vlogs, Cute Animals, Science Edu' },
+      'ent-2': { zh: 'B站硬核科普, 网课/教程, 技术演讲', en: 'Deep Dive Tutorials, Online Courses, Tech Talks' },
+      'ent-3': { zh: '科幻小说, 技术博客, 论文研读', en: 'Sci-Fi, Tech Blogs, Paper Reading' },
+      'life-1': { zh: '羽毛球, 骑行, 跑步', en: 'Badminton, Cycling, Running' },
+      'life-2': { zh: '随便对付, 甜食控', en: 'Whatever is easy, Sweet Tooth' },
+      'life-3': { zh: '打游戏, 刷短视频, 听歌', en: 'Gaming, Short Videos, Music' },
+      'design-1': { zh: 'Material Design, Apple风', en: 'Material Design, Apple Style' },
+      'design-2': { zh: '活泼/多彩, 科技感/暗黑', en: 'Playful/Colorful, Tech/Dark' },
+      'design-3': { zh: '丝滑动画, 快速响应', en: 'Smooth Animations, Fast Response' },
+      'digital-1': { zh: '掌机/主机, 降噪耳机, 机械键盘', en: 'Gaming Console, ANC Headphones, Mech Keyboard' },
+      'digital-2': { zh: '任天堂, 索尼(Sony), 华为', en: 'Nintendo, Sony, Huawei' },
+      'digital-3': { zh: '极具性价比, 极致性能', en: 'Best Value, Peak Performance' },
+      'goal-1': { zh: '点亮开发板, 做完课设项目, 读完一本书', en: 'Board Bring-up, Course Project, Finish a Book' },
+      'goal-2': { zh: '爬山徒步, 城市漫游', en: 'Hiking, City Wandering' },
+      'goal-3': { zh: '尝试新运动, 学一门乐器', en: 'Try a New Sport, Learn an Instrument' },
+      'comm-1': { zh: '幽默风趣, 循循善诱', en: 'Humorous & Witty, Patient & Guiding' },
+      'comm-2': { zh: '简短总结, 结构化表格', en: 'Concise Summary, Structured Tables' },
+      'comm-3': { zh: '朋友般闲聊, 热情鼓励', en: 'Like a Friend, Warm & Encouraging' }
     }
   },
   pm: {
-    name: '产品经理',
+    name: { zh: '产品经理', en: 'Product Manager' },
     icon: '📋',
     values: {
-      'tech-1': 'RTOS',
-      'tech-2': 'Agent开发, GPT',
-      'tech-3': 'Python, 前端(React/Vue), Git',
-      'art-1': '极简主义, Apple风',
-      'art-2': '黑白灰克制, 大留白',
-      'art-3': '纪实摄影',
-      'music-1': '流行, 爵士/古典',
-      'ent-1': '知识科普, Vlog',
-      'ent-2': 'TED演讲, 商业分析',
-      'ent-3': '商业分析, 历史人文, 新闻资讯',
-      'life-1': '游泳, 跑步',
-      'life-2': '清淡, 咖啡/茶依赖',
-      'life-3': '看书, 听歌放空',
-      'design-1': 'Apple风, Material Design',
-      'design-2': '商务/专业, 极简/克制',
-      'design-3': '快速响应, 丝滑动画',
-      'digital-1': '智能手机, 降噪耳机',
-      'digital-2': '苹果(Apple), 华为(Huawei)',
-      'digital-3': '工业设计, 续航无忧',
-      'goal-1': '个人网站',
-      'goal-2': '城市漫游',
-      'goal-3': '学习3D建模',
-      'comm-1': '直奔主题, 循循善诱',
-      'comm-2': '结构化表格, 思维导图',
-      'comm-3': '客观中立'
+      'tech-1': { zh: 'RTOS, 物联网, 传感器', en: 'RTOS, IoT, Sensors' },
+      'tech-2': { zh: 'Agent开发, GPT, RAG, 大模型应用', en: 'Agent Dev, GPT, RAG, LLM Apps' },
+      'tech-3': { zh: 'Python, SQL, 前端(React/Vue), Axure', en: 'Python, SQL, Frontend(React/Vue), Axure' },
+      'art-1': { zh: '极简主义, Apple风', en: 'Minimalism, Apple Style' },
+      'art-2': { zh: '黑白灰克制, 大留白, 莫兰迪色系', en: 'B&W Restraint, White Space, Morandi Palette' },
+      'art-3': { zh: '纪实摄影, 3D渲染', en: 'Documentary Photography, 3D Rendering' },
+      'music-1': { zh: '流行, 爵士/古典, 纯音乐/BGM', en: 'Pop, Jazz/Classical, Instrumental/BGM' },
+      'music-2': { zh: '周杰伦, 坂本龙一, 泰勒·斯威夫特', en: 'Jay Chou, Ryuichi Sakamoto, Taylor Swift' },
+      'ent-1': { zh: '知识科普, 商业分析, Vlog', en: 'Science Edu, Business Analysis, Vlogs' },
+      'ent-2': { zh: 'TED演讲, 商业分析, 行业报告', en: 'TED Talks, Business Analysis, Industry Reports' },
+      'ent-3': { zh: '商业分析, 历史人文, 新闻资讯', en: 'Business Analysis, History & Humanities, News' },
+      'life-1': { zh: '游泳, 跑步, 羽毛球', en: 'Swimming, Running, Badminton' },
+      'life-2': { zh: '清淡, 咖啡/茶依赖', en: 'Light Diet, Coffee/Tea Dependent' },
+      'life-3': { zh: '看书, 听歌放空, 看展', en: 'Reading, Music & Zoning Out, Exhibitions' },
+      'design-1': { zh: 'Apple风, Material Design', en: 'Apple Style, Material Design' },
+      'design-2': { zh: '商务/专业, 极简/克制', en: 'Business/Professional, Minimalist/Controlled' },
+      'design-3': { zh: '快速响应, 丝滑动画, 手势操作', en: 'Fast Response, Smooth Animations, Gestures' },
+      'digital-1': { zh: '智能手机, 降噪耳机, 大屏平板', en: 'Smartphone, ANC Headphones, Large Tablet' },
+      'digital-2': { zh: '苹果(Apple), 华为(Huawei), 微软', en: 'Apple, Huawei, Microsoft' },
+      'digital-3': { zh: '工业设计, 续航无忧, 屏幕素质', en: 'Industrial Design, Battery Life, Display Quality' },
+      'goal-1': { zh: '个人网站, 小工具/脚本', en: 'Personal Website, Small Tools/Scripts' },
+      'goal-2': { zh: '海边度假, 历史古迹, 城市漫游', en: 'Beach Vacation, Historical Sites, City Wandering' },
+      'goal-3': { zh: '学习3D建模, 系统学习产品方法论', en: 'Learn 3D Modeling, Study Product Methodology' },
+      'comm-1': { zh: '直奔主题, 循循善诱', en: 'Get to the Point, Patient & Guiding' },
+      'comm-2': { zh: '结构化表格, 思维导图, 简短总结', en: 'Structured Tables, Mind Maps, Concise Summary' },
+      'comm-3': { zh: '客观中立, 朋友般闲聊', en: 'Objective & Balanced, Like a Friend' }
     }
   },
   creator: {
-    name: '创作者',
+    name: { zh: '创作者', en: 'Creator' },
     icon: '✨',
     values: {
-      'tech-2': '提示词工程(Prompt), Agent开发',
-      'tech-3': '前端(React/Vue), Python',
-      'art-1': '极简主义, 赛博朋克, 毛玻璃/新拟态',
-      'art-2': '莫兰迪色系, 高饱和霓虹',
-      'art-3': '胶片摄影, 3D渲染, 矢量插画, 抽象艺术',
-      'music-1': '电子EDM, 摇滚, R&B, 纯音乐/BGM',
-      'music-2': '泽野弘之, 坂本龙一',
-      'ent-1': 'Vlog, 风景, 知识科普',
-      'ent-2': 'TED演讲, 影视解说',
-      'ent-3': '科幻小说, 历史人文',
-      'life-1': '力量训练, 散步',
-      'life-2': '无辣不欢',
-      'life-3': '打游戏, 看书, 听歌放空',
-      'design-1': 'Apple风, 卡片式',
-      'design-2': '活泼/多彩, 极简/克制',
-      'design-3': '细腻微动效, 手势操作, 丝滑动画',
-      'digital-1': '相机, VR/AR, 降噪耳机',
-      'digital-2': '索尼(Sony), 大疆(DJI)',
-      'digital-3': '屏幕素质, 工业设计',
-      'goal-1': '个人网站, 小工具/脚本',
-      'goal-2': '海边度假, 历史古迹',
-      'goal-3': '学一门乐器, 学习3D建模',
-      'comm-1': '幽默风趣',
-      'comm-2': '简短总结, 思维导图',
-      'comm-3': '热情鼓励, 朋友般闲聊'
+      'tech-1': { zh: 'Arduino, ESP32, 全志', en: 'Arduino, ESP32, Allwinner' },
+      'tech-2': { zh: '提示词工程, Agent开发, AI生图, 视频生成', en: 'Prompt Eng, Agent Dev, AI Art, Video Gen' },
+      'tech-3': { zh: '前端(React/Vue), Python, Blender, After Effects', en: 'Frontend(React/Vue), Python, Blender, After Effects' },
+      'art-1': { zh: '极简主义, 赛博朋克, 毛玻璃/新拟态, 像素风', en: 'Minimalism, Cyberpunk, Glassmorphism, Pixel Art' },
+      'art-2': { zh: '莫兰迪色系, 高饱和霓虹, 大留白', en: 'Morandi Palette, Neon, Generous White Space' },
+      'art-3': { zh: '胶片摄影, 3D渲染, 矢量插画, 抽象艺术', en: 'Film Photography, 3D Render, Vector Art, Abstract Art' },
+      'music-1': { zh: '电子EDM, 摇滚, R&B, 纯音乐/BGM', en: 'Electronic EDM, Rock, R&B, Instrumental/BGM' },
+      'music-2': { zh: '泽野弘之, 坂本龙一, 落日飞车', en: 'Hiroyuki Sawano, Ryuichi Sakamoto, Sunset Rollercoaster' },
+      'ent-1': { zh: 'Vlog, 风景, 知识科普, 影视解说', en: 'Vlogs, Landscapes, Science Edu, Film Essays' },
+      'ent-2': { zh: 'TED演讲, 影视解说, 纪录片', en: 'TED Talks, Film Essays, Documentaries' },
+      'ent-3': { zh: '科幻小说, 历史人文, 艺术评论', en: 'Sci-Fi, History & Humanities, Art Criticism' },
+      'life-1': { zh: '力量训练, 散步, 骑行', en: 'Strength Training, Walking, Cycling' },
+      'life-2': { zh: '无辣不欢, 咖啡依赖', en: 'Spicy Food Lover, Coffee Dependent' },
+      'life-3': { zh: '打游戏, 看书, 听歌放空', en: 'Gaming, Reading, Music & Zoning Out' },
+      'design-1': { zh: 'Apple风, 卡片式, 拟物化', en: 'Apple Style, Card-based, Skeuomorphic' },
+      'design-2': { zh: '活泼/多彩, 极简/克制, 科技感/暗黑', en: 'Playful/Colorful, Minimalist/Controlled, Tech/Dark' },
+      'design-3': { zh: '细腻微动效, 手势操作, 丝滑动画', en: 'Subtle Micro-interactions, Gestures, Fluid Animations' },
+      'digital-1': { zh: '相机, VR/AR, 降噪耳机, 掌机', en: 'Camera, VR/AR, ANC Headphones, Handheld Console' },
+      'digital-2': { zh: '索尼(Sony), 大疆(DJI), 苹果(Apple)', en: 'Sony, DJI, Apple' },
+      'digital-3': { zh: '屏幕素质, 工业设计, 极致性能', en: 'Display Quality, Industrial Design, Peak Performance' },
+      'goal-1': { zh: '个人网站/作品集, 小工具/脚本', en: 'Personal Website/Portfolio, Small Tools/Scripts' },
+      'goal-2': { zh: '海边度假, 历史古迹, 艺术之旅', en: 'Beach Vacation, Historical Sites, Art Tours' },
+      'goal-3': { zh: '学一门乐器, 学习3D建模, 拍一个Vlog', en: 'Learn an Instrument, Learn 3D Modeling, Make a Vlog' },
+      'comm-1': { zh: '幽默风趣, 循循善诱', en: 'Humorous & Witty, Patient & Guiding' },
+      'comm-2': { zh: '简短总结, 思维导图, 图文并茂', en: 'Concise Summary, Mind Maps, Rich Visuals' },
+      'comm-3': { zh: '热情鼓励, 朋友般闲聊', en: 'Warm & Encouraging, Like a Friend' }
+    }
+  },
+  researcher: {
+    name: { zh: '科研人员', en: 'Researcher' },
+    icon: '🔬',
+    values: {
+      'tech-1': { zh: 'STM32, Jetson, FPGA, RISC-V', en: 'STM32, Jetson, FPGA, RISC-V' },
+      'tech-2': { zh: '深度学习, Transformer, 强化学习, 论文复现', en: 'Deep Learning, Transformers, RL, Paper Reproduction' },
+      'tech-3': { zh: 'Python, C/C++, PyTorch, MATLAB, LaTeX', en: 'Python, C/C++, PyTorch, MATLAB, LaTeX' },
+      'tech-4': { zh: 'ARM架构, RISC-V, Jetson', en: 'ARM Architecture, RISC-V, Jetson' },
+      'tech-5': { zh: 'Ubuntu, Docker, Linux内核, Shell脚本', en: 'Ubuntu, Docker, Linux Kernel, Shell Scripts' },
+      'art-1': { zh: '极简主义, 扁平化', en: 'Minimalism, Flat Design' },
+      'art-2': { zh: '黑白灰克制, 大留白', en: 'B&W Restraint, Generous White Space' },
+      'art-3': { zh: '技术图表, 3D渲染, 纪实摄影', en: 'Tech Diagrams, 3D Rendering, Documentary Photography' },
+      'music-1': { zh: '古典/爵士, 纯音乐/BGM, 电子', en: 'Classical/Jazz, Instrumental/BGM, Electronic' },
+      'music-2': { zh: '坂本龙一, 贝多芬, 泽野弘之', en: 'Ryuichi Sakamoto, Beethoven, Hiroyuki Sawano' },
+      'ent-1': { zh: '知识科普, 科技数码, 纪录片', en: 'Science Edu, Tech Reviews, Documentaries' },
+      'ent-2': { zh: '学术论文, 网课/教程, TED演讲, 技术大会', en: 'Academic Papers, Online Courses, TED Talks, Tech Conferences' },
+      'ent-3': { zh: '技术博客, 科技科普, 哲学, 科幻小说', en: 'Tech Blogs, Science Articles, Philosophy, Sci-Fi' },
+      'life-1': { zh: '跑步, 游泳, 散步', en: 'Running, Swimming, Walking' },
+      'life-2': { zh: '清淡, 随便对付', en: 'Light Diet, Whatever is easy' },
+      'life-3': { zh: '听歌, 看书, 放空', en: 'Music, Reading, Zoning Out' },
+      'design-1': { zh: 'Apple风, Material Design', en: 'Apple Style, Material Design' },
+      'design-2': { zh: '极简/克制, 商务/专业, 科技感/暗黑', en: 'Minimalist/Controlled, Business/Professional, Tech/Dark' },
+      'design-3': { zh: '快速响应, 丝滑动画', en: 'Fast Response, Smooth Animations' },
+      'digital-1': { zh: '降噪耳机, 机械键盘, 大屏显示器', en: 'ANC Headphones, Mech Keyboard, Large Monitor' },
+      'digital-2': { zh: '苹果(Apple), 索尼(Sony), Dell', en: 'Apple, Sony, Dell' },
+      'digital-3': { zh: '极致性能, 屏幕素质, 稳定性', en: 'Peak Performance, Display Quality, Stability' },
+      'goal-1': { zh: '发论文, 复现论文实验, 搭建实验平台', en: 'Publish Paper, Reproduce Experiments, Build Testbed' },
+      'goal-2': { zh: '学术会议, 历史古迹', en: 'Academic Conferences, Historical Sites' },
+      'goal-3': { zh: '深入一个研究方向, 学一门新技能', en: 'Go Deep in Research Area, Learn a New Skill' },
+      'comm-1': { zh: '直奔主题, 严谨客观', en: 'Get to the Point, Rigorous & Objective' },
+      'comm-2': { zh: '代码+注释, 结构化表格, 简短总结', en: 'Code + Comments, Structured Tables, Concise Summary' },
+      'comm-3': { zh: '专业高冷, 客观中立', en: 'Professional & Cool, Objective & Balanced' }
     }
   }
 };
 
 const TABLE_ROWS = [
-  { category: '学习技术方向', items: [
-    ['tech-1', '最近想学习的嵌入式知识'],
-    ['tech-2', '最近想学习的AI/大模型知识'],
-    ['tech-3', '最近想掌握的编程/工具技能'],
-    ['tech-4', '最近想研究的硬件/开发板'],
-    ['tech-5', '最近想深入的系统/环境']
+  { category: { zh: '学习技术方向', en: 'Tech & Learning' }, items: [
+    ['tech-1', { zh: '最近想学习的嵌入式知识', en: 'Embedded knowledge to learn' }],
+    ['tech-2', { zh: '最近想学习的AI/大模型知识', en: 'AI / LLM knowledge to learn' }],
+    ['tech-3', { zh: '最近想掌握的编程/工具技能', en: 'Programming/tools to master' }],
+    ['tech-4', { zh: '最近想研究的硬件/开发板', en: 'Hardware/boards to research' }],
+    ['tech-5', { zh: '最近想深入的系统/环境', en: 'Systems/environments to dive into' }]
   ]},
-  { category: '艺术审美偏好', items: [
-    ['art-1', '最近喜欢的艺术/视觉风格'],
-    ['art-2', '最近喜欢的配色/排版风格'],
-    ['art-3', '最近喜欢的插画/渲染/摄影风格']
+  { category: { zh: '艺术审美偏好', en: 'Art & Aesthetics' }, items: [
+    ['art-1', { zh: '最近喜欢的艺术/视觉风格', en: 'Art/visual style you like' }],
+    ['art-2', { zh: '最近喜欢的配色/排版风格', en: 'Color scheme/layout style' }],
+    ['art-3', { zh: '最近喜欢的插画/渲染/摄影风格', en: 'Illustration/render/photo style' }]
   ]},
-  { category: '音乐喜好', items: [
-    ['music-1', '最近喜欢的音乐类型/曲风'],
-    ['music-2', '最近常听的歌手/乐队']
+  { category: { zh: '音乐喜好', en: 'Music Taste' }, items: [
+    ['music-1', { zh: '最近喜欢的音乐类型/曲风', en: 'Music genre/style you like' }],
+    ['music-2', { zh: '最近常听的歌手/乐队', en: 'Artists/bands you listen to' }]
   ]},
-  { category: '内容娱乐偏好', items: [
-    ['ent-1', '最近喜欢的短视频类型'],
-    ['ent-2', '最近喜欢看的视频/纪录片/课程'],
-    ['ent-3', '最近喜欢的文字内容']
+  { category: { zh: '内容娱乐偏好', en: 'Content & Entertainment' }, items: [
+    ['ent-1', { zh: '最近喜欢的短视频类型', en: 'Short video content you like' }],
+    ['ent-2', { zh: '最近喜欢看的视频/纪录片/课程', en: 'Videos/documentaries/courses you watch' }],
+    ['ent-3', { zh: '最近喜欢的文字内容', en: 'Text content you enjoy' }]
   ]},
-  { category: '生活运动习惯', items: [
-    ['life-1', '最近喜欢的锻炼/运动方式'],
-    ['life-2', '最近偏好的饮食/口味'],
-    ['life-3', '最近喜欢的放松方式']
+  { category: { zh: '生活运动习惯', en: 'Lifestyle & Exercise' }, items: [
+    ['life-1', { zh: '最近喜欢的锻炼/运动方式', en: 'Exercise/workout you enjoy' }],
+    ['life-2', { zh: '最近偏好的饮食/口味', en: 'Food/diet preferences' }],
+    ['life-3', { zh: '最近喜欢的放松方式', en: 'How you relax' }]
   ]},
-  { category: '设计界面偏好', items: [
-    ['design-1', '最近喜欢的网页/APP风格'],
-    ['design-2', '喜欢的UI氛围'],
-    ['design-3', '偏好的交互体验风格']
+  { category: { zh: '设计界面偏好', en: 'Design & UI' }, items: [
+    ['design-1', { zh: '最近喜欢的网页/APP风格', en: 'Web/APP style you like' }],
+    ['design-2', { zh: '喜欢的UI氛围', en: 'Preferred UI vibe' }],
+    ['design-3', { zh: '偏好的交互体验风格', en: 'Interaction experience preference' }]
   ]},
-  { category: '数码产品喜好', items: [
-    ['digital-1', '最近感兴趣的数码产品'],
-    ['digital-2', '最近关注的品牌/新品'],
-    ['digital-3', '看重的设备体验']
+  { category: { zh: '数码产品喜好', en: 'Digital Products' }, items: [
+    ['digital-1', { zh: '最近感兴趣的数码产品', en: 'Digital products you are interested in' }],
+    ['digital-2', { zh: '最近关注的品牌/新品', en: 'Brands/new products you follow' }],
+    ['digital-3', { zh: '看重的设备体验', en: 'Device experience you value most' }]
   ]},
-  { category: '近期计划目标', items: [
-    ['goal-1', '最近想完成的小项目/小目标'],
-    ['goal-2', '最近想去的地方/旅行计划'],
-    ['goal-3', '最近想尝试的新事物']
+  { category: { zh: '近期计划目标', en: 'Goals & Plans' }, items: [
+    ['goal-1', { zh: '最近想完成的小项目/小目标', en: 'Small projects/goals you want to achieve' }],
+    ['goal-2', { zh: '最近想去的地方/旅行计划', en: 'Places/travel plans' }],
+    ['goal-3', { zh: '最近想尝试的新事物', en: 'New things you want to try' }]
   ]},
-  { category: '沟通表达偏好', items: [
-    ['comm-1', '喜欢的沟通风格'],
-    ['comm-2', '喜欢的回答形式'],
-    ['comm-3', '偏好的语气氛围']
+  { category: { zh: '沟通表达偏好', en: 'Communication Style' }, items: [
+    ['comm-1', { zh: '喜欢的沟通风格', en: 'Communication style you prefer' }],
+    ['comm-2', { zh: '喜欢的回答形式', en: 'Response format you prefer' }],
+    ['comm-3', { zh: '偏好的语气氛围', en: 'Tone and atmosphere you prefer' }]
   ]}
 ];
 
 // ====== STATE ======
 const STORAGE_KEY = 'ai_pref_profiles';
-const THEME_KEY = 'theme';
+const THEME_KEY = 'theme_v3';
+const LANG_KEY = 'lang_v3';
 let currentProfile = 'default';
 let profiles = {};
+let lang = localStorage.getItem(LANG_KEY) || 'zh';
+
+function applyI18n() {
+  const t = I18N[lang];
+  document.getElementById('site-title').innerText = t.siteTitle;
+  document.getElementById('site-subtitle').innerText = t.siteSubtitle;
+  document.getElementById('th-category').innerText = t.thCategory;
+  document.getElementById('th-item').innerText = t.thItem;
+  document.getElementById('th-input').innerText = t.thInput;
+  document.getElementById('progress-label-text').innerText = t.progressLabel;
+  document.getElementById('note-text').innerText = t.note;
+  document.getElementById('btn-reset-text').innerText = t.btnReset;
+  document.getElementById('btn-import-text').innerText = t.btnImport;
+  document.getElementById('btn-export-text').innerText = t.btnExport;
+  document.getElementById('import-template-title').innerText = t.importTemplateTitle;
+  document.getElementById('import-template-desc').innerText = t.importTemplateDesc;
+  document.getElementById('import-json-title').innerText = t.importJsonTitle;
+  document.getElementById('import-json-desc').innerText = t.importJsonDesc;
+  document.getElementById('export-md-desc').innerText = t.exportMdDesc;
+  document.getElementById('export-json-desc').innerText = t.exportJsonDesc;
+  document.getElementById('export-prompt-desc').innerText = t.exportPromptDesc;
+  document.getElementById('export-text-desc').innerText = t.exportTextDesc;
+  document.getElementById('modal-new-profile-title').innerText = t.modalNewProfileTitle;
+  document.getElementById('modal-new-profile-desc').innerText = t.modalNewProfileDesc;
+  document.getElementById('modal-cancel-text').innerText = t.modalCancel;
+  document.getElementById('modal-create-text').innerText = t.modalCreate;
+  document.getElementById('modal-template-title').innerText = t.modalTemplateTitle;
+  document.getElementById('modal-template-desc').innerText = t.modalTemplateDesc;
+  document.getElementById('modal-template-cancel').innerText = t.modalTemplateCancel;
+  document.getElementById('btn-new-profile').innerText = t.btnNewProfile;
+  
+  const isLight = document.documentElement.classList.contains('light');
+  updateThemeUI(isLight);
+  
+  // Re-render template modal if open
+  if(document.getElementById('modal-template').classList.contains('show')) openTemplateModal();
+}
+
+function toggleLang() {
+  lang = lang === 'zh' ? 'en' : 'zh';
+  localStorage.setItem(LANG_KEY, lang);
+  updateLangUI();
+  applyI18n();
+  renderTable();
+  renderProfileBar();
+  updateProgress();
+}
+
+function updateLangUI() {
+  document.getElementById('lang-zh').className = lang === 'zh' ? 'lang-active' : '';
+  document.getElementById('lang-en').className = lang === 'en' ? 'lang-active' : '';
+}
 
 function getTemplateOptions(id) {
   const t = TEMPLATE_DATA.find(t => t.id === id);
-  return t ? t.options : '';
+  return t ? (t.options[lang] || t.options['zh']) : '';
 }
 
 // ====== INIT ======
 function init() {
   loadProfiles();
+  updateLangUI();
+  applyI18n();
   renderTable();
   renderProfileBar();
   loadTheme();
@@ -890,11 +1116,11 @@ function loadProfiles() {
     if (saved) {
       profiles = JSON.parse(saved);
     } else {
-      profiles = { default: { name: '默认档案', values: {} } };
+      profiles = { default: { name: 'default', values: {} } };
     }
     currentProfile = Object.keys(profiles)[0];
   } catch(e) {
-    profiles = { default: { name: '默认档案', values: {} } };
+    profiles = { default: { name: 'default', values: {} } };
     currentProfile = 'default';
   }
 }
@@ -905,13 +1131,16 @@ function saveProfiles() {
 
 function renderProfileBar() {
   const bar = document.getElementById('profile-bar');
-  const tabs = Object.entries(profiles).map(([id, p]) => `
+  const t = I18N[lang];
+  const tabs = Object.entries(profiles).map(([id, p]) => {
+    const displayName = (id === 'default' || p.name === 'default' || p.name === '默认档案') ? t.profileDefault : p.name;
+    return `
     <div class="profile-tab ${id === currentProfile ? 'active' : ''}" onclick="switchProfile('${id}')">
-      ${p.name}
+      ${displayName}
       ${id !== 'default' ? `<button class="del" onclick="event.stopPropagation();deleteProfile('${id}')">×</button>` : ''}
     </div>
-  `).join('');
-  bar.innerHTML = `<button class="btn-new-profile" onclick="openNewProfileModal()">+ 新建档案</button>` + tabs;
+  `}).join('');
+  bar.innerHTML = `<button class="btn-new-profile" id="btn-new-profile" onclick="openNewProfileModal()">${t.btnNewProfile}</button>` + tabs;
 }
 
 function switchProfile(id) {
@@ -934,7 +1163,7 @@ function saveCurrentToProfile() {
   document.querySelectorAll('.input-cell').forEach(c => {
     if (c.innerText.trim()) values[c.id] = c.innerText.trim();
   });
-  profiles[currentProfile] = profiles[currentProfile] || { name: profiles[currentProfile]?.name || '默认档案', values: {} };
+  profiles[currentProfile] = profiles[currentProfile] || { name: profiles[currentProfile]?.name || 'default', values: {} };
   profiles[currentProfile].values = values;
   saveProfiles();
 }
@@ -958,18 +1187,18 @@ function createProfile() {
   closeModal('modal-new-profile');
   renderProfileBar();
   switchProfile(id);
-  showToast(`已创建档案：${name}`);
+  showToast(`${I18N[lang].toastCreated}${name}`);
 }
 
 function deleteProfile(id) {
-  if (!confirm(`确定删除档案"${profiles[id]?.name}"吗？`)) return;
+  if (!confirm(`${I18N[lang].confirmDelete}${profiles[id]?.name}${I18N[lang].confirmDeleteSuffix}`)) return;
   const name = profiles[id]?.name;
   delete profiles[id];
   saveProfiles();
   if (currentProfile === id) currentProfile = Object.keys(profiles)[0];
   renderProfileBar();
   switchProfile(currentProfile);
-  showToast(`已删除：${name}`);
+  showToast(`${I18N[lang].toastDeleted}${name}`);
 }
 
 // ====== RENDER TABLE ======
@@ -983,10 +1212,15 @@ function renderTable() {
       const isLast = si === TABLE_ROWS.length - 1 && ii === section.items.length - 1;
       const catRowspan = section.items.length;
       const options = getTemplateOptions(id);
+      
+      const categoryLabel = section.category[lang] || section.category['zh'];
+      const itemLabel = label[lang] || label['zh'];
+      const placeholder = I18N[lang].placeholder;
+      
       html += `<tr>
-        ${isCategoryFirst ? `<td rowspan="${catRowspan}" class="category-cell" style="${isLast ? 'border-bottom:none' : ''}">${section.category}</td>` : ''}
-        <td class="item-cell">${label}</td>
-        <td class="input-cell" contenteditable="true" data-placeholder="点击输入..."
+        ${isCategoryFirst ? `<td rowspan="${catRowspan}" class="category-cell" style="${isLast ? 'border-bottom:none' : ''}">${categoryLabel}</td>` : ''}
+        <td class="item-cell">${itemLabel}</td>
+        <td class="input-cell" contenteditable="true" data-placeholder="${placeholder}"
           data-options="${options}"
           id="${id}" ${isLast ? 'style="border-bottom:none"' : ''}></td>
       </tr>`;
@@ -1001,6 +1235,12 @@ function renderTable() {
       localStorage.setItem('self_analysis_' + currentProfile + '_' + e.target.id, e.target.innerText);
       updateProgress();
     });
+  });
+  
+  // Re-fill data
+  Object.entries(profiles[currentProfile]?.values || {}).forEach(([cellId, val]) => {
+    const el = document.getElementById(cellId);
+    if (el) el.innerText = val;
   });
 }
 
@@ -1033,7 +1273,7 @@ function showSuggestions(cell) {
 function insertOption(text) {
   if (!currentCell) return;
   let cur = currentCell.innerText.trim();
-  if (cur && !cur.endsWith('，') && !cur.endsWith(',')) cur += '，';
+  if (cur && !cur.endsWith('，') && !cur.endsWith(',')) cur += (lang === 'en' ? ', ' : '，');
   currentCell.innerText = cur + text;
   const key = 'self_analysis_' + currentProfile + '_' + currentCell.id;
   localStorage.setItem(key, currentCell.innerText);
@@ -1071,7 +1311,7 @@ function toggleTheme() {
 function updateThemeUI(isLight) {
   document.getElementById('theme-icon-dark').style.display = isLight ? 'none' : '';
   document.getElementById('theme-icon-light').style.display = isLight ? '' : 'none';
-  document.getElementById('theme-label').innerText = isLight ? '浅色' : '深色';
+  document.getElementById('theme-label').innerText = isLight ? I18N[lang].themeLight : I18N[lang].themeDark;
 }
 function loadTheme() {
   const saved = localStorage.getItem(THEME_KEY);
@@ -1100,14 +1340,21 @@ function exportAs(format) {
   saveCurrentToProfile();
   const now = new Date();
   const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-  const profileName = profiles[currentProfile]?.name || '默认档案';
+  const profileName = (currentProfile === 'default' || profiles[currentProfile]?.name === 'default') ? I18N[lang].profileDefault : (profiles[currentProfile]?.name || I18N[lang].profileDefault);
   const data = getAllData();
   let content = '';
   if (format === 'markdown') content = buildMarkdown(data, dateStr, profileName);
   else if (format === 'json') content = buildJSON(data, dateStr, profileName);
   else if (format === 'prompt') content = buildSystemPrompt(data, dateStr, profileName);
   else if (format === 'text') content = buildText(data, dateStr, profileName);
-  copyToClipboard(content, `已复制为${format === 'markdown'?'Markdown':format==='json'?'JSON':format==='prompt'?'System Prompt':'纯文本'}！`);
+  
+  let formatName = '';
+  if(format === 'markdown') formatName = I18N[lang].exportMd;
+  else if(format === 'json') formatName = I18N[lang].exportJson;
+  else if(format === 'prompt') formatName = I18N[lang].exportPrompt;
+  else if(format === 'text') formatName = I18N[lang].exportText;
+  
+  copyToClipboard(content, `${I18N[lang].toastCopied}${formatName}！`);
 }
 
 function getAllData() {
@@ -1122,17 +1369,39 @@ function buildMarkdown(data, dateStr, profileName) {
   const rows = [];
   TABLE_ROWS.forEach(section => {
     section.items.forEach(([id, label]) => {
-      rows.push({ category: section.category, item: label, value: data[id] || '—' });
+      rows.push({ category: section.category[lang], item: label[lang], value: data[id] || '—' });
     });
   });
-  const沟风格 = data['comm-1'] || '待填写';
-  const回答形式 = data['comm-2'] || '待填写';
-  const语气 = data['comm-3'] || '待填写';
-  let md = `## 🤖 给 AI 的指令\n`;
-  md += `请以"${语气}"的风格，用"${回答形式}"的形式回答。\n`;
-  md += `【档案】${profileName} | 更新时间：${dateStr}\n---\n# 个人偏好与技能设定\n\n`;
+  const comm1 = data['comm-1'] || '待填写';
+  const comm2 = data['comm-2'] || '待填写';
+  const comm3 = data['comm-3'] || '待填写';
+  
+  let md = `## 🤖 给 AI 的指令
+`;
+  if (lang === 'en') md = `## 🤖 Instructions for AI
+`;
+  
+  if (lang === 'zh') {
+    md += `请以"${comm3}"的风格，用"${comm2}"的形式回答。
+`;
+    md += `【档案】${profileName} | 更新时间：${dateStr}
+---
+# 个人偏好与技能设定
+
+`;
+  } else {
+    md += `Please respond in a "${comm3}" tone, using "${comm2}" format.
+`;
+    md += `[Profile] ${profileName} | Updated: ${dateStr}
+---
+# Personal Preferences & Skills
+
+`;
+  }
+  
   rows.forEach(({ category, item, value }) => {
-    md += `| **${category}** | ${item} | ${value} |\n`;
+    md += `| **${category}** | ${item} | ${value} |
+`;
   });
   return md;
 }
@@ -1149,37 +1418,64 @@ function buildJSON(data, dateStr, profileName) {
 }
 
 function buildSystemPrompt(data, dateStr, profileName) {
-  const沟风格 = data['comm-1'] || '专业直接';
-  const回答形式 = data['comm-2'] || '结构化表格';
-  const语气 = data['comm-3'] || '客观专业';
-  const审美 = data['art-1'] || '极简主义';
-  return `【角色设定】你是一位${语气}的个人成长助理，代号"${profileName}"。
+  const comm1 = data['comm-1'] || (lang === 'zh' ? '专业直接' : 'Professional & Direct');
+  const comm2 = data['comm-2'] || (lang === 'zh' ? '结构化表格' : 'Structured Tables');
+  const comm3 = data['comm-3'] || (lang === 'zh' ? '客观专业' : 'Objective & Professional');
+  const art1 = data['art-1'] || (lang === 'zh' ? '极简主义' : 'Minimalism');
+  
+  if (lang === 'en') {
+    return `[Role Setting] You are a ${comm3} personal growth assistant, codename "${profileName}".
+
+[User Profile]
+- Comm Style: ${comm1}
+- Format: ${comm2}
+- Tone/Vibe: ${comm3}
+- Aesthetics: ${art1}
+- Tech Stack: ${data['tech-3'] || 'TBD'}
+- AI/LLM: ${data['tech-2'] || 'TBD'}
+- Recent Goals: ${data['goal-1'] || 'TBD'}
+
+[Behavioral Guidelines]
+- Tone: ${comm3}, ${comm1}
+- Prioritize ${comm2} format
+- Code examples should use ${art1} style
+- Avoid fluff, every sentence must contain information
+
+[Last Updated] ${dateStr}`;
+  }
+  
+  return `【角色设定】你是一位${comm3}的个人成长助理，代号"${profileName}"。
 
 【用户画像】
-- 沟通风格：${沟风格}
-- 回答形式：${回答形式}
-- 语气氛围：${语气}
-- 审美偏好：${审美}
+- 沟通风格：${comm1}
+- 回答形式：${comm2}
+- 语气氛围：${comm3}
+- 审美偏好：${art1}
 - 技术栈：${data['tech-3'] || '待填写'}
 - AI/大模型：${data['tech-2'] || '待填写'}
 - 近期目标：${data['goal-1'] || '待填写'}
 
 【行为准则】
-- 风格：${语气}，${沟风格}
-- 优先使用${回答形式}形式回复
-- 代码示例使用${审美}风格
+- 风格：${comm3}，${comm1}
+- 优先使用${comm2}形式回复
+- 代码示例使用${art1}风格
 - 避免冗余，每句话要有信息量
 
 【更新时间】${dateStr}`;
 }
 
 function buildText(data, dateStr, profileName) {
-  let txt = `【${profileName}】个人偏好与技能设定 (${dateStr})\n${'='.repeat(36)}\n\n`;
-  let lastCat = '';
+  let txt = `【${profileName}】${I18N[lang].siteSubtitle} (${dateStr})
+${'='.repeat(36)}
+
+`;
   TABLE_ROWS.forEach(section => {
-    txt += `\n【${section.category}】\n`;
+    txt += `
+【${section.category[lang]}】
+`;
     section.items.forEach(([id, label]) => {
-      txt += `  · ${label}：${data[id] || '(未填写)'}\n`;
+      txt += `  · ${label[lang]}：${data[id] || '(未填写/Empty)'}
+`;
     });
   });
   return txt;
@@ -1199,15 +1495,14 @@ function handleFileImport(e) {
     try {
       const json = JSON.parse(ev.target.result);
       const values = json.values || json.entries || {};
-      // Detect if profile name in JSON
       const profileName = json.profile || '导入档案';
       const id = 'profile_' + Date.now();
       profiles[id] = { name: profileName, values };
       saveProfiles();
       switchProfile(id);
-      showToast(`已导入${profileName}，共 ${Object.values(values).filter(Boolean).length} 项`);
+      showToast(`${I18N[lang].toastImport}${profileName}，共 ${Object.values(values).filter(Boolean).length} ${I18N[lang].toastImportItems}`);
     } catch(err) {
-      showToast('JSON 格式错误，导入失败');
+      showToast(I18N[lang].toastJsonError);
     }
   };
   reader.readAsText(file);
@@ -1220,7 +1515,8 @@ function openTemplateModal() {
   grid.innerHTML = Object.entries(PRESET_TEMPLATES).map(([id, t]) => `
     <div class="template-card" onclick="loadTemplate('${id}')">
       <div class="icon">${t.icon}</div>
-      <div class="name">${t.name}</div>
+      <div class="name">${t.name[lang] || t.name.zh}</div>
+      <div class="name-en">${t.name.en || ''}</div>
     </div>
   `).join('');
   document.getElementById('modal-template').classList.add('show');
@@ -1230,26 +1526,24 @@ function loadTemplate(id) {
   const t = PRESET_TEMPLATES[id];
   if (!t) return;
   saveCurrentToProfile();
-  // Clear current
   document.querySelectorAll('.input-cell').forEach(c => c.innerText = '');
-  // Fill with template
   Object.entries(t.values).forEach(([cellId, val]) => {
     const el = document.getElementById(cellId);
-    if (el) el.innerText = val;
+    if (el) el.innerText = val[lang] || val['zh'] || val;
   });
   closeModal('modal-template');
   updateProgress();
-  showToast(`已加载"${t.name}"模板`);
+  showToast(`${I18N[lang].toastLoaded}${t.name[lang] || t.name.zh}${I18N[lang].toastTemplate}`);
 }
 
 // ====== RESET ======
 function resetCurrentProfile() {
-  if (!confirm('确定要清空当前档案的所有内容吗？')) return;
+  if (!confirm(I18N[lang].confirmReset)) return;
   document.querySelectorAll('.input-cell').forEach(c => c.innerText = '');
   profiles[currentProfile].values = {};
   saveProfiles();
   updateProgress();
-  showToast('当前档案已重置');
+  showToast(I18N[lang].toastReset);
 }
 
 // ====== COPY ======
@@ -1262,7 +1556,7 @@ function fallbackCopy(text, msg) {
   const ta = document.createElement('textarea');
   ta.value = text; ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px';
   document.body.appendChild(ta); ta.focus(); ta.select();
-  try { document.execCommand('copy'); showToast(msg); } catch { showToast('复制失败'); }
+  try { document.execCommand('copy'); showToast(msg); } catch { showToast(I18N[lang].toastCopyFail); }
   document.body.removeChild(ta);
 }
 function showToast(msg) {
