@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>个人偏好与学习方向自我分析表</title>
+  <style>
+    :root {
+      --bg-color: #09090b;
+      --card-bg: rgba(255, 255, 255, 0.03);
+      --text-main: #ffffff;
+      --text-muted: #a1a1aa;
+      --border-color: rgba(255, 255, 255, 0.1);
+      --accent-start: #8b5cf6;
+      --accent-end: #3b82f6;
+      --focus-glow: rgba(139, 92, 246, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 64px 20px;
+      min-height: 100vh;
+      /* Subtle mesh gradient background */
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(120, 119, 198, 0.15), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.15), transparent 25%);
+      background-attachment: fixed;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 24px;
+      box-shadow: 0 4px 24px -1px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+      padding: 48px;
+      border: 1px solid var(--border-color);
+      animation: fadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header {
+      margin-bottom: 48px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+      background: linear-gradient(to right, #fff, #a1a1aa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      padding-bottom: 24px; /* Space for dropdown */
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 16px 20px;
+      text-align: left;
+    }
+
+    th {
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 12px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+    }
+
+    /* Add spacing between categories instead of full borders */
+    tbody tr {
+      transition: background-color 0.2s ease;
+    }
+    
+    tbody tr:not(:last-child) td {
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .category-cell {
+      font-weight: 600;
+      vertical-align: top;
+      color: var(--text-main);
+      width: 20%;
+      padding-top: 24px;
+    }
+
+    .item-cell {
+      width: 35%;
+      color: var(--text-muted);
+    }
+
+    .input-cell {
+      width: 45%;
+      cursor: text;
+      outline: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      border-radius: 6px;
+      padding: 6px 12px;
+      margin: 4px 0;
+      background: rgba(255,255,255,0.01);
+      border: 1px solid transparent;
+    }
+
+    .input-cell:empty:before {
+      content: attr(data-placeholder);
+      color: rgba(255,255,255,0.15);
+      pointer-events: none;
+    }
+
+    .input-cell:hover {
+      background-color: rgba(255,255,255,0.03);
+    }
+
+    .input-cell:focus {
+      background-color: rgba(255,255,255,0.04);
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 0 2px var(--focus-glow);
+    }
+
+    /* --- Suggestion Menu Dropdown --- */
+    #suggestion-menu {
+      position: absolute;
+      background: rgba(20, 20, 25, 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      padding: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      max-width: 320px;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #suggestion-menu.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .suggestion-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .suggestion-item:hover {
+      background: var(--accent-start);
+      border-color: var(--accent-start);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .actions {
+      margin-top: 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-color);
+      padding-top: 32px;
+    }
+    
+    .note {
+      color: var(--text-muted);
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .note::before {
+      content: '💡';
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 16px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-primary:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    .btn-primary:active {
+      transform: scale(0.96);
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--text-muted);
+    }
+
+    .btn-secondary:hover {
+      color: var(--text-main);
+      background-color: rgba(255,255,255,0.05);
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--text-main);
+      padding: 12px 24px;
+      border-radius: 99px;
+      font-size: 14px;
+      font-weight: 500;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      z-index: 1000;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>My Preferences & Goals</h1>
+      <div class="subtitle">个人偏好与技能设定</div>
+    </header>
+
+    <div class="table-wrapper">
+      <table id="analysis-table">
+        <thead>
+          <tr>
+            <th>分类</th>
+            <th>具体项目</th>
+            <th>你的填写 (可自填或选标签)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 学习技术方向 (5项) -->
+          <tr>
+            <td rowspan="5" class="category-cell">学习技术方向</td>
+            <td class="item-cell">最近想学习的嵌入式知识</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="STM32, ESP32, 树莓派, Arduino, RTOS, 瑞芯微, 全志" id="tech-1"></td>
+          </tr>
+          <tr>
+            <td class="item-cell">最近想学习的AI/大模型知识</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="Agent开发, Skill, 神经网络, Transformer, GPT, 提示词工程(Prompt), RAG, 部署微调, LangChain" id="tech-2"></td>
+          </tr>
+          <tr>
+            <td class="item-cell">最近想掌握的编程/工具技能</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="Python, C/C++, PyTorch, QT, LVGL, Rust, Go, 前端(React/Vue), Git" id="tech-3"></td>
+          </tr>
+          <tr>
+            <td class="item-cell">最近想研究的硬件/开发板</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="RISC-V, ARM架构, RT-thread, Jetson" id="tech-4"></td>
+          </tr>
+          <tr>
+            <td class="item-cell">最近想深入的系统/环境</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="Linux内核, 设备树, ROS, 机器人, 机器人运动学, 机械臂仿真, Shell脚本, Docker/K8s, Ubuntu" id="tech-5"></td>
+          </tr>
+
+          <!-- 艺术审美偏好 (3项) -->
+          <tr>
+            <td rowspan="3" class="category-cell">艺术审美偏好</td>
+            <td class="item-cell">最近喜欢的艺术/视觉风格</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="极简主义, 赛博朋克, 像素风, 毛玻璃/新拟态, 扁平化" id="art-1"></td>
+          </tr>
+          <tr>
+            <td class="item-cell">最近喜欢的配色/排版风格</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="莫兰迪色系, 黑白灰克制, 高饱和霓虹, 大留白, 网格排版" id="art-2"></td>
+          </tr>
+          <tr>
+            <td class="item-cell">最近喜欢的插画/渲染/摄影风格</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="3D渲染, LUT, 胶片摄影, 矢量插画, 抽象艺术, 纪实摄影" id="art-3"></td>
+          </tr>
+
+          <!-- 音乐喜好 (2项) -->
+          <tr>
+            <td rowspan="2" class="category-cell">音乐喜好</td>
+            <td class="item-cell">最近喜欢的音乐类型/曲风</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="流行, 纯音乐/BGM, 电子EDM, 摇滚, 爵士/古典, 嘻哈" id="music-1"></td>
+          </tr>
+          <tr>
+            <td class="item-cell">最近常听的歌手/乐队</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="周杰伦, 泽野弘之, 泰勒·斯威夫特, 坂本龙一, 林俊杰, 伍佰" id="music-2"></td>
+          </tr>
+
+          <!-- 内容娱乐偏好 (3项) -->
+          <tr>
+            <td rowspan="3" class="category-cell">内容娱乐偏好</td>
+            <td class="item-cell">最近喜欢的短视频类型</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="科技数码, Vlog, 风景, 知识科普, 游戏解说, 萌宠" id="ent-1"></td>
+          </tr>
+          <tr>
+            <td class="item-cell">最近喜欢看的视频/纪录片/课程</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="B站硬核科普, TED演讲, 网课/教程, 影视解说" id="ent-2"></td>
+          </tr>
+          <tr>
+            <td class="item-cell">最近喜欢的文字内容</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="技术博客, 哲学宗教, 科幻小说, 科技科普, 商业分析, 历史人文, 新闻资讯" id="ent-3"></td>
+          </tr>
+
+          <!-- 生活运动习惯 (3项) -->
+          <tr>
+            <td rowspan="3" class="category-cell">生活运动习惯</td>
+            <td class="item-cell">最近喜欢的锻炼/运动方式</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="跑步, 游泳, 力量训练, 羽毛球, 骑行, 散步, 躺平" id="life-1"></td>
+          </tr>
+          <tr>
+            <td class="item-cell">最近偏好的饮食/口味</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="清淡, 无辣不欢, 甜食控, 咖啡/茶依赖, 随便对付" id="life-2"></td>
+          </tr>
+          <tr>
+            <td class="item-cell">最近喜欢的放松方式</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="听歌, 放空, 公园, 打游戏, 睡觉, 看书, 刷短视频" id="life-3"></td>
+          </tr>
+
+          <!-- 设计界面偏好 (3项) -->
+          <tr>
+            <td rowspan="3" class="category-cell">设计界面偏好</td>
+            <td class="item-cell">最近喜欢的网页/APP风格</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="Apple风, Material Design, 拟物化, 卡片式" id="design-1"></td>
+          </tr>
+          <tr>
+            <td class="item-cell">喜欢的UI氛围</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="极简/克制, 科技感/暗黑, 活泼/多彩, 商务/专业" id="design-2"></td>
+          </tr>
+          <tr>
+            <td class="item-cell">偏好的交互体验风格</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="丝滑动画, 快速响应, 细腻微动效, 手势操作" id="design-3"></td>
+          </tr>
+
+          <!-- 数码产品喜好 (3项) -->
+          <tr>
+            <td rowspan="3" class="category-cell">数码产品喜好</td>
+            <td class="item-cell">最近感兴趣的数码产品</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="智能手机, 相机, VR/AR, 降噪耳机, 掌机/主机" id="digital-1"></td>
+          </tr>
+          <tr>
+            <td class="item-cell">最近关注的品牌/新品</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="苹果(Apple), 索尼(Sony), 大疆(DJI), 华为(Huawei), 任天堂" id="digital-2"></td>
+          </tr>
+          <tr>
+            <td class="item-cell">看重的设备体验</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="极致性能, 续航无忧, 屏幕素质, 工业设计, 极具性价比" id="digital-3"></td>
+          </tr>
+
+          <!-- 近期计划目标 (3项) -->
+          <tr>
+            <td rowspan="3" class="category-cell">近期计划目标</td>
+            <td class="item-cell">最近想完成的小项目/小目标</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="做个个人网站, 写个小工具/脚本, 点亮开发板, 读完一本书" id="goal-1"></td>
+          </tr>
+          <tr>
+            <td class="item-cell">最近想去的地方/旅行计划</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="海边度假, 爬山徒步, 历史古迹, 城市漫游, 宅家云旅游" id="goal-2"></td>
+          </tr>
+          <tr>
+            <td class="item-cell">最近想尝试的新事物</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="学一门乐器, 尝试新运动, 做一次饭, 学习3D建模" id="goal-3"></td>
+          </tr>
+
+          <!-- 沟通表达偏好 (3项) -->
+          <tr>
+            <td rowspan="3" class="category-cell" style="border-bottom: none;">沟通表达偏好</td>
+            <td class="item-cell">喜欢的沟通风格</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="直奔主题, 循循善诱, 幽默风趣, 严谨客观" id="comm-1"></td>
+          </tr>
+          <tr>
+            <td class="item-cell">喜欢的回答形式</td>
+            <td class="input-cell" contenteditable="true" data-placeholder="点击输入..." data-options="结构化表格, 代码+注释, 思维导图, 简短总结" id="comm-2"></td>
+          </tr>
+          <tr>
+            <td class="item-cell" style="border-bottom: none;">偏好的语气氛围</td>
+            <td class="input-cell" style="border-bottom: none;" contenteditable="true" data-placeholder="点击输入..." data-options="热情鼓励, 专业高冷, 朋友般闲聊, 客观中立" id="comm-3"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="actions">
+      <div class="note">直接点击表格中的“你的填写”列进行编辑，支持打字或选择标签，数据会自动保存在浏览器中。</div>
+      <div class="btn-group">
+        <button class="btn btn-secondary" onclick="clearData()">清空</button>
+        <button class="btn btn-primary" onclick="exportToMarkdown()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          复制为 Markdown
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast">已复制到剪贴板</div>
+
+  <script>
+    const cells = document.querySelectorAll('.input-cell');
+    let currentCell = null;
+
+    // --- Dropdown Menu Logic ---
+    const suggestionMenu = document.createElement('div');
+    suggestionMenu.id = 'suggestion-menu';
+    document.body.appendChild(suggestionMenu);
+
+    function showSuggestions(cell) {
+      currentCell = cell;
+      const optionsStr = cell.getAttribute('data-options');
+      
+      if (!optionsStr) {
+        suggestionMenu.classList.remove('show');
+        return;
+      }
+      
+      const options = optionsStr.split(',').map(s => s.trim());
+      suggestionMenu.innerHTML = ''; // clear
+      
+      options.forEach(opt => {
+        const item = document.createElement('div');
+        item.className = 'suggestion-item';
+        item.innerText = opt;
+        
+        // Use mousedown instead of click to prevent focus loss from input-cell
+        item.addEventListener('mousedown', (e) => {
+          e.preventDefault(); 
+        });
+        
+        item.addEventListener('click', () => {
+          insertOption(opt);
+        });
+        
+        suggestionMenu.appendChild(item);
+      });
+      
+      // Calculate Position
+      const rect = cell.getBoundingClientRect();
+      suggestionMenu.style.top = (rect.bottom + window.scrollY + 8) + 'px';
+      suggestionMenu.style.left = (rect.left + window.scrollX) + 'px';
+      suggestionMenu.style.width = Math.max(300, rect.width) + 'px';
+      
+      suggestionMenu.classList.add('show');
+    }
+
+    function insertOption(text) {
+      if (!currentCell) return;
+      
+      let currentText = currentCell.innerText.trim();
+      
+      // Append logic
+      if (currentText && !currentText.endsWith('，') && !currentText.endsWith(',')) {
+        currentCell.innerText = currentText + '，' + text;
+      } else if (currentText) {
+        currentCell.innerText = currentText + text;
+      } else {
+        currentCell.innerText = text;
+      }
+      
+      // Trigger save
+      localStorage.setItem('self_analysis_' + currentCell.id, currentCell.innerText);
+      
+      // Keep focus and place caret at end
+      currentCell.focus();
+      if (typeof window.getSelection !== "undefined" && typeof document.createRange !== "undefined") {
+        const range = document.createRange();
+        range.selectNodeContents(currentCell);
+        range.collapse(false);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+    }
+
+    // Hide menu on outside click
+    document.addEventListener('mousedown', (e) => {
+      if (!suggestionMenu.contains(e.target) && e.target !== currentCell) {
+        suggestionMenu.classList.remove('show');
+      }
+    });
+
+    // --- LocalStorage & Editing Logic ---
+    cells.forEach(cell => {
+      // Load saved data
+      const savedContent = localStorage.getItem('self_analysis_' + cell.id);
+      if (savedContent) {
+        cell.innerText = savedContent;
+      }
+      
+      // Listen for focus to show menu
+      cell.addEventListener('focus', () => showSuggestions(cell));
+      
+      // Listen for changes and save
+      cell.addEventListener('input', (e) => {
+        localStorage.setItem('self_analysis_' + e.target.id, e.target.innerText);
+      });
+    });
+
+    // Clear all data
+    function clearData() {
+      if(confirm('确定要清空所有已填写的内容吗？')) {
+        cells.forEach(cell => {
+          cell.innerText = '';
+          localStorage.removeItem('self_analysis_' + cell.id);
+        });
+        showToast('内容已清空');
+      }
+    }
+
+    // Export to Markdown format with AI Prompt
+    function exportToMarkdown() {
+      // 生成当前时间
+      const now = new Date();
+      const dateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+      // --- AI 提示词 (Prompt) ---
+      let md = `## 🤖 给 AI 的指令 (Prompt)
+请你扮演一位专业的个人成长教练和数字管家，帮我处理以下任务：
+
+1. **建立个人档案 (Memory)**：
+   - 请在 \`cc-connect/记录\`（或其他你认为合适的本地文件夹）中，创建一个名为 \`自我分析报告_${dateStr}.md\` 的文件，并将下面的表格数据保存进去。
+   - 提取表格中的核心偏好和技能方向，作为你的长期记忆，以便在未来的对话中为我提供更个性化的回答和代码风格。
+
+2. **深度偏好分析**：
+   - 根据我在表格中的填写，分析我的技术倾向（全栈/底层/AI等）和审美偏好（极简/赛博等）。
+   - 分析我的生活与娱乐习惯，指出这体现了怎样的工作/生活节奏。
+
+3. **定制成长计划与建议**：
+   - 基于我的“近期计划目标”和“技术学习方向”，为我制定一个**为期 4 周的可行性成长计划**。
+   - 给我推荐 3 个与我审美偏好相符的优秀开源项目、设计网站或相关资源。
+   - 根据我的“沟通表达偏好”，调整你接下来给我的回复语气。
+
+请先确认你已经保存了数据，然后直接以我偏好的语气输出你的分析和建议。
+
+---
+
+`;
+
+      md += "# 个人偏好与学习方向自我分析表\n";
+      md += `> 更新时间：${dateStr}\n\n`;
+      md += "| 分类 | 具体项目 | 你的填写 |\n";
+      md += "| :--- | :--- | :--- |\n";
+
+      const rows = document.querySelectorAll('tbody tr');
+      let currentCategory = "";
+
+      rows.forEach(row => {
+        const categoryNode = row.querySelector('.category-cell');
+        if (categoryNode) {
+          currentCategory = `**${categoryNode.innerText}**`;
+        } else {
+          currentCategory = "";
+        }
+
+        const item = row.querySelector('.item-cell').innerText;
+        const input = row.querySelector('.input-cell').innerText.replace(/\n/g, ' ');
+
+        md += `| ${currentCategory} | ${item} | ${input} |\n`;
+      });
+
+      // 尝试使用现代 Clipboard API
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(md).then(() => {
+          showToast('已复制包含 AI Prompt 的完整报告！');
+        }).catch(err => {
+          console.warn('现代剪贴板 API 失败，尝试降级方案:', err);
+          fallbackCopy(md);
+        });
+      } else {
+        fallbackCopy(md);
+      }
+    }
+
+    // 经典降级复制方案 (兼容受限的 iframe 预览环境)
+    function fallbackCopy(text) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      
+      // 确保文本域不可见，并且不会导致页面跳动
+      textArea.style.position = "fixed";
+      textArea.style.top = "-9999px";
+      textArea.style.left = "-9999px";
+      
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+
+      try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+          showToast('已复制包含 AI Prompt 的完整报告！');
+        } else {
+          showToast('复制失败，您的浏览器禁用了复制权限');
+        }
+      } catch (err) {
+        console.error('降级复制也失败了:', err);
+        showToast('复制失败，请手动全选复制');
+      }
+      
+      document.body.removeChild(textArea);
+    }
+
+    // Toast notification helper
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.innerText = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
