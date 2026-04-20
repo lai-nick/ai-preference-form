@@ -43,10 +43,24 @@
       padding: 64px 20px;
       min-height: 100vh;
       background-image:
-        radial-gradient(circle at 15% 50%, rgba(120, 119, 198, 0.12), transparent 25%),
-        radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.12), transparent 25%);
+        radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.15), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.15), transparent 25%),
+        radial-gradient(circle at 50% 80%, rgba(236, 72, 153, 0.1), transparent 30%),
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 40px 40px, 40px 40px;
       background-attachment: fixed;
       transition: background-color 0.3s, color 0.3s;
+    }
+
+    :root.light body {
+      background-image:
+        radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.1), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.1), transparent 25%),
+        radial-gradient(circle at 50% 80%, rgba(236, 72, 153, 0.08), transparent 30%),
+        linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 40px 40px, 40px 40px;
     }
 
     .container {
@@ -365,8 +379,9 @@
       color: var(--text-muted);
       cursor: pointer;
       display: flex;
-      align-items: center;
-      gap: 10px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
       transition: all 0.15s;
       border: none;
       background: none;
@@ -375,15 +390,23 @@
     }
     .dropdown-item:hover { background: rgba(255,255,255,0.08); color: var(--text-main); }
     :root.light .dropdown-item:hover { background: rgba(0,0,0,0.05); }
+    .dropdown-item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      color: var(--text-main);
+    }
     .dropdown-item .tag {
-      font-size: 11px;
+      font-size: 10px;
       padding: 2px 6px;
       border-radius: 4px;
       background: rgba(139,92,246,0.2);
       color: var(--accent-start);
       font-weight: 600;
+      white-space: nowrap;
     }
-    .dropdown-item .desc { display: block; font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+    .dropdown-item .desc { display: block; font-size: 11px; color: var(--text-muted); line-height: 1.4; }
     .dropdown-divider { height: 1px; background: var(--border-color); margin: 6px 0; }
 
     .btn {
@@ -585,13 +608,17 @@
           </button>
           <div class="dropdown-menu" id="import-menu">
             <button class="dropdown-item" onclick="openTemplateModal()">
-              <strong id="import-template-title">从模板加载</strong>
-              <span class="tag">NEW</span>
+              <div class="dropdown-item-header">
+                <strong id="import-template-title">从模板加载</strong>
+                <span class="tag">NEW</span>
+              </div>
               <span class="desc" id="import-template-desc">程序员 / 产品经理 / 学生...</span>
             </button>
             <div class="dropdown-divider"></div>
             <button class="dropdown-item" onclick="importFromJSON()">
-              <strong id="import-json-title">导入 JSON 文件</strong>
+              <div class="dropdown-item-header">
+                <strong id="import-json-title">导入 JSON 文件</strong>
+              </div>
               <span class="desc" id="import-json-desc">恢复之前导出的配置</span>
             </button>
           </div>
@@ -602,10 +629,34 @@
             <span id="btn-export-text">导出 ▾</span>
           </button>
           <div class="dropdown-menu" id="export-menu">
-            <button class="dropdown-item" onclick="exportAs('markdown')"><strong>Markdown</strong><span class="tag">AI</span><span class="desc" id="export-md-desc">复制给 Trae / ChatGPT / Claude</span></button>
-            <button class="dropdown-item" onclick="exportAs('json')"><strong>JSON</strong><span class="tag">数据</span><span class="desc" id="export-json-desc">备份配置，换设备可导入恢复</span></button>
-            <button class="dropdown-item" onclick="exportAs('prompt')"><strong>System Prompt</strong><span class="tag">角色</span><span class="desc" id="export-prompt-desc">粘贴到 AI 的系统提示词中</span></button>
-            <button class="dropdown-item" onclick="exportAs('text')"><strong>纯文本</strong><span class="tag">通用</span><span class="desc" id="export-text-desc">简单文字，复制到任何地方</span></button>
+            <button class="dropdown-item" onclick="exportAs('markdown')">
+              <div class="dropdown-item-header">
+                <strong>Markdown</strong>
+                <span class="tag">AI</span>
+              </div>
+              <span class="desc" id="export-md-desc">复制给 Trae / ChatGPT / Claude</span>
+            </button>
+            <button class="dropdown-item" onclick="exportAs('json')">
+              <div class="dropdown-item-header">
+                <strong>JSON</strong>
+                <span class="tag">数据</span>
+              </div>
+              <span class="desc" id="export-json-desc">备份配置，换设备可导入恢复</span>
+            </button>
+            <button class="dropdown-item" onclick="exportAs('prompt')">
+              <div class="dropdown-item-header">
+                <strong>System Prompt</strong>
+                <span class="tag">角色</span>
+              </div>
+              <span class="desc" id="export-prompt-desc">粘贴到 AI 的系统提示词中</span>
+            </button>
+            <button class="dropdown-item" onclick="exportAs('text')">
+              <div class="dropdown-item-header">
+                <strong>纯文本</strong>
+                <span class="tag">通用</span>
+              </div>
+              <span class="desc" id="export-text-desc">简单文字，复制到任何地方</span>
+            </button>
           </div>
         </div>
       </div>
